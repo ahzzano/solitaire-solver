@@ -108,6 +108,9 @@ public class App {
         // CardStack A - to move
         // CardStack B - to receive
         for (CardStack stackToMove : tableu) {
+            if (stackToMove.empty()) {
+                continue;
+            }
             if (stackToMove.revealedStart() == 0 && stackToMove.getRevealedTop().value() == Value.KING) {
                 continue;
             }
@@ -120,7 +123,7 @@ public class App {
                     continue;
                 }
 
-                if (stackToMove.getRevealedTop().isCompatibleDownwards(stackToReceive.getRevealedBottom())) {
+                if(stackToMove.getRevealedTop().isCompatibleDownwards(stackToReceive.getRevealedBottom())) {
                     var temp = stackToMove.splitStack(stackToMove.revealedStart());
 
                     if(temp.isEmpty()) {

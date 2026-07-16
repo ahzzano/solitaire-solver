@@ -189,7 +189,7 @@ public class MovesTest {
             new Card(Suit.CLUBS, Value.SEVEN),
             new Card(Suit.CLUBS, Value.TEN),
             new Card(Suit.SPADES, Value.JACK),
-            new Card(Suit.SPADES, Value.JACK)
+            new Card(Suit.DIAMONDS, Value.SEVEN)
         )), 6);
 
         App app = new App();
@@ -197,7 +197,11 @@ public class MovesTest {
         app.aceToFoundations(tableu, foundations);
         app.cardsToFoundation(tableu, foundations);
         app.kingToEmpty(tableu);
-        app.lateralMoves(tableu);
+
+        boolean keepLateralMoves = true;
+        while (keepLateralMoves) {
+            keepLateralMoves = app.lateralMoves(tableu);
+        }
 
         // Expected Final State 
         assertEquals(foundations[0].empty(), false);
