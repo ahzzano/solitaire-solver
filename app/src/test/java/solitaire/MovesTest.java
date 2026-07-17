@@ -19,6 +19,28 @@ import solitaire.utils.Value;
 import solitaire.utils.Waste;
 
 public class MovesTest {
+    @Test void wasteCardToFoundation() {
+        Foundation[] foundations = new Foundation[4];
+        for (int i = 0; i < 4; i++) {
+            foundations[i] = new Foundation();
+        }
+
+        foundations[0].push(new Card(Suit.CLUBS, Value.ACE));
+
+        Waste waste = new Waste();
+        Deque<Card> stock = new ArrayDeque<>();
+
+        stock.add(new Card(Suit.SPADES, Value.ACE));
+        stock.add(new Card(Suit.CLUBS, Value.TWO));
+
+        App app = new App();
+
+        app.wasteCardToFoundation(waste, stock, foundations);
+        assertEquals(foundations[0].getTop().value(), Value.TWO);
+        assertEquals(waste.size(), 1);
+
+    }
+
     @Test void wasteAceToFoundation() {
         Foundation[] foundations = new Foundation[4];
         for (int i = 0; i < 4; i++) {

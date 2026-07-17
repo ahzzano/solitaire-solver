@@ -18,6 +18,27 @@ import solitaire.utils.Value;
 import solitaire.utils.Waste;
 
 public class App {
+    public boolean wasteCardToFoundation(Waste waste, Deque<Card> stock, Foundation[] foundations) {
+        boolean move = false;
+        if (waste.size() == 0) {
+            waste.drawThree(stock);
+        }
+
+        Card top = waste.getTop();
+
+        for (Foundation foundation : foundations) {
+            if (foundation.pushable(top)) {
+                Card c = waste.popTop();
+                foundation.push(c);
+                move = true;
+                break;
+            }
+        }
+
+
+        return move;
+    }
+
     public boolean wasteAceToFoundation(Waste waste, Deque<Card> stock, Foundation[] foundations) {
         boolean move = false;
         if (waste.size() == 0) {
