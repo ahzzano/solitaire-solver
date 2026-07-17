@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,8 +16,48 @@ import solitaire.utils.CardStack;
 import solitaire.utils.Foundation;
 import solitaire.utils.Suit;
 import solitaire.utils.Value;
+import solitaire.utils.Waste;
 
 public class MovesTest {
+    @Test void wasteKingToTableu() {
+        CardStack[] tableu = new CardStack[4];
+        tableu[0] = new CardStack(new LinkedList<Card>(), 0);
+
+        tableu[1] = new CardStack(new LinkedList<Card>(List.of(
+            new Card(Suit.DIAMONDS, Value.THREE),
+            new Card(Suit.SPADES, Value.JACK)
+        )), 1);
+
+        tableu[2] = new CardStack(new LinkedList<Card>(), 0);
+
+        tableu[3] = new CardStack(new LinkedList<Card>(List.of(
+            new Card(Suit.SPADES, Value.JACK)
+        )), 0);
+
+        Waste waste = new Waste();
+        Deque<Card> stock = new ArrayDeque<>();
+
+        stock.add(new Card(Suit.CLUBS, Value.KING));
+        stock.add(new Card(Suit.HEARTS, Value.KING));
+
+        App app = new App();
+
+        app.wasteKingToTableu(waste, stock, tableu);
+
+        assertFalse(tableu[0].empty());
+        assertEquals(tableu[0].getRevealedBottom().value(), Value.KING);
+        assertEquals(tableu[0].getRevealedBottom().suit(), Suit.HEARTS);
+
+        app.wasteKingToTableu(waste, stock, tableu);
+
+        assertFalse(tableu[2].empty());
+        assertEquals(tableu[2].getRevealedBottom().value(), Value.KING);
+        assertEquals(tableu[2].getRevealedBottom().suit(), Suit.CLUBS);
+
+        assertEquals(tableu[1].size(), 2);
+        assertEquals(tableu[3].size(), 1);
+    }
+
     @Test void lateralMoves() {
         CardStack[] tableu = new CardStack[4];
 
