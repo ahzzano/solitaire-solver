@@ -17,6 +17,12 @@ public class CardStack {
         this.revealedStart = revealedStart;
     }
 
+    public void pushCard(Card c) {
+        if (this.cards.isEmpty()) {
+            this.cards.push(c);
+        }
+    }
+
     public Optional<CardStack> splitStack(int index) {
         if (index < this.revealedStart) {
             return Optional.empty();

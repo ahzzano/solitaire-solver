@@ -15,8 +15,31 @@ import solitaire.utils.CardStack;
 import solitaire.utils.Foundation;
 import solitaire.utils.Suit;
 import solitaire.utils.Value;
+import solitaire.utils.Waste;
 
 public class App {
+    public boolean wasteKingToTableu(Waste waste, Deque<Card> stock, CardStack[] tableu) {
+        boolean move = false;
+        if (waste.size() == 0) {
+            waste.drawThree(stock);
+        }
+
+        Card top = waste.getTop();
+        if (top.value() != Value.KING) {
+            return false;
+        }
+
+        for (CardStack cardStack : tableu) {
+            if (cardStack.empty()) {
+                cardStack.pushCard(waste.popTop());
+                move = true;
+                break;
+            }
+        }
+
+        return move;
+    }
+
     public boolean cardsToFoundation(CardStack[] tableu, Foundation[] foundations) {
         boolean move = false;
 
