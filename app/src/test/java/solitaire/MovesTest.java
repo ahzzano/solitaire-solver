@@ -19,6 +19,48 @@ import solitaire.utils.Value;
 import solitaire.utils.Waste;
 
 public class MovesTest {
+    @Test void wasteCardToTableu() {
+        CardStack[] tableu = new CardStack[4];
+
+        tableu[0] = new CardStack(new LinkedList<Card>(List.of(new Card(Suit.DIAMONDS, Value.KING))), 0);
+        tableu[1] = new CardStack(new LinkedList<Card>(
+            List.of(
+                new Card(Suit.DIAMONDS, Value.KING),
+                new Card(Suit.HEARTS, Value.TEN))
+            ),
+            1);
+        tableu[2] = new CardStack(new LinkedList<Card>(List.of(
+            new Card(Suit.SPADES, Value.TWO),
+            new Card(Suit.SPADES, Value.THREE),
+            new Card(Suit.HEARTS, Value.FIVE)
+        )),2);
+
+        tableu[3] = new CardStack(new LinkedList<Card>(List.of(
+            new Card(Suit.SPADES, Value.TWO),
+            new Card(Suit.SPADES, Value.THREE),
+            new Card(Suit.HEARTS, Value.FIVE),
+            new Card(Suit.SPADES, Value.FOUR)
+        )), 3);
+
+        Deque<Card> stock = new ArrayDeque<>();
+        stock.add(new Card(Suit.CLUBS, Value.FOUR));
+        stock.add(new Card(Suit.SPADES, Value.NINE));
+        stock.add(new Card(Suit.CLUBS, Value.QUEEN));
+        Waste waste = new Waste();
+
+        App app = new App();
+        app.wasteCardToTableu(waste, stock, tableu);
+        app.wasteCardToTableu(waste, stock, tableu);
+        app.wasteCardToTableu(waste, stock, tableu);
+
+        assertEquals(tableu[0].getRevealedBottom().value(), Value.QUEEN);
+        assertEquals(tableu[1].getRevealedBottom().value(), Value.NINE);
+        assertEquals(tableu[2].getRevealedBottom().value(), Value.FOUR);
+
+        assertEquals(tableu[3].getRevealedBottom().value(), Value.FOUR);
+        assertEquals(tableu[3].getRevealedBottom().suit(), Suit.SPADES);
+    }
+
     @Test void wasteCardToFoundation() {
         Foundation[] foundations = new Foundation[4];
         for (int i = 0; i < 4; i++) {

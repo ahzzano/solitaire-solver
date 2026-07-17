@@ -23,6 +23,10 @@ public class CardStack {
         }
     }
 
+    public void appendCard(Card c) {
+        this.cards.addLast(c);
+    }
+
     public Optional<CardStack> splitStack(int index) {
         if (index < this.revealedStart) {
             return Optional.empty();
