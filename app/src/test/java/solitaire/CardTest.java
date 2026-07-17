@@ -20,7 +20,6 @@ public class CardTest {
         Card c1 = new Card(Suit.DIAMONDS, Value.FIVE);
         Card c2 = new Card(Suit.SPADES, Value.FOUR);
         Card c3 = new Card(Suit.HEARTS, Value.THREE);
-        Card c4 = new Card(Suit.CLUBS, Value.TWO);
 
         assertTrue(c2.isCompatibleBelow(c1));
         assertFalse(c3.isCompatibleBelow(c1));
