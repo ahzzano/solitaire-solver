@@ -4,8 +4,6 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Optional;
 
-import solitaire.Value;
-
 public class Foundation {
     private Deque<Card> cards;
     private Card base;

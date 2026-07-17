@@ -14,6 +14,7 @@ import solitaire.utils.Card;
 import solitaire.utils.CardStack;
 import solitaire.utils.Foundation;
 import solitaire.utils.Suit;
+import solitaire.utils.Value;
 
 public class App {
     public boolean cardsToFoundation(CardStack[] tableu, Foundation[] foundations) {
@@ -123,7 +124,7 @@ public class App {
                     continue;
                 }
 
-                if(stackToMove.getRevealedTop().isCompatibleDownwards(stackToReceive.getRevealedBottom())) {
+                if(stackToMove.getRevealedTop().isCompatibleBelow(stackToReceive.getRevealedBottom())) {
                     var temp = stackToMove.splitStack(stackToMove.revealedStart());
 
                     if(temp.isEmpty()) {

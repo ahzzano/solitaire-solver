@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import solitaire.utils.Card;
 import solitaire.utils.Foundation;
 import solitaire.utils.Suit;
+import solitaire.utils.Value;
 
 public class FoundationsTest {
     @Test void foundationValidPushes() {

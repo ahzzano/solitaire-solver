@@ -1,7 +1,5 @@
 package solitaire.utils;
 
-import solitaire.Value;
-
 public class Card {
     final Suit suit;
     final Value value;
@@ -27,7 +25,7 @@ public class Card {
         return this.value == other.value;
     }
 
-    public boolean isCompatibleDownwards(Card other) {
+    public boolean isCompatibleBelow(Card other) {
         return !this.sameColor(other) && this.value().number() == other.value().number() - 1;
     }
 

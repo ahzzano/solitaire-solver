@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import solitaire.utils.Card;
 import solitaire.utils.CardStack;
 import solitaire.utils.Suit;
+import solitaire.utils.Value;
 
 public class CardTest {
     @Test void cardMovableComparison() {
@@ -21,8 +22,8 @@ public class CardTest {
         Card c3 = new Card(Suit.HEARTS, Value.THREE);
         Card c4 = new Card(Suit.CLUBS, Value.TWO);
 
-        assertTrue(c1.isCompatibleDownwards(c2));
-        assertFalse(c1.isCompatibleDownwards(c3));
+        assertTrue(c2.isCompatibleBelow(c1));
+        assertFalse(c3.isCompatibleBelow(c1));
 
     }
 

@@ -1,4 +1,4 @@
-package solitaire;
+package solitaire.utils;
 
 public enum Value {
     ACE(1),

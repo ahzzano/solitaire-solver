@@ -13,6 +13,7 @@ import solitaire.utils.Card;
 import solitaire.utils.CardStack;
 import solitaire.utils.Foundation;
 import solitaire.utils.Suit;
+import solitaire.utils.Value;
 
 public class MovesTest {
     @Test void lateralMoves() {
