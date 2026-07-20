@@ -230,6 +230,16 @@ public class App {
         return move;
     }
 
+    public boolean buildTableu(CardStack[] tableu, Foundation[] foundations) {
+        boolean move = false;
+        move = move || aceToFoundations(tableu, foundations);
+        move = move || cardsToFoundation(tableu, foundations);
+        move = move || kingToEmpty(tableu);
+        move = move || lateralMoves(tableu);
+        return move;
+
+    }
+
     public static void main(String[] args) {
         // Initialize the stockpile
         ArrayList<Card> deck = new ArrayList<>();
