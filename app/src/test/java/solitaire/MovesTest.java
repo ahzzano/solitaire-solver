@@ -326,14 +326,7 @@ public class MovesTest {
 
         App app = new App();
 
-        app.aceToFoundations(tableu, foundations);
-        app.cardsToFoundation(tableu, foundations);
-        app.kingToEmpty(tableu);
-
-        boolean keepLateralMoves = true;
-        while (keepLateralMoves) {
-            keepLateralMoves = app.lateralMoves(tableu);
-        }
+        while(app.buildTableu(tableu, foundations)) {}
 
         // Expected Final State 
         assertEquals(foundations[0].empty(), false);
