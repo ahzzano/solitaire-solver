@@ -54,7 +54,6 @@ public class App {
             }
         }
 
-
         return move;
     }
 
