@@ -86,6 +86,9 @@ public class CardStack {
     }
     
     public Card getRevealedBottom() {
+        if (this.cards.isEmpty()) {
+            return null;
+        }
         return this.cards.get(this.cards.size() - 1);
     }
 

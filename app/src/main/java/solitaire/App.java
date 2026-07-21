@@ -26,6 +26,9 @@ public class App {
 
         Card top = waste.getTop();
         for (CardStack cardStack : tableu) {
+            if (cardStack.empty()) {
+                continue;
+            }
             if (top.isCompatibleBelow(cardStack.getRevealedBottom())) {
                 Card c = waste.popTop();
 
@@ -206,8 +209,8 @@ public class App {
                 if (stackToMove == stackToReceive) {
                     continue;
                 }
-
-                if (stackToReceive.empty() && stackToMove.getRevealedTop().value() != Value.KING) {
+                
+                if (stackToReceive.empty()) {
                     continue;
                 }
 
