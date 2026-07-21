@@ -36,4 +36,10 @@ public class Waste {
             stock.push(this.cards.pop());
         }
     }
+
+    public void display() {
+        for (Card card : this.cards) {
+            System.out.println(card.toDisplayString());
+        }
+    }
 }

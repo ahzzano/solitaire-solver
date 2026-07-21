@@ -67,4 +67,10 @@ public class Foundation {
     public Card getTop() {
         return this.cards.peek();
     }
+    
+    public void display() {
+        for (Card card : cards) {
+            System.out.println(card.toDisplayString());
+        }
+    }
 }

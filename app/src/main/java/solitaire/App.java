@@ -170,6 +170,7 @@ public class App {
                 emptyStackIndexes.add(i);
             }
         }
+        System.out.println(emptyStackIndexes.size());
 
         if(emptyStackIndexes.isEmpty()) {
             return move;
@@ -180,6 +181,10 @@ public class App {
         for (CardStack stack : tableu) {
             if (stack.empty()) {
                 continue;
+            }
+
+            if (nextMarkedStack >= emptyStackIndexes.size()) {
+                break;
             }
 
             if (stack.revealedStart() > 0 && stack.getRevealedTop().value() == Value.KING) {
@@ -257,7 +262,15 @@ public class App {
                 while (buildTableu(tableu, foundations)) {}
             }
         }
+        waste.refresh(stock);
         return moveMade;
+    }
+
+    public void displayTableu(CardStack[] tableu) {
+        for (CardStack cardStack : tableu) {
+            cardStack.display();
+        }
+
     }
 
     public CardStack[] initializeTableu(ArrayList<Card> deck) {
@@ -295,6 +308,10 @@ public class App {
         }
 
         Collections.shuffle(deck);
+        System.out.println("Printing Deck Order");
+        for (Card card : deck) {
+            System.out.println(card.toDisplayString());
+        }
 
         App app = new App();
         // Initialize the tableu
@@ -330,5 +347,19 @@ public class App {
         } else {
             System.out.println("You lost!");
         }
+        System.out.println("Tableu");
+        for (CardStack stack : tableu) {
+            stack.display();
+        }
+        System.out.println("Stock");
+        for (Card card : stock) {
+            System.out.println(card.toDisplayString());
+        }
+        System.out.println("Foundations");
+        for (Foundation foundation : foundations) {
+            foundation.display();
+        }
+        System.out.println("Waste");
+        waste.display();
     }
 }

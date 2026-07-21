@@ -4,6 +4,10 @@ public class Card {
     final Suit suit;
     final Value value;
 
+    public String toDisplayString() {
+        return this.suit.name() + "-" + this.value.name();
+    }
+
     public Value value() {
         return this.value;
     }

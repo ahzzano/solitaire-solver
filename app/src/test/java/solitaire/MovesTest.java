@@ -268,6 +268,25 @@ public class MovesTest {
         assertTrue(tableu[3].empty());
     }
 
+    @Test void kingToNonEmpty() {
+        // Do nothing
+        CardStack[] tableu = new CardStack[2];
+
+        tableu[0] = new CardStack(new LinkedList<Card>(List.of(
+            new Card(Suit.HEARTS, Value.KING)
+        )), 0);
+        tableu[1] = new CardStack(new LinkedList<Card>(List.of(
+            new Card(Suit.DIAMONDS, Value.ACE),
+            new Card(Suit.DIAMONDS, Value.KING),
+            new Card(Suit.SPADES, Value.QUEEN)
+        )), 1);
+
+        App app = new App();
+        boolean worked = app.kingToEmpty(tableu);
+
+        assertFalse(worked);
+    }
+
     @Test void exampleFirstMoveWithoutWaste() {
         CardStack[] tableu = new CardStack[7];
         Foundation[] foundations = new Foundation[4];

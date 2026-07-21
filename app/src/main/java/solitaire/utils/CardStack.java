@@ -99,4 +99,12 @@ public class CardStack {
     public boolean empty() {
         return this.cards.isEmpty();
     }
+
+    public void display() {
+        for (Card card : cards) {
+            System.out.println(card.toDisplayString());
+        }
+        System.out.println(this.revealedStart);
+
+    }
 }
