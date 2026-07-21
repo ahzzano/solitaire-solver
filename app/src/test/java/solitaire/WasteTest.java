@@ -29,7 +29,7 @@ public class WasteTest {
         Deque<Card> stock = initializeStock();
         Waste waste = new Waste();
 
-        waste.drawThree(stock);
+        waste.drawThreeFrom(stock);
 
         assertEquals(stock.size(), 52 - 3);
         assertEquals(waste.size(), 3);
@@ -45,7 +45,7 @@ public class WasteTest {
 
         Waste waste = new Waste();
         
-        waste.drawThree(stock);
+        waste.drawThreeFrom(stock);
 
         assertEquals(stock.size(), 0);
         assertEquals(waste.size(), 2);
@@ -56,7 +56,7 @@ public class WasteTest {
 
         Waste waste = new Waste();
         while (!stock.isEmpty()) {
-            waste.drawThree(stock);
+            waste.drawThreeFrom(stock);
         }
 
         waste.refresh(stock);
@@ -74,7 +74,7 @@ public class WasteTest {
 
         Waste waste = new Waste();
 
-        waste.drawThree(stock);
+        waste.drawThreeFrom(stock);
 
         assertEquals(stock.size(), 1);
         assertEquals(waste.size(), 3);
@@ -83,7 +83,7 @@ public class WasteTest {
 
         assertEquals(waste.size(), 2);
 
-        waste.drawThree(stock);
+        waste.drawThreeFrom(stock);
 
         assertEquals(waste.size(), 3);
 

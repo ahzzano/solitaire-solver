@@ -22,7 +22,7 @@ public class Waste {
         return this.cards.pop();
     }
 
-    public void drawThree(Deque<Card> stock) {
+    public void drawThreeFrom(Deque<Card> stock) {
         for (int i = 0; i < 3; i++) {
             if (stock.isEmpty()) {
                 break;

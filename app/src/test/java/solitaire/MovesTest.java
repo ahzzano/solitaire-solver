@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
@@ -339,5 +340,50 @@ public class MovesTest {
         assertFalse(tableu[6].empty());
 
         assertTrue(tableu[1].empty());
+    }
+
+    @Test void exampleGame() {
+        ArrayList<Card> deck = new ArrayList<>();
+
+        for (Suit suit : Suit.values()) {
+            for (Value value : Value.values()) {
+                deck.add(new Card(suit, value));
+            }
+        }
+
+        App app = new App();
+
+        CardStack[] tableu = app.initializeTableu(deck);
+
+        Deque<Card> stock = app.initializeStock(deck);
+        Waste waste = new Waste();
+
+        assertTrue(deck.isEmpty());
+        
+        // Initialize the foundations
+        Foundation[] foundations = new Foundation[4];
+        for (int i = 0; i < 4; i++) {
+            foundations[i] = new Foundation();
+        }
+
+        boolean moveMadeThisCycle = app.playOneCycle(tableu, foundations, waste, stock);
+
+        assertFalse(foundations[0].empty());
+        assertFalse(foundations[1].empty());
+        assertFalse(foundations[2].empty());
+        assertFalse(foundations[3].empty());
+
+        for (CardStack stack : tableu) {
+            for (int i = stack.revealedStart() + 1; i < stack.size(); i++) {
+                Card a = stack.getCard(i);
+                Card b = stack.getCard(i - 1);
+
+                assertFalse(a.sameColor(b));
+            }
+        }
+
+        assertTrue(moveMadeThisCycle);
+
+
     }
 }

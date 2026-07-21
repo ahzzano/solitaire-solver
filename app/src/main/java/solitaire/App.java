@@ -21,7 +21,7 @@ public class App {
     public boolean wasteCardToTableu(Waste waste, Deque<Card> stock, CardStack[] tableu) {
         boolean move = false;
         if (waste.size() == 0) {
-            waste.drawThree(stock);
+            waste.drawThreeFrom(stock);
         }
 
         Card top = waste.getTop();
@@ -40,7 +40,7 @@ public class App {
     public boolean wasteCardToFoundation(Waste waste, Deque<Card> stock, Foundation[] foundations) {
         boolean move = false;
         if (waste.size() == 0) {
-            waste.drawThree(stock);
+            waste.drawThreeFrom(stock);
         }
 
         Card top = waste.getTop();
@@ -60,7 +60,7 @@ public class App {
     public boolean wasteAceToFoundation(Waste waste, Deque<Card> stock, Foundation[] foundations) {
         boolean move = false;
         if (waste.size() == 0) {
-            waste.drawThree(stock);
+            waste.drawThreeFrom(stock);
         }
 
         Card top = waste.getTop();
@@ -85,7 +85,7 @@ public class App {
     public boolean wasteKingToTableu(Waste waste, Deque<Card> stock, CardStack[] tableu) {
         boolean move = false;
         if (waste.size() == 0) {
-            waste.drawThree(stock);
+            waste.drawThreeFrom(stock);
         }
 
         Card top = waste.getTop();
@@ -237,7 +237,48 @@ public class App {
         move = move || kingToEmpty(tableu);
         move = move || lateralMoves(tableu);
         return move;
+    }
 
+    public boolean playOneCycle(CardStack[] tableu, Foundation[] foundations, Waste waste, Deque<Card> stock) {
+        while (buildTableu(tableu, foundations)) {}
+        boolean moveMade = false;
+        while (!stock.isEmpty()) {
+            waste.drawThreeFrom(stock);
+            boolean wasteMove = this.wasteAceToFoundation(waste, stock, foundations);
+            wasteMove = this.wasteCardToFoundation(waste, stock, foundations);
+            wasteMove = this.wasteKingToTableu(waste, stock, tableu);
+            wasteMove = this.wasteCardToTableu(waste, stock, tableu);
+            if (!wasteMove) {
+            } else {
+                moveMade = true;
+                while (buildTableu(tableu, foundations)) {}
+            }
+        }
+        return moveMade;
+    }
+
+    public CardStack[] initializeTableu(ArrayList<Card> deck) {
+        CardStack[] tableu = new CardStack[7];
+        for (int i = 0; i < 7; i++) {
+            tableu[i] = new CardStack(new LinkedList<Card>(), i);
+            for (int j = 0; j < i+1; j++) {
+                Card c = deck.remove(0);
+                tableu[i].appendCard(c);
+            }
+        }
+
+        return tableu;
+    }
+
+    public Deque<Card> initializeStock(ArrayList<Card> deck) {
+        Deque<Card> stock = new ArrayDeque<>();
+
+        while (!deck.isEmpty()) {
+            Card c = deck.remove(0);
+            stock.add(c);
+        }
+        
+        return stock;
     }
 
     public static void main(String[] args) {
@@ -250,19 +291,14 @@ public class App {
             }
         }
 
-        Deque<Card> stock = new ArrayDeque<>();
-        Deque<Card> waste = new ArrayDeque<>();
-
         Collections.shuffle(deck);
-        for (Card card : deck) {
-            stock.add(card);
-        }
 
+        App app = new App();
         // Initialize the tableu
-        CardStack[] tableu = new CardStack[7];
-        for (int i = 0; i < 7; i++) {
-            tableu[i] = new CardStack(new LinkedList<Card>(), 0);
-        }
+        CardStack[] tableu = app.initializeTableu(deck);
+
+        Deque<Card> stock = app.initializeStock(deck);
+        Deque<Card> waste = new ArrayDeque<>();
         
         // Initialize the foundations
         Foundation[] foundations = new Foundation[4];
