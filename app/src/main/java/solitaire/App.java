@@ -297,6 +297,24 @@ public class App {
         return stock;
     }
 
+    public void displayState(CardStack[] tableu, Deque<Card> stock, Foundation[] foundations, Waste waste) {
+        System.out.println("Tableu");
+        for (CardStack stack : tableu) {
+            stack.display();
+        }
+        System.out.println("Stock");
+        for (Card card : stock) {
+            System.out.println(card.toDisplayString());
+        }
+        System.out.println("Foundations");
+        for (Foundation foundation : foundations) {
+            foundation.display();
+        }
+        System.out.println("Waste");
+        waste.display();
+
+    }
+
     public static void main(String[] args) {
         // Initialize the stockpile
         ArrayList<Card> deck = new ArrayList<>();
@@ -331,6 +349,11 @@ public class App {
         boolean win = false;
         while (move && win == false) {
             move = app.playOneCycle(tableu, foundations, waste, stock);
+            System.out.println("");
+            System.out.println("");
+            app.displayState(tableu, stock, foundations, waste);
+            System.out.println("");
+            System.out.println("");
             for (Foundation foundation : foundations) {
                 boolean complete = true;
                 if (foundation.size() < 13) {
@@ -347,19 +370,7 @@ public class App {
         } else {
             System.out.println("You lost!");
         }
-        System.out.println("Tableu");
-        for (CardStack stack : tableu) {
-            stack.display();
-        }
-        System.out.println("Stock");
-        for (Card card : stock) {
-            System.out.println(card.toDisplayString());
-        }
-        System.out.println("Foundations");
-        for (Foundation foundation : foundations) {
-            foundation.display();
-        }
-        System.out.println("Waste");
-        waste.display();
+
+        app.displayState(tableu, stock, foundations, waste);
     }
 }
