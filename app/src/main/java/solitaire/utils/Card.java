@@ -5,7 +5,7 @@ public class Card {
     final Value value;
 
     public String toDisplayString() {
-        return this.suit.name() + "-" + this.value.name();
+        return this.value.displayString() + "(" + this.suit.displayString() + ")";
     }
 
     public Value value() {

@@ -169,7 +169,7 @@ public class App {
                 emptyStackIndexes.add(i);
             }
         }
-        System.out.println(emptyStackIndexes.size());
+        // System.out.println(emptyStackIndexes.size());
 
         if(emptyStackIndexes.isEmpty()) {
             return move;
@@ -265,11 +265,21 @@ public class App {
         return moveMade;
     }
 
+    // Target
+/*
+S -- 0(D)		                5(H)  3(D)  4(C)  --
+
+----  -(-)  -(-)  -(-)  -(-)  -(-)  ----  ----  ----
+      -(-)  -(-)  -(-)  -(-)  -(-)
+      1(H)  -(-)  -(-)  -(-)  5(C)
+	  -(-)	1(C)  4(S) 
+	  -(-)
+	  K(D)
+*/
     public void displayTableu(CardStack[] tableu) {
         for (CardStack cardStack : tableu) {
             cardStack.display();
         }
-
     }
 
     public CardStack[] initializeTableu(ArrayList<Card> deck) {
@@ -297,21 +307,55 @@ public class App {
     }
 
     public void displayState(CardStack[] tableu, Deque<Card> stock, Foundation[] foundations, Waste waste) {
-        System.out.println("Tableu");
-        for (CardStack stack : tableu) {
-            stack.display();
-        }
-        System.out.println("Stock");
-        for (Card card : stock) {
-            System.out.println(card.toDisplayString());
-        }
-        System.out.println("Foundations");
-        for (Foundation foundation : foundations) {
-            foundation.display();
-        }
-        System.out.println("Waste");
-        waste.display();
+        Card topStock = stock.peek();
 
+        System.out.print("S--" + topStock.toDisplayString());
+        for (int i = 0; i < 16; i++) {
+            System.out.print(" ");
+        }
+
+        for (Foundation foundation : foundations) {
+            if (foundation.empty()) {
+                System.out.print("----  ");
+                continue;
+            }
+
+            System.out.print(foundation.getTop().toDisplayString() + "  ");
+            if (foundation.getTop().value() != Value.TEN) {
+                System.out.print(" ");
+            }
+        }
+
+        System.out.println();
+        System.out.println();
+
+        int maxSizeStack = 0;
+        for (CardStack stack : tableu) {
+            if (stack.size() > maxSizeStack) {
+                maxSizeStack = stack.size();
+            }
+        }
+        for (int i = 0; i < maxSizeStack; i++) {
+            for (CardStack stack : tableu) {
+                if (i >= stack.size()) {
+                    System.out.print("       ");
+                    // System.out.print("----   ");
+                    continue;
+                }
+
+                if (i < stack.revealedStart()) {
+                    System.out.print("-(-)   ");
+                    continue;
+                }
+
+                System.out.print(stack.getCard(i).toDisplayString());
+                System.out.print("  ");
+                if (stack.getCard(i).value() != Value.TEN) {
+                    System.out.print(" ");
+                }
+            }
+            System.out.println();
+        }
     }
 
     public static void main(String[] args) {
@@ -349,9 +393,7 @@ public class App {
         while (move && win == false) {
             move = app.playOneCycle(tableu, foundations, waste, stock);
             System.out.println("");
-            System.out.println("");
             app.displayState(tableu, stock, foundations, waste);
-            System.out.println("");
             System.out.println("");
             for (Foundation foundation : foundations) {
                 boolean complete = true;
