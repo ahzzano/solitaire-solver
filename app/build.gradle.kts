@@ -34,7 +34,7 @@ java {
 
 application {
     // Define the main class for the application.
-    mainClass = "solitaire.solver.App"
+    mainClass = "solitaire.App"
 }
 
 // tasks.named<JavaCompile>("compileJava") {
