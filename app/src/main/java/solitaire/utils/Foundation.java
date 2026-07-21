@@ -60,6 +60,10 @@ public class Foundation {
         return this.cards.isEmpty();
     }
 
+    public int size() {
+        return this.cards.size();
+    }
+
     public Card getTop() {
         return this.cards.peek();
     }

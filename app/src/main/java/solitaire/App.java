@@ -298,7 +298,7 @@ public class App {
         CardStack[] tableu = app.initializeTableu(deck);
 
         Deque<Card> stock = app.initializeStock(deck);
-        Deque<Card> waste = new ArrayDeque<>();
+        Waste waste = new Waste();
         
         // Initialize the foundations
         Foundation[] foundations = new Foundation[4];
@@ -307,5 +307,25 @@ public class App {
         }
 
         // Board gaming
+        boolean move = true;
+        boolean win = false;
+        while (move && win == false) {
+            move = app.playOneCycle(tableu, foundations, waste, stock);
+            for (Foundation foundation : foundations) {
+                boolean complete = true;
+                if (foundation.size() < 13) {
+                    complete = false;
+                    break;
+                }
+
+                win = complete;
+            }
+        }
+
+        if (win) {
+            System.out.println("You win!");
+        } else {
+            System.out.println("You lost!");
+        }
     }
 }
