@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.LinkedList;
+import java.util.Scanner;
 
 import solitaire.utils.Card;
 import solitaire.utils.CardStack;
@@ -17,6 +18,18 @@ import solitaire.utils.Value;
 import solitaire.utils.Waste;
 
 public class App {
+    public Scanner terminalInput;
+
+    public void setTerminalInput(Scanner scanner){
+        this.terminalInput = scanner;
+    }
+
+    public void pause() {
+        if (this.terminalInput != null) {
+            this.terminalInput.nextLine();
+        }
+    }
+
     public boolean wasteCardToTableu(Waste waste, Deque<Card> stock, CardStack[] tableu) {
         boolean move = false;
         if (waste.size() == 0) {
@@ -247,14 +260,19 @@ public class App {
     }
 
     public boolean playOneCycle(CardStack[] tableu, Foundation[] foundations, Waste waste, Deque<Card> stock) {
-        while (buildTableu(tableu, foundations)) {}
+        while (buildTableu(tableu, foundations)) {
+            this.displayState(tableu, stock, foundations, waste);
+        }
         boolean moveMade = false;
         while (!stock.isEmpty()) {
             waste.drawThreeFrom(stock);
             boolean wasteMove = this.wasteAceToFoundation(waste, stock, foundations);
-            wasteMove = this.wasteCardToFoundation(waste, stock, foundations);
-            wasteMove = this.wasteKingToTableu(waste, stock, tableu);
-            wasteMove = this.wasteCardToTableu(waste, stock, tableu);
+            this.displayState(tableu, stock, foundations, waste);
+            wasteMove = wasteMove || this.wasteCardToFoundation(waste, stock, foundations);
+            this.displayState(tableu, stock, foundations, waste);
+            wasteMove = wasteMove || this.wasteKingToTableu(waste, stock, tableu);
+            this.displayState(tableu, stock, foundations, waste);
+            wasteMove = wasteMove|| this.wasteCardToTableu(waste, stock, tableu);
             if (!wasteMove) {
             } else {
                 moveMade = true;
@@ -307,9 +325,16 @@ S -- 0(D)		                5(H)  3(D)  4(C)  --
     }
 
     public void displayState(CardStack[] tableu, Deque<Card> stock, Foundation[] foundations, Waste waste) {
-        Card topStock = stock.peek();
+        Card topWaste = waste.getTop();
+        System.out.println("");
 
-        System.out.print("S--" + topStock.toDisplayString());
+        if (topWaste != null) {
+            System.out.print("S(" + stock.size() + ")");
+            System.out.print("--" + topWaste.toDisplayString());
+        } else {
+            System.out.print(" [ empty ] ");
+        }
+
         for (int i = 0; i < 16; i++) {
             System.out.print(" ");
         }
@@ -356,9 +381,14 @@ S -- 0(D)		                5(H)  3(D)  4(C)  --
             }
             System.out.println();
         }
+        System.out.println("");
+        this.pause();
     }
 
     public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
+
         // Initialize the stockpile
         ArrayList<Card> deck = new ArrayList<>();
 
@@ -375,6 +405,7 @@ S -- 0(D)		                5(H)  3(D)  4(C)  --
         }
 
         App app = new App();
+        app.setTerminalInput(scanner);
         // Initialize the tableu
         CardStack[] tableu = app.initializeTableu(deck);
 
@@ -392,9 +423,8 @@ S -- 0(D)		                5(H)  3(D)  4(C)  --
         boolean win = false;
         while (move && win == false) {
             move = app.playOneCycle(tableu, foundations, waste, stock);
-            System.out.println("");
             app.displayState(tableu, stock, foundations, waste);
-            System.out.println("");
+            scanner.nextLine();
             for (Foundation foundation : foundations) {
                 boolean complete = true;
                 if (foundation.size() < 13) {
@@ -413,5 +443,7 @@ S -- 0(D)		                5(H)  3(D)  4(C)  --
         }
 
         app.displayState(tableu, stock, foundations, waste);
+
+        app.terminalInput.close();
     }
 }
