@@ -118,5 +118,223 @@ public class Board {
         scanner.nextLine();
     }
 
+    public boolean cardsToFoundation() {
+        boolean move = false;
+
+        for (Manoeuvre stack : this.tableu) {
+            if (stack.empty()) {
+                continue;
+            }
+
+            boolean pushable = true;
+            while (!stack.empty() && pushable) {
+                for (Foundation foundation : foundations) {
+                    Card end = stack.getRevealedBottom();
+                    if (!foundation.pushable(end)) {
+                        pushable = false;
+                        continue;
+                    }
+
+                    foundation.push(stack.popCard());
+                    move = true;
+                    pushable = true;
+                    break;
+                }
+            }
+        }
+
+        return move;
+    }
+
+    public boolean aceToFoundations() {
+        boolean move = false;
+        for (Manoeuvre stack : this.tableu) {
+            if (stack.empty()) {
+                continue;
+            }
+            Card end = stack.getRevealedBottom();
+            if (end.value() != Value.ACE) {
+                continue;
+            }
+
+            for (Foundation foundation : this.foundations) {
+                if (!foundation.empty()) {
+                    continue;
+                }
+
+                Card c = stack.popCard();
+                foundation.push(c);
+                move = true;
+                break;
+            }
+        }
+
+        return move;
+    }
+
+    public boolean kingToEmpty() {
+        ArrayList<Integer> emptyStackIndexes = new ArrayList<>();
+        boolean move = false;
+
+        for (int i = 0; i < this.tableu.length; i++) {
+            if (tableu[i].empty()) {
+                emptyStackIndexes.add(i);
+            }
+        }
+
+        if(emptyStackIndexes.isEmpty()) {
+            return move;
+        }
+
+        int nextMarkedStack = 0;
+
+        for (Manoeuvre stack : this.tableu) {
+            if (stack.empty()) {
+                continue;
+            }
+
+            if (nextMarkedStack >= emptyStackIndexes.size()) {
+                break;
+            }
+
+            if (stack.revealedStart() > 0 && stack.getRevealedTop().value() == Value.KING) {
+                Manoeuvre kingStack = stack.splitStack(stack.revealedStart()).get();
+                this.tableu[emptyStackIndexes.get(nextMarkedStack)].mergeStacks(kingStack);
+                nextMarkedStack += 1;
+                move = true;
+            }
+        }
+
+        return move;
+    }
+
+    public boolean lateralMoves() {
+        boolean move = false;
+
+        // CardStack A - to move
+        // CardStack B - to receive
+        for (Manoeuvre manoeuvreToMove : this.tableu) {
+            if (manoeuvreToMove.empty()) {
+                continue;
+            }
+            if (manoeuvreToMove.revealedStart() == 0 && manoeuvreToMove.getRevealedTop().value() == Value.KING) {
+                continue;
+            }
+            for (Manoeuvre manoeuvreToReceive : this.tableu) {
+                if (manoeuvreToMove == manoeuvreToReceive) {
+                    continue;
+                }
+                
+                if (manoeuvreToReceive.empty()) {
+                    continue;
+                }
+
+                if(manoeuvreToMove.getRevealedTop().isCompatibleBelow(manoeuvreToReceive.getRevealedBottom())) {
+                    var temp = manoeuvreToMove.splitStack(manoeuvreToMove.revealedStart());
+
+                    if(temp.isEmpty()) {
+                        continue;
+                    }
+
+                    Manoeuvre cs = temp.get();
+
+                    manoeuvreToReceive.mergeStacks(cs);
+                    move = true;
+                    break;
+                }
+            }
+        }
+
+        return move;
+    }
+
+    public boolean wasteCardToTableu() {
+        boolean move = false;
+        if (this.waste.size() == 0) {
+            this.waste.drawThreeFrom(this.stock);
+        }
+
+        Card top = this.waste.getTop();
+        for (Manoeuvre manoeuvre : this.tableu) {
+            if (manoeuvre.empty()) {
+                continue;
+            }
+            if (top.isCompatibleBelow(manoeuvre.getRevealedBottom())) {
+                Card c = this.waste.popTop();
+
+                manoeuvre.appendCard(c);
+                move = true;
+                break;
+            }
+        }
+        return move;
+    }
+
+    public boolean wasteCardToFoundation() {
+        boolean move = false;
+        if (this.waste.size() == 0) {
+            this.waste.drawThreeFrom(this.stock);
+        }
+
+        Card top = this.waste.getTop();
+
+        for (Foundation foundation : this.foundations) {
+            if (foundation.pushable(top)) {
+                Card c = this.waste.popTop();
+                foundation.push(c);
+                move = true;
+                break;
+            }
+        }
+
+        return move;
+    }
+
+    public boolean wasteAceToFoundation() {
+        boolean move = false;
+        if (this.waste.size() == 0) {
+            this.waste.drawThreeFrom(this.stock);
+        }
+
+        Card top = this.waste.getTop();
+        if (top.value() != Value.ACE) {
+            return false;
+        }
+
+        for (Foundation foundation : this.foundations) {
+            if (!foundation.empty()) {
+                continue;
+            }
+
+            Card c = this.waste.popTop();
+            foundation.push(c);
+            move = true;
+            break;
+        }
+
+        return move;
+    }
+
+    public boolean wasteKingToTableu() {
+        boolean move = false;
+        if (this.waste.size() == 0) {
+            this.waste.drawThreeFrom(this.stock);
+        }
+
+        Card top = this.waste.getTop();
+        if (top.value() != Value.KING) {
+            return false;
+        }
+
+        for (Manoeuvre cardStack : this.tableu) {
+            if (cardStack.empty()) {
+                cardStack.pushCard(this.waste.popTop());
+                move = true;
+                break;
+            }
+        }
+
+        return move;
+    }
 
 }
