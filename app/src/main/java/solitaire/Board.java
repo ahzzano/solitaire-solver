@@ -22,6 +22,7 @@ public class Board {
         this.initializeTableu(deck);
         this.initializeStock(deck);
         this.initializeFoundations();
+        this.waste = new Waste();
     }
 
     private void initializeTableu(ArrayList<Card> deck) {
@@ -337,4 +338,49 @@ public class Board {
         return move;
     }
 
+    private void tableuMoves() {
+        boolean tableuMoves = true;
+
+        while(tableuMoves) {
+            tableuMoves = false;
+            tableuMoves = tableuMoves || this.aceToFoundations();
+            tableuMoves = tableuMoves || this.cardsToFoundation();
+            tableuMoves = tableuMoves || this.kingToEmpty();
+            tableuMoves = tableuMoves || this.lateralMoves();
+        }
+
+    }
+
+    public boolean playOneCycle() {
+        this.tableuMoves();
+
+        boolean moveMade = false;
+        while(!this.stock.isEmpty()) {
+            this.waste.drawThreeFrom(this.stock);
+            boolean wasteMoves = this.wasteAceToFoundation();
+            wasteMoves = wasteMoves || this.wasteCardToFoundation();
+            wasteMoves = wasteMoves || this.wasteKingToTableu();
+            wasteMoves = wasteMoves || this.wasteCardToTableu();
+
+            if (wasteMoves) {
+                moveMade = true;
+                this.tableuMoves();
+            }
+        }
+
+        this.waste.refresh(this.stock);
+        return moveMade;
+    }
+
+    public boolean areFoundationsComplete() {
+        boolean complete = true;
+        for (Foundation foundation : this.foundations) {
+            if (foundation.size() < 13) {
+                complete = false;
+                break;
+            }
+        }
+
+        return complete;
+    }
 }
