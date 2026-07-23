@@ -113,6 +113,7 @@ public class Board {
                     }
 
                     foundation.push(stack.popCard());
+                    System.out.println("Moved " + foundation.getTop().toDisplayString() + " to Foundations");
                     move = true;
                     pushable = true;
                     break;
@@ -140,6 +141,7 @@ public class Board {
                 }
 
                 Card c = stack.popCard();
+                System.out.println("Moved " + c.toDisplayString() + " to Foundations");
                 foundation.push(c);
                 move = true;
                 break;
@@ -165,6 +167,7 @@ public class Board {
 
         int nextMarkedStack = 0;
 
+        int index = 0;
         for (Manoeuvre stack : this.tableu) {
             if (stack.empty()) {
                 continue;
@@ -176,10 +179,12 @@ public class Board {
 
             if (stack.revealedStart() > 0 && stack.getRevealedTop().value() == Value.KING) {
                 Manoeuvre kingStack = stack.splitStack(stack.revealedStart()).get();
+                System.out.println("Moved " + kingStack.getRevealedTop().toDisplayString() + " to Manoeuvre #" + (index+1));
                 this.tableu[emptyStackIndexes.get(nextMarkedStack)].mergeStacks(kingStack);
                 nextMarkedStack += 1;
                 move = true;
             }
+            index++;
         }
 
         return move;
@@ -190,6 +195,7 @@ public class Board {
 
         // CardStack A - to move
         // CardStack B - to receive
+        int indexA = 1;
         for (Manoeuvre manoeuvreToMove : this.tableu) {
             if (manoeuvreToMove.empty()) {
                 continue;
@@ -197,6 +203,7 @@ public class Board {
             if (manoeuvreToMove.revealedStart() == 0 && manoeuvreToMove.getRevealedTop().value() == Value.KING) {
                 continue;
             }
+            int indexB = 1;
             for (Manoeuvre manoeuvreToReceive : this.tableu) {
                 if (manoeuvreToMove == manoeuvreToReceive) {
                     continue;
@@ -217,9 +224,12 @@ public class Board {
 
                     manoeuvreToReceive.mergeStacks(cs);
                     move = true;
+                    System.out.println("Moved cards from Manoeuvre #" + (indexA) + " to Manoeuvre #" + (indexB));
                     break;
                 }
+                indexB++;
             }
+            indexA++;
         }
 
         return move;
@@ -232,17 +242,21 @@ public class Board {
         }
 
         Card top = this.waste.getTop();
+        int index = 0;
         for (Manoeuvre manoeuvre : this.tableu) {
             if (manoeuvre.empty()) {
                 continue;
             }
             if (top.isCompatibleBelow(manoeuvre.getRevealedBottom())) {
                 Card c = this.waste.popTop();
+                System.out.println("Moved " + top.toDisplayString() + " to Manoeuvre #" + (index+1));
 
                 manoeuvre.appendCard(c);
                 move = true;
                 break;
             }
+
+            index++;
         }
         return move;
     }
@@ -258,6 +272,7 @@ public class Board {
         for (Foundation foundation : this.foundations) {
             if (foundation.pushable(top)) {
                 Card c = this.waste.popTop();
+                System.out.println("Moved " + c.toDisplayString() + " to foundations");
                 foundation.push(c);
                 move = true;
                 break;
@@ -284,6 +299,7 @@ public class Board {
             }
 
             Card c = this.waste.popTop();
+            System.out.println("Moved " + c.toDisplayString() + " to foundations");
             foundation.push(c);
             move = true;
             break;
@@ -303,12 +319,16 @@ public class Board {
             return false;
         }
 
-        for (Manoeuvre cardStack : this.tableu) {
-            if (cardStack.empty()) {
-                cardStack.pushCard(this.waste.popTop());
+        int index=0;
+        for (Manoeuvre manoeuvre : this.tableu) {
+            if (manoeuvre.empty()) {
+                Card c = this.waste.popTop();
+                manoeuvre.pushCard(c);
+                System.out.println("Moved " + c.toDisplayString() + " to " + (index+1));
                 move = true;
                 break;
             }
+            index += 1;
         }
 
         return move;
@@ -319,14 +339,22 @@ public class Board {
 
         while(tableuMoves) {
             tableuMoves = false;
-            tableuMoves = tableuMoves || this.aceToFoundations();
-            this.displayState();
-            tableuMoves = tableuMoves || this.cardsToFoundation();
-            this.displayState();
-            tableuMoves = tableuMoves || this.kingToEmpty();
-            this.displayState();
-            tableuMoves = tableuMoves || this.lateralMoves();
-            this.displayState();
+            if (this.aceToFoundations()) {
+                this.displayState();
+                tableuMoves = true;
+            }
+            if (this.cardsToFoundation()) {
+                this.displayState();
+                tableuMoves = true;
+            }
+            if (this.kingToEmpty()) {
+                this.displayState();
+                tableuMoves = true;
+            }
+            if (this.lateralMoves()) {
+                this.displayState();
+                tableuMoves = true;
+            }
         }
 
     }
@@ -337,15 +365,26 @@ public class Board {
         boolean moveMade = false;
         boolean wasteMoves = false;
         while(!this.stock.isEmpty()) {
+            System.out.println("Drawing cards from stock");
             this.waste.drawThreeFrom(this.stock);
-            wasteMoves = this.wasteAceToFoundation();
             this.displayState();
-            wasteMoves = wasteMoves || this.wasteCardToFoundation();
-            this.displayState();
-            wasteMoves = wasteMoves || this.wasteKingToTableu();
-            this.displayState();
-            wasteMoves = wasteMoves || this.wasteCardToTableu();
-            this.displayState();
+
+            if (this.wasteAceToFoundation()) {
+                wasteMoves = true;
+                this.displayState();
+            }
+            if (this.wasteCardToFoundation()) {
+                wasteMoves = true;
+                this.displayState();
+            }
+            if (this.wasteKingToTableu()) {
+                wasteMoves = true;
+                this.displayState();
+            }
+            if (this.wasteCardToTableu()) {
+                wasteMoves = true;
+                this.displayState();
+            }
 
             if (wasteMoves) {
                 moveMade = true;

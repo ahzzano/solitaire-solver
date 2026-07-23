@@ -18,6 +18,9 @@ public class App {
 
         BoardDisplay display = BoardDisplay.withBoard(board);
         display.setScanner(scanner);
+        
+        System.out.println("Starting the game GLHF");
+        display.displayState();
 
         while (move && !win) {
             move = board.playOneCycle();

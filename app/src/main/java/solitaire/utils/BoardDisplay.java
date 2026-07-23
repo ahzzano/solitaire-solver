@@ -71,6 +71,11 @@ public class BoardDisplay {
             }
         }
 
+        for (int i = 0; i < tableu.length; i++) {
+            System.out.print("Mv#" + (i+1) + "   ");
+        }
+        System.out.println();
+
         for (int i = 0; i < maxSizeStack; i++) {
             for (Manoeuvre stack : tableu) {
                 if (i >= stack.size()) {
