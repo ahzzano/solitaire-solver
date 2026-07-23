@@ -5,6 +5,8 @@ package solitaire;
 
 import java.util.Scanner;
 
+import solitaire.utils.BoardDisplay;
+
 public class App {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -14,9 +16,12 @@ public class App {
         boolean move = true;
         boolean win = false;
 
+        BoardDisplay display = BoardDisplay.withBoard(board);
+        display.setScanner(scanner);
+
         while (move && !win) {
-            move = board.playOneCycle(scanner);
-            board.displayState(scanner);
+            move = board.playOneCycle();
+            display.displayState();
 
             if (board.areFoundationsComplete()) {
                 win = true;

@@ -9,7 +9,8 @@ public class Board {
     Waste waste;
     Deque<Card> stock;
     Foundation[] foundations;
-
+    BoardDisplay display;
+    
     public Board() {
         ArrayList<Card> deck = new ArrayList<>();
 
@@ -23,6 +24,26 @@ public class Board {
         this.initializeStock(deck);
         this.initializeFoundations();
         this.waste = new Waste();
+    }
+
+    public void withDisplay(BoardDisplay display) {
+        this.display = display;
+    }
+
+    public Manoeuvre[] getTableu() {
+        return this.tableu;
+    }
+
+    public Waste getWaste() {
+        return this.waste;
+    }
+
+    public Deque<Card> getStock() {
+        return this.stock;
+    }
+
+    public Foundation[] getFoundations() {
+        return this.foundations;
     }
 
     public void withTableu(Manoeuvre[] tableu) {
@@ -68,71 +89,10 @@ public class Board {
         }
     }
 
-    public void displayState(Scanner scanner) {
-        Card topWaste = this.waste.getTop();
-        System.out.println("");
-
-        if (topWaste != null) {
-            System.out.print("S(" + stock.size() + ")");
-            System.out.print("--" + topWaste.toDisplayString());
-        } else {
-            System.out.print(" [ empty ] ");
+    private void displayState() {
+        if(this.display != null) {
+            this.display.displayState();
         }
-
-        for (int i = 0; i < 16; i++) {
-            System.out.print(" ");
-        }
-
-        for (Foundation foundation : foundations) {
-            if (foundation.empty()) {
-                System.out.print("----  ");
-                continue;
-            }
-
-            System.out.print(foundation.getTop().toDisplayString() + "  ");
-            if (foundation.getTop().value() != Value.TEN) {
-                System.out.print(" ");
-            }
-        }
-
-        System.out.println();
-        System.out.println();
-
-        int maxSizeStack = 0;
-
-        for (Manoeuvre stack : tableu) {
-            if (stack.size() > maxSizeStack) {
-                maxSizeStack = stack.size();
-            }
-        }
-
-        for (int i = 0; i < maxSizeStack; i++) {
-            for (Manoeuvre stack : tableu) {
-                if (i >= stack.size()) {
-                    if (i < 1) {
-                        System.out.print("----   ");
-                    }
-                    else {
-                        System.out.print("       ");
-                    }
-                    continue;
-                }
-
-                if (i < stack.revealedStart()) {
-                    System.out.print("-(-)   ");
-                    continue;
-                }
-
-                System.out.print(stack.getCard(i).toDisplayString());
-                System.out.print("  ");
-                if (stack.getCard(i).value() != Value.TEN) {
-                    System.out.print(" ");
-                }
-            }
-            System.out.println();
-        }
-        System.out.println("");
-        scanner.nextLine();
     }
 
     public boolean cardsToFoundation() {
@@ -354,42 +314,42 @@ public class Board {
         return move;
     }
 
-    private void tableuMoves(Scanner scanner) {
+    private void tableuMoves() {
         boolean tableuMoves = true;
 
         while(tableuMoves) {
             tableuMoves = false;
             tableuMoves = tableuMoves || this.aceToFoundations();
-            this.displayState(scanner);
+            this.displayState();
             tableuMoves = tableuMoves || this.cardsToFoundation();
-            this.displayState(scanner);
+            this.displayState();
             tableuMoves = tableuMoves || this.kingToEmpty();
-            this.displayState(scanner);
+            this.displayState();
             tableuMoves = tableuMoves || this.lateralMoves();
-            this.displayState(scanner);
+            this.displayState();
         }
 
     }
 
-    public boolean playOneCycle(Scanner scanner) {
-        this.tableuMoves(scanner);
+    public boolean playOneCycle() {
+        this.tableuMoves();
 
         boolean moveMade = false;
         boolean wasteMoves = false;
         while(!this.stock.isEmpty()) {
             this.waste.drawThreeFrom(this.stock);
             wasteMoves = this.wasteAceToFoundation();
-            this.displayState(scanner);
+            this.displayState();
             wasteMoves = wasteMoves || this.wasteCardToFoundation();
-            this.displayState(scanner);
+            this.displayState();
             wasteMoves = wasteMoves || this.wasteKingToTableu();
-            this.displayState(scanner);
+            this.displayState();
             wasteMoves = wasteMoves || this.wasteCardToTableu();
-            this.displayState(scanner);
+            this.displayState();
 
             if (wasteMoves) {
                 moveMade = true;
-                this.tableuMoves(scanner);
+                this.tableuMoves();
             }
         }
 
