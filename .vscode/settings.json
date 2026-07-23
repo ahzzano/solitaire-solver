@@ -4,5 +4,6 @@
     "cSpell.words": [
         "Manoeuvre",
         "tableu"
-    ]
+    ],
+    "java.debug.settings.onBuildFailureProceed": true
 }

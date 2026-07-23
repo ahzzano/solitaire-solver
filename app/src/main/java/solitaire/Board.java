@@ -69,7 +69,7 @@ public class Board {
     }
 
     public void displayState(Scanner scanner) {
-        Card topWaste = waste.getTop();
+        Card topWaste = this.waste.getTop();
         System.out.println("");
 
         if (topWaste != null) {
@@ -354,33 +354,42 @@ public class Board {
         return move;
     }
 
-    private void tableuMoves() {
+    private void tableuMoves(Scanner scanner) {
         boolean tableuMoves = true;
 
         while(tableuMoves) {
             tableuMoves = false;
             tableuMoves = tableuMoves || this.aceToFoundations();
+            this.displayState(scanner);
             tableuMoves = tableuMoves || this.cardsToFoundation();
+            this.displayState(scanner);
             tableuMoves = tableuMoves || this.kingToEmpty();
+            this.displayState(scanner);
             tableuMoves = tableuMoves || this.lateralMoves();
+            this.displayState(scanner);
         }
 
     }
 
-    public boolean playOneCycle() {
-        this.tableuMoves();
+    public boolean playOneCycle(Scanner scanner) {
+        this.tableuMoves(scanner);
 
         boolean moveMade = false;
+        boolean wasteMoves = false;
         while(!this.stock.isEmpty()) {
             this.waste.drawThreeFrom(this.stock);
-            boolean wasteMoves = this.wasteAceToFoundation();
+            wasteMoves = this.wasteAceToFoundation();
+            this.displayState(scanner);
             wasteMoves = wasteMoves || this.wasteCardToFoundation();
+            this.displayState(scanner);
             wasteMoves = wasteMoves || this.wasteKingToTableu();
+            this.displayState(scanner);
             wasteMoves = wasteMoves || this.wasteCardToTableu();
+            this.displayState(scanner);
 
             if (wasteMoves) {
                 moveMade = true;
-                this.tableuMoves();
+                this.tableuMoves(scanner);
             }
         }
 

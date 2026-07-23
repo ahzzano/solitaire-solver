@@ -15,9 +15,8 @@ public class App {
         boolean win = false;
 
         while (move && !win) {
-            move = board.playOneCycle();
+            move = board.playOneCycle(scanner);
             board.displayState(scanner);
-            scanner.nextLine();
 
             if (board.areFoundationsComplete()) {
                 win = true;
