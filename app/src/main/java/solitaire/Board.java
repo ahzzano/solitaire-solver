@@ -82,11 +82,13 @@ public class Board {
         System.out.println();
 
         int maxSizeStack = 0;
+
         for (Manoeuvre stack : tableu) {
             if (stack.size() > maxSizeStack) {
                 maxSizeStack = stack.size();
             }
         }
+
         for (int i = 0; i < maxSizeStack; i++) {
             for (Manoeuvre stack : tableu) {
                 if (i >= stack.size()) {
@@ -116,5 +118,5 @@ public class Board {
         scanner.nextLine();
     }
 
-    
+
 }
