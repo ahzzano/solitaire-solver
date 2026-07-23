@@ -25,6 +25,22 @@ public class Board {
         this.waste = new Waste();
     }
 
+    public void withTableu(Manoeuvre[] tableu) {
+        this.tableu = tableu;
+    }
+
+    public void withStock(Deque<Card> stock) {
+        this.stock = stock;
+    }
+
+    public void withWaste(Waste waste) {
+        this.waste = waste;
+    }
+
+    public void withFoundations(Foundation[] foundations) {
+        this.foundations = foundations;
+    }
+
     private void initializeTableu(ArrayList<Card> deck) {
         this.tableu = new Manoeuvre[7];
         for (int i = 0; i < 7; i++) {

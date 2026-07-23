@@ -21,6 +21,7 @@ import solitaire.utils.Waste;
 
 public class MovesTest {
     @Test void wasteCardToTableu() {
+        Board board = new Board();
         Manoeuvre[] tableu = new Manoeuvre[4];
 
         tableu[0] = new Manoeuvre(new LinkedList<Card>(List.of(new Card(Suit.DIAMONDS, Value.KING))), 0);
@@ -49,20 +50,25 @@ public class MovesTest {
         stock.add(new Card(Suit.CLUBS, Value.QUEEN));
         Waste waste = new Waste();
 
-        App app = new App();
-        app.wasteCardToTableu(waste, stock, tableu);
-        app.wasteCardToTableu(waste, stock, tableu);
-        app.wasteCardToTableu(waste, stock, tableu);
+        board.withTableu(tableu);
+        board.withStock(stock);
+        board.withWaste(waste);
 
-        assertEquals(tableu[0].getRevealedBottom().value(), Value.QUEEN);
-        assertEquals(tableu[1].getRevealedBottom().value(), Value.NINE);
-        assertEquals(tableu[2].getRevealedBottom().value(), Value.FOUR);
+        board.wasteCardToTableu();
+        board.wasteCardToTableu();
+        board.wasteCardToTableu();
 
-        assertEquals(tableu[3].getRevealedBottom().value(), Value.FOUR);
-        assertEquals(tableu[3].getRevealedBottom().suit(), Suit.SPADES);
+        assertEquals(board.tableu[0].getRevealedBottom().value(), Value.QUEEN);
+        assertEquals(board.tableu[1].getRevealedBottom().value(), Value.NINE);
+        assertEquals(board.tableu[2].getRevealedBottom().value(), Value.FOUR);
+
+        assertEquals(board.tableu[3].getRevealedBottom().value(), Value.FOUR);
+        assertEquals(board.tableu[3].getRevealedBottom().suit(), Suit.SPADES);
     }
 
+
     @Test void wasteCardToFoundation() {
+        Board board = new Board();
         Foundation[] foundations = new Foundation[4];
         for (int i = 0; i < 4; i++) {
             foundations[i] = new Foundation();
@@ -76,15 +82,17 @@ public class MovesTest {
         stock.add(new Card(Suit.SPADES, Value.ACE));
         stock.add(new Card(Suit.CLUBS, Value.TWO));
 
-        App app = new App();
+        board.withFoundations(foundations);
+        board.withWaste(waste);
+        board.withStock(stock);
 
-        app.wasteCardToFoundation(waste, stock, foundations);
-        assertEquals(foundations[0].getTop().value(), Value.TWO);
-        assertEquals(waste.size(), 1);
-
+        board.wasteCardToFoundation();
+        assertEquals(board.foundations[0].getTop().value(), Value.TWO);
+        assertEquals(board.waste.size(), 1);
     }
 
     @Test void wasteAceToFoundation() {
+        Board board = new Board();
         Foundation[] foundations = new Foundation[4];
         for (int i = 0; i < 4; i++) {
             foundations[i] = new Foundation();
@@ -96,20 +104,23 @@ public class MovesTest {
         stock.add(new Card(Suit.CLUBS, Value.ACE));
         stock.add(new Card(Suit.HEARTS, Value.KING));
 
-        App app = new App();
+        board.withFoundations(foundations);
+        board.withWaste(waste);
+        board.withStock(stock);
 
-        app.wasteAceToFoundation(waste, stock, foundations);
+        board.wasteAceToFoundation();
 
-        assertTrue(foundations[0].empty());
+        assertTrue(board.foundations[0].empty());
 
-        waste.popTop();
+        board.waste.popTop();
 
-        app.wasteAceToFoundation(waste, stock, foundations);
+        board.wasteAceToFoundation();
 
-        assertFalse(foundations[0].empty());
+        assertFalse(board.foundations[0].empty());
     }
 
     @Test void wasteKingToTableu() {
+        Board board = new Board();
         Manoeuvre[] tableu = new Manoeuvre[4];
         tableu[0] = new Manoeuvre(new LinkedList<Card>(), 0);
 
@@ -130,25 +141,28 @@ public class MovesTest {
         stock.add(new Card(Suit.CLUBS, Value.KING));
         stock.add(new Card(Suit.HEARTS, Value.KING));
 
-        App app = new App();
+        board.withTableu(tableu);
+        board.withWaste(waste);
+        board.withStock(stock);
 
-        app.wasteKingToTableu(waste, stock, tableu);
+        board.wasteKingToTableu();
 
-        assertFalse(tableu[0].empty());
-        assertEquals(tableu[0].getRevealedBottom().value(), Value.KING);
-        assertEquals(tableu[0].getRevealedBottom().suit(), Suit.HEARTS);
+        assertFalse(board.tableu[0].empty());
+        assertEquals(board.tableu[0].getRevealedBottom().value(), Value.KING);
+        assertEquals(board.tableu[0].getRevealedBottom().suit(), Suit.HEARTS);
 
-        app.wasteKingToTableu(waste, stock, tableu);
+        board.wasteKingToTableu();
 
-        assertFalse(tableu[2].empty());
-        assertEquals(tableu[2].getRevealedBottom().value(), Value.KING);
-        assertEquals(tableu[2].getRevealedBottom().suit(), Suit.CLUBS);
+        assertFalse(board.tableu[2].empty());
+        assertEquals(board.tableu[2].getRevealedBottom().value(), Value.KING);
+        assertEquals(board.tableu[2].getRevealedBottom().suit(), Suit.CLUBS);
 
-        assertEquals(tableu[1].size(), 2);
-        assertEquals(tableu[3].size(), 1);
+        assertEquals(board.tableu[1].size(), 2);
+        assertEquals(board.tableu[3].size(), 1);
     }
 
     @Test void lateralMoves() {
+        Board board = new Board();
         Manoeuvre[] tableu = new Manoeuvre[4];
 
         tableu[0] = new Manoeuvre(new LinkedList<Card>(List.of(
@@ -168,13 +182,14 @@ public class MovesTest {
             new Card(Suit.SPADES, Value.KING)
         )), 0);
 
-        App app = new App();
-        app.lateralMoves(tableu);
+        board.withTableu(tableu);
+        board.lateralMoves();
 
-        assertTrue(tableu[0].empty());
+        assertTrue(board.tableu[0].empty());
     }
 
     @Test void aceToFoundations() {
+        Board board = new Board();
         LinkedList<Card> stack1 = new LinkedList<Card>(List.of(
             new Card(Suit.DIAMONDS, Value.EIGHT),
             new Card(Suit.CLUBS, Value.NINE),
@@ -197,17 +212,19 @@ public class MovesTest {
         tableu[1] = new Manoeuvre(new LinkedList<>(), 0);
         tableu[2] = new Manoeuvre(stack2, 0);
         
-        App app = new App();
-        app.aceToFoundations(tableu, foundations);
+        board.withTableu(tableu);
+        board.withFoundations(foundations);
+        board.aceToFoundations();
 
-        assertEquals(tableu[0].getRevealedBottom().value(), Value.JACK);
-        assertEquals(foundations[0].getTop().value(), Value.ACE);
+        assertEquals(board.tableu[0].getRevealedBottom().value(), Value.JACK);
+        assertEquals(board.foundations[0].getTop().value(), Value.ACE);
 
-        assertTrue(tableu[2].empty());
-        assertEquals(foundations[1].getTop().suit(), Suit.HEARTS);
+        assertTrue(board.tableu[2].empty());
+        assertEquals(board.foundations[1].getTop().suit(), Suit.HEARTS);
     }
 
     @Test void cardsToFoundation() {
+        Board board = new Board();
         Manoeuvre[] tableu = new Manoeuvre[2];
         Foundation[] foundations = new Foundation[4];
 
@@ -232,17 +249,19 @@ public class MovesTest {
             new Card(Suit.HEARTS, Value.THREE)
         )), 1);
 
-        App app = new App();
-        app.cardsToFoundation(tableu, foundations);
+        board.withTableu(tableu);
+        board.withFoundations(foundations);
+        board.cardsToFoundation();
 
-        assertTrue(tableu[0].empty());
-        assertEquals(tableu[1].getRevealedBottom().suit(), Suit.SPADES);
-        assertEquals(tableu[1].getRevealedBottom().value(), Value.FOUR);
+        assertTrue(board.tableu[0].empty());
+        assertEquals(board.tableu[1].getRevealedBottom().suit(), Suit.SPADES);
+        assertEquals(board.tableu[1].getRevealedBottom().value(), Value.FOUR);
 
-        assertEquals(foundations[1].getTop().value(), Value.THREE);
+        assertEquals(board.foundations[1].getTop().value(), Value.THREE);
     }
     
     @Test void kingToEmpty() {
+        Board board = new Board();
         Manoeuvre[] tableu = new Manoeuvre[4];
 
         tableu[0] = new Manoeuvre(new LinkedList<Card>(List.of(
@@ -256,20 +275,21 @@ public class MovesTest {
         )), 1);
         tableu[3] = new Manoeuvre(new LinkedList<Card>(List.of()), 0);
 
-        App app = new App();
-        boolean worked = app.kingToEmpty(tableu);
+        board.withTableu(tableu);
+        boolean worked = board.kingToEmpty();
 
         assertTrue(worked);
 
-        assertEquals(tableu[0].getRevealedTop().suit(), Suit.HEARTS);
-        assertEquals(tableu[1].getRevealedTop().suit(), Suit.DIAMONDS);
-        assertEquals(tableu[2].getRevealedBottom().value(), Value.ACE);
+        assertEquals(board.tableu[0].getRevealedTop().suit(), Suit.HEARTS);
+        assertEquals(board.tableu[1].getRevealedTop().suit(), Suit.DIAMONDS);
+        assertEquals(board.tableu[2].getRevealedBottom().value(), Value.ACE);
 
-        assertTrue(tableu[3].empty());
+        assertTrue(board.tableu[3].empty());
     }
 
     @Test void kingToNonEmpty() {
         // Do nothing
+        Board board = new Board();
         Manoeuvre[] tableu = new Manoeuvre[2];
 
         tableu[0] = new Manoeuvre(new LinkedList<Card>(List.of(
@@ -281,13 +301,14 @@ public class MovesTest {
             new Card(Suit.SPADES, Value.QUEEN)
         )), 1);
 
-        App app = new App();
-        boolean worked = app.kingToEmpty(tableu);
+        board.withTableu(tableu);
+        boolean worked = board.kingToEmpty();
 
         assertFalse(worked);
     }
 
     @Test void exampleFirstMoveWithoutWaste() {
+        Board board = new Board();
         Manoeuvre[] tableu = new Manoeuvre[7];
         Foundation[] foundations = new Foundation[4];
 
@@ -344,55 +365,43 @@ public class MovesTest {
             new Card(Suit.DIAMONDS, Value.SEVEN)
         )), 6);
 
-        App app = new App();
+        board.withTableu(tableu);
+        board.withFoundations(foundations);
 
-        while(app.buildTableu(tableu, foundations)) {}
+        while(board.cardsToFoundation() || board.aceToFoundations() || board.kingToEmpty() || board.lateralMoves()) {}
 
         // Expected Final State 
-        assertEquals(foundations[0].empty(), false);
+        assertEquals(board.foundations[0].empty(), false);
         
-        assertFalse(tableu[0].empty());
-        assertFalse(tableu[2].empty());
-        assertFalse(tableu[3].empty());
-        assertFalse(tableu[4].empty());
-        assertFalse(tableu[5].empty());
-        assertFalse(tableu[6].empty());
+        assertFalse(board.tableu[0].empty());
+        assertFalse(board.tableu[2].empty());
+        assertFalse(board.tableu[3].empty());
+        assertFalse(board.tableu[4].empty());
+        assertFalse(board.tableu[5].empty());
+        assertFalse(board.tableu[6].empty());
 
-        assertTrue(tableu[1].empty());
+        assertTrue(board.tableu[1].empty());
     }
 
     @Test void exampleGame() {
-        ArrayList<Card> deck = new ArrayList<>();
+        Board board = new Board();
 
-        for (Suit suit : Suit.values()) {
-            for (Value value : Value.values()) {
-                deck.add(new Card(suit, value));
-            }
-        }
-
-        App app = new App();
-
-        Manoeuvre[] tableu = app.initializeTableu(deck);
-
-        Deque<Card> stock = app.initializeStock(deck);
-        Waste waste = new Waste();
-
-        assertTrue(deck.isEmpty());
+        assertTrue(board.stock.isEmpty() == false);
         
-        // Initialize the foundations
         Foundation[] foundations = new Foundation[4];
         for (int i = 0; i < 4; i++) {
             foundations[i] = new Foundation();
         }
+        board.withFoundations(foundations);
 
-        boolean moveMadeThisCycle = app.playOneCycle(tableu, foundations, waste, stock);
+        boolean moveMadeThisCycle = board.playOneCycle();
 
-        assertFalse(foundations[0].empty());
-        assertFalse(foundations[1].empty());
-        assertFalse(foundations[2].empty());
-        assertFalse(foundations[3].empty());
+        assertFalse(board.foundations[0].empty());
+        assertFalse(board.foundations[1].empty());
+        assertFalse(board.foundations[2].empty());
+        assertFalse(board.foundations[3].empty());
 
-        for (Manoeuvre stack : tableu) {
+        for (Manoeuvre stack : board.tableu) {
             for (int i = stack.revealedStart() + 1; i < stack.size(); i++) {
                 Card a = stack.getCard(i);
                 Card b = stack.getCard(i - 1);
@@ -402,7 +411,6 @@ public class MovesTest {
         }
 
         assertTrue(moveMadeThisCycle);
-
-
     }
+
 }
