@@ -294,11 +294,6 @@ S -- 0(D)		                5(H)  3(D)  4(C)  --
 	  -(-)
 	  K(D)
 */
-    public void displayTableu(CardStack[] tableu) {
-        for (CardStack cardStack : tableu) {
-            cardStack.display();
-        }
-    }
 
     public CardStack[] initializeTableu(ArrayList<Card> deck) {
         CardStack[] tableu = new CardStack[7];
@@ -363,8 +358,12 @@ S -- 0(D)		                5(H)  3(D)  4(C)  --
         for (int i = 0; i < maxSizeStack; i++) {
             for (CardStack stack : tableu) {
                 if (i >= stack.size()) {
-                    System.out.print("       ");
-                    // System.out.print("----   ");
+                    if (i < 1) {
+                        System.out.print("----   ");
+                    }
+                    else {
+                        System.out.print("       ");
+                    }
                     continue;
                 }
 
