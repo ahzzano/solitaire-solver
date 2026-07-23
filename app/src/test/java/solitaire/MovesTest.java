@@ -13,7 +13,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import solitaire.utils.Card;
-import solitaire.utils.CardStack;
+import solitaire.utils.Manoeuvre;
 import solitaire.utils.Foundation;
 import solitaire.utils.Suit;
 import solitaire.utils.Value;
@@ -21,22 +21,22 @@ import solitaire.utils.Waste;
 
 public class MovesTest {
     @Test void wasteCardToTableu() {
-        CardStack[] tableu = new CardStack[4];
+        Manoeuvre[] tableu = new Manoeuvre[4];
 
-        tableu[0] = new CardStack(new LinkedList<Card>(List.of(new Card(Suit.DIAMONDS, Value.KING))), 0);
-        tableu[1] = new CardStack(new LinkedList<Card>(
+        tableu[0] = new Manoeuvre(new LinkedList<Card>(List.of(new Card(Suit.DIAMONDS, Value.KING))), 0);
+        tableu[1] = new Manoeuvre(new LinkedList<Card>(
             List.of(
                 new Card(Suit.DIAMONDS, Value.KING),
                 new Card(Suit.HEARTS, Value.TEN))
             ),
             1);
-        tableu[2] = new CardStack(new LinkedList<Card>(List.of(
+        tableu[2] = new Manoeuvre(new LinkedList<Card>(List.of(
             new Card(Suit.SPADES, Value.TWO),
             new Card(Suit.SPADES, Value.THREE),
             new Card(Suit.HEARTS, Value.FIVE)
         )),2);
 
-        tableu[3] = new CardStack(new LinkedList<Card>(List.of(
+        tableu[3] = new Manoeuvre(new LinkedList<Card>(List.of(
             new Card(Suit.SPADES, Value.TWO),
             new Card(Suit.SPADES, Value.THREE),
             new Card(Suit.HEARTS, Value.FIVE),
@@ -110,17 +110,17 @@ public class MovesTest {
     }
 
     @Test void wasteKingToTableu() {
-        CardStack[] tableu = new CardStack[4];
-        tableu[0] = new CardStack(new LinkedList<Card>(), 0);
+        Manoeuvre[] tableu = new Manoeuvre[4];
+        tableu[0] = new Manoeuvre(new LinkedList<Card>(), 0);
 
-        tableu[1] = new CardStack(new LinkedList<Card>(List.of(
+        tableu[1] = new Manoeuvre(new LinkedList<Card>(List.of(
             new Card(Suit.DIAMONDS, Value.THREE),
             new Card(Suit.SPADES, Value.JACK)
         )), 1);
 
-        tableu[2] = new CardStack(new LinkedList<Card>(), 0);
+        tableu[2] = new Manoeuvre(new LinkedList<Card>(), 0);
 
-        tableu[3] = new CardStack(new LinkedList<Card>(List.of(
+        tableu[3] = new Manoeuvre(new LinkedList<Card>(List.of(
             new Card(Suit.SPADES, Value.JACK)
         )), 0);
 
@@ -149,22 +149,22 @@ public class MovesTest {
     }
 
     @Test void lateralMoves() {
-        CardStack[] tableu = new CardStack[4];
+        Manoeuvre[] tableu = new Manoeuvre[4];
 
-        tableu[0] = new CardStack(new LinkedList<Card>(List.of(
+        tableu[0] = new Manoeuvre(new LinkedList<Card>(List.of(
             new Card(Suit.DIAMONDS, Value.QUEEN)
         )), 0);
 
-        tableu[1] = new CardStack(new LinkedList<Card>(List.of(
+        tableu[1] = new Manoeuvre(new LinkedList<Card>(List.of(
             new Card(Suit.DIAMONDS, Value.THREE),
             new Card(Suit.SPADES, Value.JACK)
         )), 1);
 
-        tableu[2] = new CardStack(new LinkedList<Card>(List.of(
+        tableu[2] = new Manoeuvre(new LinkedList<Card>(List.of(
             new Card(Suit.SPADES, Value.KING)
         )), 0);
 
-        tableu[3] = new CardStack(new LinkedList<Card>(List.of(
+        tableu[3] = new Manoeuvre(new LinkedList<Card>(List.of(
             new Card(Suit.SPADES, Value.KING)
         )), 0);
 
@@ -186,16 +186,16 @@ public class MovesTest {
             new Card(Suit.HEARTS, Value.ACE)
         ));
 
-        CardStack[] tableu = new CardStack[3];
+        Manoeuvre[] tableu = new Manoeuvre[3];
         Foundation[] foundations = new Foundation[4];
 
         for (int i = 0; i < 4; i++) {
             foundations[i] = new Foundation();
         }
 
-        tableu[0] = new CardStack(stack1, 3);
-        tableu[1] = new CardStack(new LinkedList<>(), 0);
-        tableu[2] = new CardStack(stack2, 0);
+        tableu[0] = new Manoeuvre(stack1, 3);
+        tableu[1] = new Manoeuvre(new LinkedList<>(), 0);
+        tableu[2] = new Manoeuvre(stack2, 0);
         
         App app = new App();
         app.aceToFoundations(tableu, foundations);
@@ -208,7 +208,7 @@ public class MovesTest {
     }
 
     @Test void cardsToFoundation() {
-        CardStack[] tableu = new CardStack[2];
+        Manoeuvre[] tableu = new Manoeuvre[2];
         Foundation[] foundations = new Foundation[4];
 
         for (int i = 0; i < 4; i++) {
@@ -220,14 +220,14 @@ public class MovesTest {
         foundations[2].push(new Card(Suit.CLUBS, Value.ACE));
         foundations[3].push(new Card(Suit.SPADES, Value.ACE));
 
-        tableu[0] = new CardStack(new LinkedList<Card>(List.of(
+        tableu[0] = new Manoeuvre(new LinkedList<Card>(List.of(
             new Card(Suit.DIAMONDS, Value.TWO),
             new Card(Suit.HEARTS, Value.TWO),
             new Card(Suit.SPADES, Value.TWO),
             new Card(Suit.CLUBS, Value.TWO)
         )), 3);
 
-        tableu[1] = new CardStack(new LinkedList<Card>(List.of(
+        tableu[1] = new Manoeuvre(new LinkedList<Card>(List.of(
             new Card(Suit.SPADES, Value.FOUR),
             new Card(Suit.HEARTS, Value.THREE)
         )), 1);
@@ -243,18 +243,18 @@ public class MovesTest {
     }
     
     @Test void kingToEmpty() {
-        CardStack[] tableu = new CardStack[4];
+        Manoeuvre[] tableu = new Manoeuvre[4];
 
-        tableu[0] = new CardStack(new LinkedList<Card>(List.of(
+        tableu[0] = new Manoeuvre(new LinkedList<Card>(List.of(
             new Card(Suit.HEARTS, Value.KING)
         )), 0);
-        tableu[1] = new CardStack(new LinkedList<Card>(List.of()), 0);
-        tableu[2] = new CardStack(new LinkedList<Card>(List.of(
+        tableu[1] = new Manoeuvre(new LinkedList<Card>(List.of()), 0);
+        tableu[2] = new Manoeuvre(new LinkedList<Card>(List.of(
             new Card(Suit.DIAMONDS, Value.ACE),
             new Card(Suit.DIAMONDS, Value.KING),
             new Card(Suit.SPADES, Value.QUEEN)
         )), 1);
-        tableu[3] = new CardStack(new LinkedList<Card>(List.of()), 0);
+        tableu[3] = new Manoeuvre(new LinkedList<Card>(List.of()), 0);
 
         App app = new App();
         boolean worked = app.kingToEmpty(tableu);
@@ -270,12 +270,12 @@ public class MovesTest {
 
     @Test void kingToNonEmpty() {
         // Do nothing
-        CardStack[] tableu = new CardStack[2];
+        Manoeuvre[] tableu = new Manoeuvre[2];
 
-        tableu[0] = new CardStack(new LinkedList<Card>(List.of(
+        tableu[0] = new Manoeuvre(new LinkedList<Card>(List.of(
             new Card(Suit.HEARTS, Value.KING)
         )), 0);
-        tableu[1] = new CardStack(new LinkedList<Card>(List.of(
+        tableu[1] = new Manoeuvre(new LinkedList<Card>(List.of(
             new Card(Suit.DIAMONDS, Value.ACE),
             new Card(Suit.DIAMONDS, Value.KING),
             new Card(Suit.SPADES, Value.QUEEN)
@@ -288,36 +288,36 @@ public class MovesTest {
     }
 
     @Test void exampleFirstMoveWithoutWaste() {
-        CardStack[] tableu = new CardStack[7];
+        Manoeuvre[] tableu = new Manoeuvre[7];
         Foundation[] foundations = new Foundation[4];
 
         for (int i = 0; i < 4; i++) {
             foundations[i] = new Foundation();
         }
 
-        tableu[0] = new CardStack(new LinkedList<Card>(List.of(
+        tableu[0] = new Manoeuvre(new LinkedList<Card>(List.of(
             new Card(Suit.SPADES, Value.FIVE)
         )), 0);
 
-        tableu[1] = new CardStack(new LinkedList<Card>(List.of( 
+        tableu[1] = new Manoeuvre(new LinkedList<Card>(List.of( 
             new Card(Suit.DIAMONDS, Value.TEN),
             new Card(Suit.SPADES, Value.SIX)
         )), 1);
 
-        tableu[2] = new CardStack(new LinkedList<Card>(List.of( 
+        tableu[2] = new Manoeuvre(new LinkedList<Card>(List.of( 
             new Card(Suit.HEARTS, Value.SIX),
             new Card(Suit.HEARTS, Value.QUEEN),
             new Card(Suit.DIAMONDS, Value.QUEEN)
         )), 2);
 
-        tableu[3] = new CardStack(new LinkedList<Card>(List.of( 
+        tableu[3] = new Manoeuvre(new LinkedList<Card>(List.of( 
             new Card(Suit.DIAMONDS, Value.FOUR),
             new Card(Suit.HEARTS, Value.FIVE),
             new Card(Suit.DIAMONDS, Value.EIGHT),
             new Card(Suit.SPADES, Value.ACE)
         )), 3);
 
-        tableu[4] = new CardStack(new LinkedList<Card>(List.of( 
+        tableu[4] = new Manoeuvre(new LinkedList<Card>(List.of( 
             new Card(Suit.DIAMONDS, Value.FIVE),
             new Card(Suit.SPADES, Value.FOUR),
             new Card(Suit.HEARTS, Value.ACE),
@@ -325,7 +325,7 @@ public class MovesTest {
             new Card(Suit.CLUBS, Value.TWO)
         )), 4);
 
-        tableu[5] = new CardStack(new LinkedList<Card>(List.of( 
+        tableu[5] = new Manoeuvre(new LinkedList<Card>(List.of( 
             new Card(Suit.DIAMONDS, Value.THREE),
             new Card(Suit.DIAMONDS, Value.KING),
             new Card(Suit.CLUBS, Value.THREE),
@@ -334,7 +334,7 @@ public class MovesTest {
             new Card(Suit.SPADES, Value.JACK)
         )), 5);
 
-        tableu[6] = new CardStack(new LinkedList<Card>(List.of( 
+        tableu[6] = new Manoeuvre(new LinkedList<Card>(List.of( 
             new Card(Suit.DIAMONDS, Value.THREE),
             new Card(Suit.DIAMONDS, Value.KING),
             new Card(Suit.CLUBS, Value.THREE),
@@ -372,7 +372,7 @@ public class MovesTest {
 
         App app = new App();
 
-        CardStack[] tableu = app.initializeTableu(deck);
+        Manoeuvre[] tableu = app.initializeTableu(deck);
 
         Deque<Card> stock = app.initializeStock(deck);
         Waste waste = new Waste();
@@ -392,7 +392,7 @@ public class MovesTest {
         assertFalse(foundations[2].empty());
         assertFalse(foundations[3].empty());
 
-        for (CardStack stack : tableu) {
+        for (Manoeuvre stack : tableu) {
             for (int i = stack.revealedStart() + 1; i < stack.size(); i++) {
                 Card a = stack.getCard(i);
                 Card b = stack.getCard(i - 1);

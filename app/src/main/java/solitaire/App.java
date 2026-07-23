@@ -11,7 +11,7 @@ import java.util.LinkedList;
 import java.util.Scanner;
 
 import solitaire.utils.Card;
-import solitaire.utils.CardStack;
+import solitaire.utils.Manoeuvre;
 import solitaire.utils.Foundation;
 import solitaire.utils.Suit;
 import solitaire.utils.Value;
@@ -30,14 +30,14 @@ public class App {
         }
     }
 
-    public boolean wasteCardToTableu(Waste waste, Deque<Card> stock, CardStack[] tableu) {
+    public boolean wasteCardToTableu(Waste waste, Deque<Card> stock, Manoeuvre[] tableu) {
         boolean move = false;
         if (waste.size() == 0) {
             waste.drawThreeFrom(stock);
         }
 
         Card top = waste.getTop();
-        for (CardStack cardStack : tableu) {
+        for (Manoeuvre cardStack : tableu) {
             if (cardStack.empty()) {
                 continue;
             }
@@ -97,7 +97,7 @@ public class App {
         return move;
     }
 
-    public boolean wasteKingToTableu(Waste waste, Deque<Card> stock, CardStack[] tableu) {
+    public boolean wasteKingToTableu(Waste waste, Deque<Card> stock, Manoeuvre[] tableu) {
         boolean move = false;
         if (waste.size() == 0) {
             waste.drawThreeFrom(stock);
@@ -108,7 +108,7 @@ public class App {
             return false;
         }
 
-        for (CardStack cardStack : tableu) {
+        for (Manoeuvre cardStack : tableu) {
             if (cardStack.empty()) {
                 cardStack.pushCard(waste.popTop());
                 move = true;
@@ -119,10 +119,10 @@ public class App {
         return move;
     }
 
-    public boolean cardsToFoundation(CardStack[] tableu, Foundation[] foundations) {
+    public boolean cardsToFoundation(Manoeuvre[] tableu, Foundation[] foundations) {
         boolean move = false;
 
-        for (CardStack stack : tableu) {
+        for (Manoeuvre stack : tableu) {
             if (stack.empty()) {
                 continue;
             }
@@ -147,9 +147,9 @@ public class App {
         return move;
     }
 
-    public boolean aceToFoundations(CardStack[] tableu, Foundation[] foundations) {
+    public boolean aceToFoundations(Manoeuvre[] tableu, Foundation[] foundations) {
         boolean move = false;
-        for (CardStack stack : tableu) {
+        for (Manoeuvre stack : tableu) {
             if (stack.empty()) {
                 continue;
             }
@@ -173,7 +173,7 @@ public class App {
         return move;
     }
 
-    public boolean kingToEmpty(CardStack[] tableu) {
+    public boolean kingToEmpty(Manoeuvre[] tableu) {
         ArrayList<Integer> emptyStackIndexes = new ArrayList<>();
         boolean move = false;
 
@@ -190,7 +190,7 @@ public class App {
 
         int nextMarkedStack = 0;
 
-        for (CardStack stack : tableu) {
+        for (Manoeuvre stack : tableu) {
             if (stack.empty()) {
                 continue;
             }
@@ -200,7 +200,7 @@ public class App {
             }
 
             if (stack.revealedStart() > 0 && stack.getRevealedTop().value() == Value.KING) {
-                CardStack kingStack = stack.splitStack(stack.revealedStart()).get();
+                Manoeuvre kingStack = stack.splitStack(stack.revealedStart()).get();
                 tableu[emptyStackIndexes.get(nextMarkedStack)].mergeStacks(kingStack);
                 nextMarkedStack += 1;
                 move = true;
@@ -210,19 +210,19 @@ public class App {
         return move;
     }
 
-    public boolean lateralMoves(CardStack[] tableu) {
+    public boolean lateralMoves(Manoeuvre[] tableu) {
         boolean move = false;
 
         // CardStack A - to move
         // CardStack B - to receive
-        for (CardStack stackToMove : tableu) {
+        for (Manoeuvre stackToMove : tableu) {
             if (stackToMove.empty()) {
                 continue;
             }
             if (stackToMove.revealedStart() == 0 && stackToMove.getRevealedTop().value() == Value.KING) {
                 continue;
             }
-            for (CardStack stackToReceive : tableu) {
+            for (Manoeuvre stackToReceive : tableu) {
                 if (stackToMove == stackToReceive) {
                     continue;
                 }
@@ -238,7 +238,7 @@ public class App {
                         continue;
                     }
 
-                    CardStack cs = temp.get();
+                    Manoeuvre cs = temp.get();
 
                     stackToReceive.mergeStacks(cs);
                     move = true;
@@ -250,7 +250,7 @@ public class App {
         return move;
     }
 
-    public boolean buildTableu(CardStack[] tableu, Foundation[] foundations) {
+    public boolean buildTableu(Manoeuvre[] tableu, Foundation[] foundations) {
         boolean move = false;
         move = move || aceToFoundations(tableu, foundations);
         move = move || cardsToFoundation(tableu, foundations);
@@ -259,7 +259,7 @@ public class App {
         return move;
     }
 
-    public boolean playOneCycle(CardStack[] tableu, Foundation[] foundations, Waste waste, Deque<Card> stock) {
+    public boolean playOneCycle(Manoeuvre[] tableu, Foundation[] foundations, Waste waste, Deque<Card> stock) {
         while (buildTableu(tableu, foundations)) {
             this.displayState(tableu, stock, foundations, waste);
         }
@@ -295,10 +295,10 @@ S -- 0(D)		                5(H)  3(D)  4(C)  --
 	  K(D)
 */
 
-    public CardStack[] initializeTableu(ArrayList<Card> deck) {
-        CardStack[] tableu = new CardStack[7];
+    public Manoeuvre[] initializeTableu(ArrayList<Card> deck) {
+        Manoeuvre[] tableu = new Manoeuvre[7];
         for (int i = 0; i < 7; i++) {
-            tableu[i] = new CardStack(new LinkedList<Card>(), i);
+            tableu[i] = new Manoeuvre(new LinkedList<Card>(), i);
             for (int j = 0; j < i+1; j++) {
                 Card c = deck.remove(0);
                 tableu[i].appendCard(c);
@@ -319,7 +319,7 @@ S -- 0(D)		                5(H)  3(D)  4(C)  --
         return stock;
     }
 
-    public void displayState(CardStack[] tableu, Deque<Card> stock, Foundation[] foundations, Waste waste) {
+    public void displayState(Manoeuvre[] tableu, Deque<Card> stock, Foundation[] foundations, Waste waste) {
         Card topWaste = waste.getTop();
         System.out.println("");
 
@@ -350,13 +350,13 @@ S -- 0(D)		                5(H)  3(D)  4(C)  --
         System.out.println();
 
         int maxSizeStack = 0;
-        for (CardStack stack : tableu) {
+        for (Manoeuvre stack : tableu) {
             if (stack.size() > maxSizeStack) {
                 maxSizeStack = stack.size();
             }
         }
         for (int i = 0; i < maxSizeStack; i++) {
-            for (CardStack stack : tableu) {
+            for (Manoeuvre stack : tableu) {
                 if (i >= stack.size()) {
                     if (i < 1) {
                         System.out.print("----   ");
@@ -406,7 +406,7 @@ S -- 0(D)		                5(H)  3(D)  4(C)  --
         App app = new App();
         app.setTerminalInput(scanner);
         // Initialize the tableu
-        CardStack[] tableu = app.initializeTableu(deck);
+        Manoeuvre[] tableu = app.initializeTableu(deck);
 
         Deque<Card> stock = app.initializeStock(deck);
         Waste waste = new Waste();

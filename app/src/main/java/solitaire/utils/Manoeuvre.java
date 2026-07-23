@@ -3,7 +3,7 @@ package solitaire.utils;
 import java.util.LinkedList;
 import java.util.Optional;
 
-public class CardStack {
+public class Manoeuvre {
     LinkedList<Card> cards;
 
     // Topmost revealed card
@@ -11,7 +11,7 @@ public class CardStack {
 
     // REMOVE revealedEnd, no need for the thing as its always at the end of the list
 
-    public CardStack(LinkedList<Card> cards, int revealedStart) {
+    public Manoeuvre(LinkedList<Card> cards, int revealedStart) {
         this.cards = cards;
         this.revealedStart = revealedStart;
     }
@@ -26,14 +26,14 @@ public class CardStack {
         this.cards.addLast(c);
     }
 
-    public Optional<CardStack> splitStack(int index) {
+    public Optional<Manoeuvre> splitStack(int index) {
         if (index < this.revealedStart) {
             return Optional.empty();
         }
         LinkedList<Card> splitCards = new LinkedList<>(this.cards.subList(index, this.cards.size()));
         this.cards.subList(index, this.cards.size()).clear();
 
-        CardStack splitStack = new CardStack(splitCards, 0);
+        Manoeuvre splitStack = new Manoeuvre(splitCards, 0);
 
         if (index == this.revealedStart) {
             revealCard();
@@ -49,7 +49,7 @@ public class CardStack {
         return this.cards.pollLast();
     }
 
-    public boolean mergeStacks(CardStack other) {
+    public boolean mergeStacks(Manoeuvre other) {
         if (this.cards.isEmpty()) {
             this.cards.addAll(other.cards);
             return true;

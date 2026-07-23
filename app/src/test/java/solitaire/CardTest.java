@@ -11,7 +11,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import solitaire.utils.Card;
-import solitaire.utils.CardStack;
+import solitaire.utils.Manoeuvre;
 import solitaire.utils.Suit;
 import solitaire.utils.Value;
 
@@ -45,7 +45,7 @@ public class CardTest {
             new Card(Suit.DIAMONDS, Value.SEVEN)
         ));
 
-        CardStack cs = new CardStack(cards, 2);
+        Manoeuvre cs = new Manoeuvre(cards, 2);
 
         assertEquals(cs.getRevealedBottom().value(), Value.SEVEN);
 
@@ -59,7 +59,7 @@ public class CardTest {
             new Card(Suit.DIAMONDS, Value.SEVEN)
         ));
 
-        CardStack cs = new CardStack(cards, 2);
+        Manoeuvre cs = new Manoeuvre(cards, 2);
         Card c = cs.popCard();
 
         assertEquals(c.value(), Value.SEVEN);
@@ -74,7 +74,7 @@ public class CardTest {
             new Card(Suit.DIAMONDS, Value.SEVEN)
         ));
 
-        CardStack cs = new CardStack(cards, 3);
+        Manoeuvre cs = new Manoeuvre(cards, 3);
         cs.popCard();
 
         assertEquals(cs.getRevealedBottom().value(), Value.EIGHT);
@@ -89,7 +89,7 @@ public class CardTest {
             new Card(Suit.DIAMONDS, Value.SEVEN)
         ));
 
-        CardStack cs = new CardStack(cards, 2);
+        Manoeuvre cs = new Manoeuvre(cards, 2);
 
         // Avoid splitting non-revealed cards
         var newCSTemp = cs.splitStack(0);
@@ -98,7 +98,7 @@ public class CardTest {
         newCSTemp = cs.splitStack(2);
         assertTrue(newCSTemp.isPresent());
 
-        CardStack newCS = newCSTemp.get();
+        Manoeuvre newCS = newCSTemp.get();
         assertTrue(newCS.getCard(0).suit() == Suit.CLUBS);
         assertTrue(newCS.getCard(1).suit() == Suit.DIAMONDS);
     }
@@ -111,10 +111,10 @@ public class CardTest {
             new Card(Suit.DIAMONDS, Value.SEVEN)
         ));
 
-        CardStack cs = new CardStack(cards, 2);
+        Manoeuvre cs = new Manoeuvre(cards, 2);
 
         var newCSTemp = cs.splitStack(2);
-        CardStack newCS = newCSTemp.get();
+        Manoeuvre newCS = newCSTemp.get();
 
         cs.mergeStacks(newCS);
         assertSame(cs.getCard(3).suit(), Suit.DIAMONDS);
@@ -133,8 +133,8 @@ public class CardTest {
             new Card(Suit.SPADES, Value.NINE)
         ));
 
-        CardStack cs1 = new CardStack(cards1, 0);
-        CardStack cs2 = new CardStack(cards2, 0);
+        Manoeuvre cs1 = new Manoeuvre(cards1, 0);
+        Manoeuvre cs2 = new Manoeuvre(cards2, 0);
 
         boolean worked = cs1.mergeStacks(cs2);
         assertFalse(worked);
