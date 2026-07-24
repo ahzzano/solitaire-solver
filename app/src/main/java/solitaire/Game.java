@@ -4,14 +4,14 @@ import java.util.*;
 
 import solitaire.utils.*;
 
-public class Board {
+public class Game {
     Manoeuvre[] tableu;
     Waste waste;
     Deque<Card> stock;
     Foundation[] foundations;
     BoardDisplay display;
     
-    public Board() {
+    public Game() {
         ArrayList<Card> deck = new ArrayList<>();
 
         for (Suit suit : Suit.values()) {

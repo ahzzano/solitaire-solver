@@ -20,7 +20,7 @@ import solitaire.utils.Waste;
 
 public class MovesTest {
     @Test void wasteCardToTableu() {
-        Board board = new Board();
+        Game board = new Game();
         Manoeuvre[] tableu = new Manoeuvre[4];
 
         tableu[0] = new Manoeuvre(new LinkedList<Card>(List.of(new Card(Suit.DIAMONDS, Value.KING))), 0);
@@ -67,7 +67,7 @@ public class MovesTest {
 
 
     @Test void wasteCardToFoundation() {
-        Board board = new Board();
+        Game board = new Game();
         Foundation[] foundations = new Foundation[4];
         for (int i = 0; i < 4; i++) {
             foundations[i] = new Foundation();
@@ -91,7 +91,7 @@ public class MovesTest {
     }
 
     @Test void wasteAceToFoundation() {
-        Board board = new Board();
+        Game board = new Game();
         Foundation[] foundations = new Foundation[4];
         for (int i = 0; i < 4; i++) {
             foundations[i] = new Foundation();
@@ -119,7 +119,7 @@ public class MovesTest {
     }
 
     @Test void wasteKingToTableu() {
-        Board board = new Board();
+        Game board = new Game();
         Manoeuvre[] tableu = new Manoeuvre[4];
         tableu[0] = new Manoeuvre(new LinkedList<Card>(), 0);
 
@@ -161,7 +161,7 @@ public class MovesTest {
     }
 
     @Test void lateralMoves() {
-        Board board = new Board();
+        Game board = new Game();
         Manoeuvre[] tableu = new Manoeuvre[4];
 
         tableu[0] = new Manoeuvre(new LinkedList<Card>(List.of(
@@ -188,7 +188,7 @@ public class MovesTest {
     }
 
     @Test void aceToFoundations() {
-        Board board = new Board();
+        Game board = new Game();
         LinkedList<Card> stack1 = new LinkedList<Card>(List.of(
             new Card(Suit.DIAMONDS, Value.EIGHT),
             new Card(Suit.CLUBS, Value.NINE),
@@ -223,7 +223,7 @@ public class MovesTest {
     }
 
     @Test void cardsToFoundation() {
-        Board board = new Board();
+        Game board = new Game();
         Manoeuvre[] tableu = new Manoeuvre[2];
         Foundation[] foundations = new Foundation[4];
 
@@ -260,7 +260,7 @@ public class MovesTest {
     }
     
     @Test void kingToEmpty() {
-        Board board = new Board();
+        Game board = new Game();
         Manoeuvre[] tableu = new Manoeuvre[4];
 
         tableu[0] = new Manoeuvre(new LinkedList<Card>(List.of(
@@ -288,7 +288,7 @@ public class MovesTest {
 
     @Test void kingToNonEmpty() {
         // Do nothing
-        Board board = new Board();
+        Game board = new Game();
         Manoeuvre[] tableu = new Manoeuvre[2];
 
         tableu[0] = new Manoeuvre(new LinkedList<Card>(List.of(
@@ -307,7 +307,7 @@ public class MovesTest {
     }
 
     @Test void exampleFirstMoveWithoutWaste() {
-        Board board = new Board();
+        Game board = new Game();
         Manoeuvre[] tableu = new Manoeuvre[7];
         Foundation[] foundations = new Foundation[4];
 
@@ -383,7 +383,7 @@ public class MovesTest {
     }
 
     @Test void exampleGame() {
-        Board board = new Board();
+        Game board = new Game();
 
         assertTrue(board.stock.isEmpty() == false);
         

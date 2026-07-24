@@ -3,13 +3,13 @@ package solitaire.utils;
 import java.util.Deque;
 import java.util.Scanner;
 
-import solitaire.Board;
+import solitaire.Game;
 
 public class BoardDisplay {
-    Board board;
+    Game board;
     Scanner scanner;
     
-    public BoardDisplay(Board board) {
+    public BoardDisplay(Game board) {
         this.board = board;
     }
 
@@ -17,7 +17,7 @@ public class BoardDisplay {
 
     }
 
-    public static BoardDisplay withBoard(Board board) {
+    public static BoardDisplay withBoard(Game board) {
         BoardDisplay display = new BoardDisplay(board);
         board.withDisplay(display);
         return display;
