@@ -12,6 +12,9 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import solitaire.moves.AceToFoundations;
+import solitaire.moves.CardsToFoundations;
+import solitaire.moves.KingToEmpty;
+import solitaire.moves.Move;
 import solitaire.utils.Card;
 import solitaire.utils.Manoeuvre;
 import solitaire.utils.Foundation;
@@ -211,7 +214,7 @@ public class MovesTest {
         tableu[1] = new Manoeuvre(new LinkedList<>(), 0);
         tableu[2] = new Manoeuvre(stack2, 0);
         
-        AceToFoundations atf = new AceToFoundations(tableu, foundations);
+        Move atf = new AceToFoundations(tableu, foundations);
         atf.play();
 
         assertEquals(tableu[0].getRevealedBottom().value(), Value.JACK);
@@ -222,7 +225,6 @@ public class MovesTest {
     }
 
     @Test void cardsToFoundation() {
-        Game board = new Game();
         Manoeuvre[] tableu = new Manoeuvre[2];
         Foundation[] foundations = new Foundation[4];
 
@@ -247,19 +249,17 @@ public class MovesTest {
             new Card(Suit.HEARTS, Value.THREE)
         )), 1);
 
-        board.withTableu(tableu);
-        board.withFoundations(foundations);
-        board.cardsToFoundation();
+        Move move = new CardsToFoundations(tableu, foundations);
+        move.play();
 
-        assertTrue(board.tableu[0].empty());
-        assertEquals(board.tableu[1].getRevealedBottom().suit(), Suit.SPADES);
-        assertEquals(board.tableu[1].getRevealedBottom().value(), Value.FOUR);
+        assertTrue(tableu[0].empty());
+        assertEquals(tableu[1].getRevealedBottom().suit(), Suit.SPADES);
+        assertEquals(tableu[1].getRevealedBottom().value(), Value.FOUR);
 
-        assertEquals(board.foundations[1].getTop().value(), Value.THREE);
+        assertEquals(foundations[1].getTop().value(), Value.THREE);
     }
     
     @Test void kingToEmpty() {
-        Game board = new Game();
         Manoeuvre[] tableu = new Manoeuvre[4];
 
         tableu[0] = new Manoeuvre(new LinkedList<Card>(List.of(
@@ -273,21 +273,21 @@ public class MovesTest {
         )), 1);
         tableu[3] = new Manoeuvre(new LinkedList<Card>(List.of()), 0);
 
-        board.withTableu(tableu);
-        boolean worked = board.kingToEmpty();
+        Move move = new KingToEmpty(tableu);
+
+        boolean worked = move.play();
 
         assertTrue(worked);
 
-        assertEquals(board.tableu[0].getRevealedTop().suit(), Suit.HEARTS);
-        assertEquals(board.tableu[1].getRevealedTop().suit(), Suit.DIAMONDS);
-        assertEquals(board.tableu[2].getRevealedBottom().value(), Value.ACE);
+        assertEquals(tableu[0].getRevealedTop().suit(), Suit.HEARTS);
+        assertEquals(tableu[1].getRevealedTop().suit(), Suit.DIAMONDS);
+        assertEquals(tableu[2].getRevealedBottom().value(), Value.ACE);
 
-        assertTrue(board.tableu[3].empty());
+        assertTrue(tableu[3].empty());
     }
 
     @Test void kingToNonEmpty() {
         // Do nothing
-        Game board = new Game();
         Manoeuvre[] tableu = new Manoeuvre[2];
 
         tableu[0] = new Manoeuvre(new LinkedList<Card>(List.of(
@@ -299,8 +299,9 @@ public class MovesTest {
             new Card(Suit.SPADES, Value.QUEEN)
         )), 1);
 
-        board.withTableu(tableu);
-        boolean worked = board.kingToEmpty();
+        Move move = new KingToEmpty(tableu);
+
+        boolean worked = move.play();
 
         assertFalse(worked);
     }
