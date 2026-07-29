@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import solitaire.moves.AceToFoundations;
 import solitaire.utils.Card;
 import solitaire.utils.Manoeuvre;
 import solitaire.utils.Foundation;
@@ -188,7 +189,6 @@ public class MovesTest {
     }
 
     @Test void aceToFoundations() {
-        Game board = new Game();
         LinkedList<Card> stack1 = new LinkedList<Card>(List.of(
             new Card(Suit.DIAMONDS, Value.EIGHT),
             new Card(Suit.CLUBS, Value.NINE),
@@ -211,15 +211,14 @@ public class MovesTest {
         tableu[1] = new Manoeuvre(new LinkedList<>(), 0);
         tableu[2] = new Manoeuvre(stack2, 0);
         
-        board.withTableu(tableu);
-        board.withFoundations(foundations);
-        board.aceToFoundations();
+        AceToFoundations atf = new AceToFoundations(tableu, foundations);
+        atf.play();
 
-        assertEquals(board.tableu[0].getRevealedBottom().value(), Value.JACK);
-        assertEquals(board.foundations[0].getTop().value(), Value.ACE);
+        assertEquals(tableu[0].getRevealedBottom().value(), Value.JACK);
+        assertEquals(foundations[0].getTop().value(), Value.ACE);
 
-        assertTrue(board.tableu[2].empty());
-        assertEquals(board.foundations[1].getTop().suit(), Suit.HEARTS);
+        assertTrue(tableu[2].empty());
+        assertEquals(foundations[1].getTop().suit(), Suit.HEARTS);
     }
 
     @Test void cardsToFoundation() {
