@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import solitaire.moves.AceToFoundations;
 import solitaire.moves.CardsToFoundations;
 import solitaire.moves.KingToEmpty;
+import solitaire.moves.LateralMoves;
 import solitaire.moves.Move;
 import solitaire.utils.Card;
 import solitaire.utils.Manoeuvre;
@@ -165,7 +166,6 @@ public class MovesTest {
     }
 
     @Test void lateralMoves() {
-        Game board = new Game();
         Manoeuvre[] tableu = new Manoeuvre[4];
 
         tableu[0] = new Manoeuvre(new LinkedList<Card>(List.of(
@@ -185,10 +185,11 @@ public class MovesTest {
             new Card(Suit.SPADES, Value.KING)
         )), 0);
 
-        board.withTableu(tableu);
-        board.lateralMoves();
+        Move move = new LateralMoves(tableu);
+        boolean made = move.play();
 
-        assertTrue(board.tableu[0].empty());
+        assertTrue(made);
+        assertTrue(tableu[0].empty());
     }
 
     @Test void aceToFoundations() {
