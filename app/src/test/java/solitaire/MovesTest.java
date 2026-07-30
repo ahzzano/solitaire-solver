@@ -390,12 +390,6 @@ public class MovesTest {
 
         assertTrue(board.talon.isStockEmpty() == false);
         
-        Foundation[] foundations = new Foundation[4];
-        for (int i = 0; i < 4; i++) {
-            foundations[i] = new Foundation();
-        }
-        board.withFoundations(foundations);
-
         boolean moveMadeThisCycle = board.playOneCycle();
 
         assertFalse(board.foundations[0].empty());

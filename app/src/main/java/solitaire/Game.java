@@ -39,17 +39,17 @@ public class Game {
         this.talon.withStock(this.initializeStock(deck));
 
         this.tableuMoves = new ArrayList<>(Arrays.asList(
-            new AceToFoundations(tableu, foundations),
-            new CardsToFoundations(tableu, foundations),
-            new KingToEmpty(tableu),
-            new LateralMoves(tableu)
+            new AceToFoundations(this.tableu, this.foundations),
+            new CardsToFoundations(this.tableu, this.foundations),
+            new KingToEmpty(this.tableu),
+            new LateralMoves(this.tableu)
         ));
 
         this.talonMoves = new ArrayList<>(Arrays.asList(
-            new TalonAceToFoundations(talon, foundations),
-            new TalonCardToFoundation(talon, foundations),
-            new TalonKingToTableu(talon, tableu),
-            new TalonCardToTableu(talon, tableu)
+            new TalonAceToFoundations(this.talon, this.foundations),
+            new TalonCardToFoundation(this.talon, this.foundations),
+            new TalonKingToTableu(this.talon, this.tableu),
+            new TalonCardToTableu(this.talon, this.tableu)
         ));
     }
 
