@@ -36,21 +36,46 @@ public class LateralMoves implements Move{
         HashMap<MoveKey, Deque<Manoeuvre>> destMap = new HashMap<>();
 
         for(Manoeuvre manoeuvre : this.tableu) {
+            // Use the same queue. That way, if a card gets placed into one
+            // both will be dequeued
+            LinkedList<Manoeuvre> queue = new LinkedList<>();
+
+            if(manoeuvre.empty()) {
+                continue;
+            }
+
             Card bottomCard = manoeuvre.getRevealedBottom();
             Rank targetRank = Rank.fromValue(bottomCard.value().number() - 1);
+
+            queue.add(manoeuvre);
 
             if(bottomCard.suit() == Suit.CLUBS || bottomCard.suit() == Suit.SPADES) {
                 MoveKey moveKeyA = new MoveKey(targetRank, Suit.DIAMONDS);
                 MoveKey moveKeyB = new MoveKey(targetRank, Suit.HEARTS);
 
                 if(!destMap.containsKey(moveKeyA)) {
-                    destMap.put(moveKeyA, new LinkedList<>());
-                }
-            }
+                    destMap.put(moveKeyA, queue);
+                } 
+
+                if(!destMap.containsKey(moveKeyB)) {
+                    destMap.put(moveKeyB, queue);
+                } 
+            } 
+            if(bottomCard.suit() == Suit.DIAMONDS || bottomCard.suit() == Suit.HEARTS) {
+                MoveKey moveKeyA = new MoveKey(targetRank, Suit.CLUBS);
+                MoveKey moveKeyB = new MoveKey(targetRank, Suit.SPADES);
+
+                if(!destMap.containsKey(moveKeyA)) {
+                    destMap.put(moveKeyA, queue);
+                } 
+
+                if(!destMap.containsKey(moveKeyB)) {
+                    destMap.put(moveKeyB, queue);
+                } 
+            } 
         }
 
         return destMap;
-
     }
 
     @Override
@@ -61,47 +86,64 @@ public class LateralMoves implements Move{
 
         boolean move = false;
 
-        HashMap<MoveKey, Deque<Manoeuvre>> destinationColumn = generateDestinationMap();
+        HashMap<MoveKey, Deque<Manoeuvre>> destMap = this.generateDestinationMap();
+        for (Manoeuvre manoeuvre : this.tableu) {
+            if(manoeuvre.empty()) {
+                continue;
+            }
 
+            Card manoeuvreTop = manoeuvre.getRevealedTop();
 
-        // CardStack A - to move
-        // CardStack B - to receive
-        // int indexA = 1;
-        // for (Manoeuvre manoeuvreToMove : this.tableu) {
-        //     if (manoeuvreToMove.empty()) {
-        //         continue;
-        //     }
-        //     if (manoeuvreToMove.revealedStart() == 0 && manoeuvreToMove.getRevealedTop().value() == Rank.KING) {
-        //         continue;
-        //     }
-        //     int indexB = 1;
-        //     for (Manoeuvre manoeuvreToReceive : this.tableu) {
-        //         if (manoeuvreToMove == manoeuvreToReceive) {
-        //             continue;
-        //         }
-                
-        //         if (manoeuvreToReceive.empty()) {
-        //             continue;
-        //         }
+            // Skip all King to Empty moves.
+            // This should be handled by KingToEmpty() instead
+            if(manoeuvreTop.value() == Rank.KING) {
+                continue;
+            }
 
-        //         if(manoeuvreToMove.getRevealedTop().isCompatibleBelow(manoeuvreToReceive.getRevealedBottom())) {
-        //             var temp = manoeuvreToMove.splitStack(manoeuvreToMove.revealedStart());
+            MoveKey targetMove = new MoveKey(manoeuvreTop.value(), manoeuvreTop.suit());
+            if(destMap.containsKey(targetMove)) {
+                Deque<Manoeuvre> nextManoeuvre = destMap.get(targetMove);
 
-        //             if(temp.isEmpty()) {
-        //                 continue;
-        //             }
+                if(nextManoeuvre.isEmpty()) {
+                    continue;
+                }
 
-        //             Manoeuvre cs = temp.get();
+                boolean validNext = false;
 
-        //             manoeuvreToReceive.mergeStacks(cs);
-        //             move = true;
-        //             System.out.println("Moved cards from Manoeuvre #" + (indexA+1) + " to Manoeuvre #" + (indexB+1));
-        //             break;
-        //         }
-        //         indexB++;
-        //     }
-        //     indexA++;
-        // }
+                Manoeuvre dest;
+
+                do {
+                    dest = nextManoeuvre.poll();
+                    if(dest == null) {
+                        break;
+                    }
+                    Card manoeuvreBottom = dest.getRevealedBottom();
+                    if(manoeuvreBottom == null) {
+                        continue;
+                    }
+                    if(!manoeuvreTop.isCompatibleBelow(manoeuvreBottom)) {
+                        continue;
+                    }
+
+                    validNext = true;
+                } while(!validNext);
+
+                if(dest == null) {
+                    continue;
+                }
+
+                var temp = manoeuvre.splitStack(manoeuvre.revealedStart());
+
+                if(temp.isEmpty()) {
+                    continue;
+                }
+
+                System.out.println("Moved Cards from " + targetMove);
+                dest.mergeStacks(temp.get());
+                move = true;
+
+            }
+        }
 
         return move;
     }
