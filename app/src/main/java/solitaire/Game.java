@@ -2,6 +2,13 @@ package solitaire;
 
 import java.util.*;
 
+import org.jspecify.annotations.NonNull;
+
+import solitaire.moves.AceToFoundations;
+import solitaire.moves.CardsToFoundations;
+import solitaire.moves.KingToEmpty;
+import solitaire.moves.LateralMoves;
+import solitaire.moves.Move;
 import solitaire.utils.*;
 
 public class Game {
@@ -10,6 +17,8 @@ public class Game {
     Deque<Card> stock;
     Foundation[] foundations;
     BoardDisplay display;
+
+    List<@NonNull Move> moves;
     
     public Game() {
         ArrayList<Card> deck = new ArrayList<>();
@@ -24,6 +33,13 @@ public class Game {
         this.initializeStock(deck);
         this.initializeFoundations();
         this.waste = new Waste();
+
+        this.moves = new ArrayList<>(Arrays.asList(
+            new AceToFoundations(tableu, foundations),
+            new CardsToFoundations(tableu, foundations),
+            new KingToEmpty(tableu),
+            new LateralMoves(tableu)
+        ));
     }
 
     public void withDisplay(BoardDisplay display) {
@@ -93,146 +109,6 @@ public class Game {
         if(this.display != null) {
             this.display.displayState();
         }
-    }
-
-    public boolean cardsToFoundation() {
-        boolean move = false;
-
-        for (Manoeuvre stack : this.tableu) {
-            if (stack.empty()) {
-                continue;
-            }
-
-            boolean pushable = true;
-            while (!stack.empty() && pushable) {
-                for (Foundation foundation : foundations) {
-                    Card end = stack.getRevealedBottom();
-                    if (!foundation.pushable(end)) {
-                        pushable = false;
-                        continue;
-                    }
-
-                    foundation.push(stack.popCard());
-                    System.out.println("Moved " + foundation.getTop().toDisplayString() + " to Foundations");
-                    move = true;
-                    pushable = true;
-                    break;
-                }
-            }
-        }
-
-        return move;
-    }
-
-    public boolean aceToFoundations() {
-        boolean move = false;
-        for (Manoeuvre stack : this.tableu) {
-            if (stack.empty()) {
-                continue;
-            }
-            Card end = stack.getRevealedBottom();
-            if (end.value() != Value.ACE) {
-                continue;
-            }
-
-            for (Foundation foundation : this.foundations) {
-                if (!foundation.empty()) {
-                    continue;
-                }
-
-                Card c = stack.popCard();
-                System.out.println("Moved " + c.toDisplayString() + " to Foundations");
-                foundation.push(c);
-                move = true;
-                break;
-            }
-        }
-
-        return move;
-    }
-
-    public boolean kingToEmpty() {
-        ArrayList<Integer> emptyStackIndexes = new ArrayList<>();
-        boolean move = false;
-
-        for (int i = 0; i < this.tableu.length; i++) {
-            if (tableu[i].empty()) {
-                emptyStackIndexes.add(i);
-            }
-        }
-
-        if(emptyStackIndexes.isEmpty()) {
-            return move;
-        }
-
-        int nextMarkedStack = 0;
-
-        int index = 0;
-        for (Manoeuvre stack : this.tableu) {
-            if (stack.empty()) {
-                continue;
-            }
-
-            if (nextMarkedStack >= emptyStackIndexes.size()) {
-                break;
-            }
-
-            if (stack.revealedStart() > 0 && stack.getRevealedTop().value() == Value.KING) {
-                Manoeuvre kingStack = stack.splitStack(stack.revealedStart()).get();
-                System.out.println("Moved " + kingStack.getRevealedTop().toDisplayString() + " to Manoeuvre #" + (index+1));
-                this.tableu[emptyStackIndexes.get(nextMarkedStack)].mergeStacks(kingStack);
-                nextMarkedStack += 1;
-                move = true;
-            }
-            index++;
-        }
-
-        return move;
-    }
-
-    public boolean lateralMoves() {
-        boolean move = false;
-
-        // CardStack A - to move
-        // CardStack B - to receive
-        int indexA = 1;
-        for (Manoeuvre manoeuvreToMove : this.tableu) {
-            if (manoeuvreToMove.empty()) {
-                continue;
-            }
-            if (manoeuvreToMove.revealedStart() == 0 && manoeuvreToMove.getRevealedTop().value() == Value.KING) {
-                continue;
-            }
-            int indexB = 1;
-            for (Manoeuvre manoeuvreToReceive : this.tableu) {
-                if (manoeuvreToMove == manoeuvreToReceive) {
-                    continue;
-                }
-                
-                if (manoeuvreToReceive.empty()) {
-                    continue;
-                }
-
-                if(manoeuvreToMove.getRevealedTop().isCompatibleBelow(manoeuvreToReceive.getRevealedBottom())) {
-                    var temp = manoeuvreToMove.splitStack(manoeuvreToMove.revealedStart());
-
-                    if(temp.isEmpty()) {
-                        continue;
-                    }
-
-                    Manoeuvre cs = temp.get();
-
-                    manoeuvreToReceive.mergeStacks(cs);
-                    move = true;
-                    System.out.println("Moved cards from Manoeuvre #" + (indexA) + " to Manoeuvre #" + (indexB));
-                    break;
-                }
-                indexB++;
-            }
-            indexA++;
-        }
-
-        return move;
     }
 
     public boolean wasteCardToTableu() {
@@ -335,28 +211,17 @@ public class Game {
     }
 
     private void tableuMoves() {
-        boolean tableuMoves = true;
-
-        while(tableuMoves) {
-            tableuMoves = false;
-            if (this.aceToFoundations()) {
-                this.displayState();
-                tableuMoves = true;
-            }
-            if (this.cardsToFoundation()) {
-                this.displayState();
-                tableuMoves = true;
-            }
-            if (this.kingToEmpty()) {
-                this.displayState();
-                tableuMoves = true;
-            }
-            if (this.lateralMoves()) {
-                this.displayState();
-                tableuMoves = true;
+        boolean movesMade = true;
+        while(movesMade) {
+            movesMade = false;
+            for (Move move : this.moves) {
+                boolean played = move.play();
+                if(played) {
+                    this.displayState();
+                    movesMade = true;
+                }
             }
         }
-
     }
 
     public boolean playOneCycle() {

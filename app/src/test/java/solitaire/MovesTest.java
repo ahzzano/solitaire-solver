@@ -308,7 +308,6 @@ public class MovesTest {
     }
 
     @Test void exampleFirstMoveWithoutWaste() {
-        Game board = new Game();
         Manoeuvre[] tableu = new Manoeuvre[7];
         Foundation[] foundations = new Foundation[4];
 
@@ -365,22 +364,24 @@ public class MovesTest {
             new Card(Suit.DIAMONDS, Value.SEVEN)
         )), 6);
 
-        board.withTableu(tableu);
-        board.withFoundations(foundations);
+        Move ctf = new CardsToFoundations(tableu, foundations);
+        Move atf = new AceToFoundations(tableu, foundations);
+        Move kte = new KingToEmpty(tableu);
+        Move lat = new LateralMoves(tableu);
 
-        while(board.cardsToFoundation() || board.aceToFoundations() || board.kingToEmpty() || board.lateralMoves()) {}
+        while(ctf.play() || atf.play() || kte.play() || lat.play()) {}
 
         // Expected Final State 
-        assertEquals(board.foundations[0].empty(), false);
+        assertEquals(foundations[0].empty(), false);
         
-        assertFalse(board.tableu[0].empty());
-        assertFalse(board.tableu[2].empty());
-        assertFalse(board.tableu[3].empty());
-        assertFalse(board.tableu[4].empty());
-        assertFalse(board.tableu[5].empty());
-        assertFalse(board.tableu[6].empty());
+        assertFalse(tableu[0].empty());
+        assertFalse(tableu[2].empty());
+        assertFalse(tableu[3].empty());
+        assertFalse(tableu[4].empty());
+        assertFalse(tableu[5].empty());
+        assertFalse(tableu[6].empty());
 
-        assertTrue(board.tableu[1].empty());
+        assertTrue(tableu[1].empty());
     }
 
     @Test void exampleGame() {
