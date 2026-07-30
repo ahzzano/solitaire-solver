@@ -26,7 +26,6 @@ import solitaire.utils.Foundation;
 import solitaire.utils.Suit;
 import solitaire.utils.Talon;
 import solitaire.utils.Value;
-import solitaire.utils.Waste;
 
 public class MovesTest {
     @Test void wasteCardToTableu() {
