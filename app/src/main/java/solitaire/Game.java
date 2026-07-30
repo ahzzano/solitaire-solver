@@ -34,7 +34,6 @@ public class Game {
         }
 
         this.initializeTableu(deck);
-        this.initializeStock(deck);
         this.initializeFoundations();
         this.talon = new Talon();
         this.talon.withStock(this.initializeStock(deck));
