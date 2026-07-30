@@ -43,8 +43,8 @@ public class LateralMoves implements Move{
                 MoveKey moveKeyA = new MoveKey(targetRank, Suit.DIAMONDS);
                 MoveKey moveKeyB = new MoveKey(targetRank, Suit.HEARTS);
 
-                if(!destinationColumn.containsKey(moveKeyA)) {
-                    destinationColumn.put(moveKeyA, new LinkedList<>());
+                if(!destMap.containsKey(moveKeyA)) {
+                    destMap.put(moveKeyA, new LinkedList<>());
                 }
             }
         }
