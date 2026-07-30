@@ -388,7 +388,7 @@ public class MovesTest {
     @Test void exampleGame() {
         Game board = new Game();
 
-        assertTrue(board.stock.isEmpty() == false);
+        assertTrue(board.talon.isStockEmpty() == false);
         
         Foundation[] foundations = new Foundation[4];
         for (int i = 0; i < 4; i++) {
