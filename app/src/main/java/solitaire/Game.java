@@ -14,6 +14,7 @@ import solitaire.utils.*;
 public class Game {
     Manoeuvre[] tableu;
     Waste waste;
+    Talon talon;
     Deque<Card> stock;
     Foundation[] foundations;
     BoardDisplay display;
@@ -32,7 +33,7 @@ public class Game {
         this.initializeTableu(deck);
         this.initializeStock(deck);
         this.initializeFoundations();
-        this.waste = new Waste();
+        this.talon = new Talon();
 
         this.moves = new ArrayList<>(Arrays.asList(
             new AceToFoundations(tableu, foundations),

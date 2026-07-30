@@ -16,10 +16,12 @@ import solitaire.moves.CardsToFoundations;
 import solitaire.moves.KingToEmpty;
 import solitaire.moves.LateralMoves;
 import solitaire.moves.Move;
+import solitaire.moves.TalonAceToFoundations;
 import solitaire.utils.Card;
 import solitaire.utils.Manoeuvre;
 import solitaire.utils.Foundation;
 import solitaire.utils.Suit;
+import solitaire.utils.Talon;
 import solitaire.utils.Value;
 import solitaire.utils.Waste;
 
@@ -102,25 +104,25 @@ public class MovesTest {
             foundations[i] = new Foundation();
         }
 
-        Waste waste = new Waste();
+        Deque<Card> waste = new ArrayDeque<>();
         Deque<Card> stock = new ArrayDeque<>();
 
         stock.add(new Card(Suit.CLUBS, Value.ACE));
         stock.add(new Card(Suit.HEARTS, Value.KING));
+        Talon talon = new Talon();
 
-        board.withFoundations(foundations);
-        board.withWaste(waste);
-        board.withStock(stock);
+        talon.withStock(stock);
+        talon.withWaste(waste);
 
-        board.wasteAceToFoundation();
+        Move move = new TalonAceToFoundations(talon, foundations);
+        move.play();
 
         assertTrue(board.foundations[0].empty());
 
-        board.waste.popTop();
+        talon.popTop();
+        move.play();
 
-        board.wasteAceToFoundation();
-
-        assertFalse(board.foundations[0].empty());
+        assertFalse(foundations[0].empty());
     }
 
     @Test void wasteKingToTableu() {
