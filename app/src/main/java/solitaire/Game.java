@@ -32,16 +32,16 @@ public class Game {
 
         this.tableuMoves = new ArrayList<>(Arrays.asList(
             new AceToFoundations(this.tableu, this.foundations),
-            new CardsToFoundations(this.tableu, this.foundations),
-            new KingToEmpty(this.tableu),
+            // new CardsToFoundations(this.tableu, this.foundations),
+            // new KingToEmpty(this.tableu),
             new LateralMoves(this.tableu)
         ));
 
         this.talonMoves = new ArrayList<>(Arrays.asList(
-            new TalonAceToFoundations(this.talon, this.foundations),
-            new TalonCardToFoundation(this.talon, this.foundations),
-            new TalonKingToTableu(this.talon, this.tableu),
-            new TalonCardToTableu(this.talon, this.tableu)
+            // new TalonAceToFoundations(this.talon, this.foundations),
+            // new TalonCardToFoundation(this.talon, this.foundations),
+            // new TalonKingToTableu(this.talon, this.tableu),
+            // new TalonCardToTableu(this.talon, this.tableu)
         ));
     }
 

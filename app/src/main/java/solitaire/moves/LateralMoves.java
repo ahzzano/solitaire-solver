@@ -46,7 +46,7 @@ public class LateralMoves implements Move{
 
                     manoeuvreToReceive.mergeStacks(cs);
                     move = true;
-                    System.out.println("Moved cards from Manoeuvre #" + (indexA) + " to Manoeuvre #" + (indexB));
+                    System.out.println("Moved cards from Manoeuvre #" + (indexA+1) + " to Manoeuvre #" + (indexB+1));
                     break;
                 }
                 indexB++;
