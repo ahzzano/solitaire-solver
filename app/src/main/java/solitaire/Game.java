@@ -55,6 +55,10 @@ public class Game {
         return this.waste;
     }
 
+    public Talon getTalon() {
+        return this.talon;
+    }
+
     public Deque<Card> getStock() {
         return this.stock;
     }

@@ -18,6 +18,7 @@ import solitaire.moves.LateralMoves;
 import solitaire.moves.Move;
 import solitaire.moves.TalonAceToFoundations;
 import solitaire.moves.TalonCardToFoundation;
+import solitaire.moves.TalonKingToTableu;
 import solitaire.utils.Card;
 import solitaire.utils.Manoeuvre;
 import solitaire.utils.Foundation;
@@ -126,7 +127,6 @@ public class MovesTest {
     }
 
     @Test void wasteKingToTableu() {
-        Game board = new Game();
         Manoeuvre[] tableu = new Manoeuvre[4];
         tableu[0] = new Manoeuvre(new LinkedList<Card>(), 0);
 
@@ -141,30 +141,29 @@ public class MovesTest {
             new Card(Suit.SPADES, Value.JACK)
         )), 0);
 
-        Waste waste = new Waste();
         Deque<Card> stock = new ArrayDeque<>();
 
         stock.add(new Card(Suit.CLUBS, Value.KING));
         stock.add(new Card(Suit.HEARTS, Value.KING));
 
-        board.withTableu(tableu);
-        board.withWaste(waste);
-        board.withStock(stock);
+        Talon talon = new Talon();
+        talon.withStock(stock);
 
-        board.wasteKingToTableu();
+        Move move = new TalonKingToTableu(talon, tableu);
+        move.play();
 
-        assertFalse(board.tableu[0].empty());
-        assertEquals(board.tableu[0].getRevealedBottom().value(), Value.KING);
-        assertEquals(board.tableu[0].getRevealedBottom().suit(), Suit.HEARTS);
+        assertFalse(tableu[0].empty());
+        assertEquals(tableu[0].getRevealedBottom().value(), Value.KING);
+        assertEquals(tableu[0].getRevealedBottom().suit(), Suit.HEARTS);
 
-        board.wasteKingToTableu();
+        move.play();
 
-        assertFalse(board.tableu[2].empty());
-        assertEquals(board.tableu[2].getRevealedBottom().value(), Value.KING);
-        assertEquals(board.tableu[2].getRevealedBottom().suit(), Suit.CLUBS);
+        assertFalse(tableu[2].empty());
+        assertEquals(tableu[2].getRevealedBottom().value(), Value.KING);
+        assertEquals(tableu[2].getRevealedBottom().suit(), Suit.CLUBS);
 
-        assertEquals(board.tableu[1].size(), 2);
-        assertEquals(board.tableu[3].size(), 1);
+        assertEquals(tableu[1].size(), 2);
+        assertEquals(tableu[3].size(), 1);
     }
 
     @Test void lateralMoves() {
