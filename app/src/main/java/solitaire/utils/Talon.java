@@ -50,4 +50,12 @@ public class Talon {
     public int size() {
         return this.waste.size();
     }
+
+    public int stockSize() {
+        return this.stock.size();
+    }
+
+    public int wasteSize() {
+        return this.waste.size();
+    }
 }

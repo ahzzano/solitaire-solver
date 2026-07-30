@@ -9,10 +9,10 @@ import org.junit.jupiter.api.Test;
 
 import solitaire.utils.Card;
 import solitaire.utils.Suit;
+import solitaire.utils.Talon;
 import solitaire.utils.Value;
-import solitaire.utils.Waste;
 
-public class WasteTest {
+public class TalonTest {
     Deque<Card> initializeStock() {
         Deque<Card> stock = new java.util.ArrayDeque<Card>();
 
@@ -27,12 +27,13 @@ public class WasteTest {
 
     @Test void drawThreeCards() {
         Deque<Card> stock = initializeStock();
-        Waste waste = new Waste();
+        Talon talon = new Talon();
+        talon.withStock(stock);
 
-        waste.drawThreeFrom(stock);
+        talon.drawThree();
 
-        assertEquals(stock.size(), 52 - 3);
-        assertEquals(waste.size(), 3);
+        assertEquals(talon.stockSize(), 52 - 3);
+        assertEquals(talon.wasteSize(), 3);
     }
 
     // Draw last 2 cards
@@ -43,25 +44,26 @@ public class WasteTest {
         stock.add(new Card(Suit.DIAMONDS, Value.TWO));
         // stock.add(new Card(Suit.DIAMONDS, Value.THREE));
 
-        Waste waste = new Waste();
+        Talon talon = new Talon();
         
-        waste.drawThreeFrom(stock);
+        talon.drawThree();
 
-        assertEquals(stock.size(), 0);
-        assertEquals(waste.size(), 2);
+        assertEquals(talon.stockSize(), 0);
+        assertEquals(talon.wasteSize(), 2);
     }
 
     @Test void refreshUponEmpty() {
         Deque<Card> stock = initializeStock();
 
-        Waste waste = new Waste();
+        Talon talon = new Talon();
+        talon.withStock(stock);
         while (!stock.isEmpty()) {
-            waste.drawThreeFrom(stock);
+            talon.drawThree();
         }
 
-        waste.refresh(stock);
+        talon.refresh();
 
-        assertEquals(stock.size(), 52);
+        assertEquals(talon.stockSize(), 52);
     }
 
     @Test void unevenRefresh() {
@@ -72,23 +74,24 @@ public class WasteTest {
         stock.add(new Card(Suit.CLUBS, Value.EIGHT));
         stock.add(new Card(Suit.CLUBS, Value.EIGHT));
 
-        Waste waste = new Waste();
+        Talon talon = new Talon();
+        talon.withStock(stock); 
 
-        waste.drawThreeFrom(stock);
+        talon.drawThree();
 
-        assertEquals(stock.size(), 1);
-        assertEquals(waste.size(), 3);
+        assertEquals(talon.stockSize(), 1);
+        assertEquals(talon.wasteSize(), 3);
 
-        waste.popTop();
+        talon.popTop();
 
-        assertEquals(waste.size(), 2);
+        assertEquals(talon.wasteSize(), 2);
 
-        waste.drawThreeFrom(stock);
+        talon.drawThree();
 
-        assertEquals(waste.size(), 3);
+        assertEquals(talon.wasteSize(), 3);
 
-        waste.refresh(stock);
+        talon.refresh();
 
-        assertEquals(stock.size(), 3);
+        assertEquals(talon.stockSize(), 3);
     }
 }
