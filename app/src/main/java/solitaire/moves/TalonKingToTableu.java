@@ -3,7 +3,7 @@ package solitaire.moves;
 import solitaire.utils.Card;
 import solitaire.utils.Manoeuvre;
 import solitaire.utils.Talon;
-import solitaire.utils.Value;
+import solitaire.utils.Rank;
 
 public class TalonKingToTableu implements Move{
     Talon talon;
@@ -22,7 +22,7 @@ public class TalonKingToTableu implements Move{
         }
 
         Card top = this.talon.getTop();
-        if (top.value() != Value.KING) {
+        if (top.value() != Rank.KING) {
             return false;
         }
 

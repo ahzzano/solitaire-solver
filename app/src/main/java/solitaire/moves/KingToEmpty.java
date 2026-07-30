@@ -3,7 +3,7 @@ package solitaire.moves;
 import java.util.ArrayList;
 
 import solitaire.utils.Manoeuvre;
-import solitaire.utils.Value;
+import solitaire.utils.Rank;
 
 public class KingToEmpty implements Move {
     Manoeuvre[] tableu;
@@ -39,7 +39,7 @@ public class KingToEmpty implements Move {
                 break;
             }
 
-            if (stack.revealedStart() > 0 && stack.getRevealedTop().value() == Value.KING) {
+            if (stack.revealedStart() > 0 && stack.getRevealedTop().value() == Rank.KING) {
                 Manoeuvre kingStack = stack.splitStack(stack.revealedStart()).get();
                 System.out.println("Moved " + kingStack.getRevealedTop().toDisplayString() + " to Manoeuvre #" + (index+1));
                 this.tableu[emptyStackIndexes.get(nextMarkedStack)].mergeStacks(kingStack);

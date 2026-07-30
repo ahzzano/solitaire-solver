@@ -10,14 +10,14 @@ import org.junit.jupiter.api.Test;
 import solitaire.utils.Card;
 import solitaire.utils.Suit;
 import solitaire.utils.Talon;
-import solitaire.utils.Value;
+import solitaire.utils.Rank;
 
 public class TalonTest {
     Deque<Card> initializeStock() {
         Deque<Card> stock = new java.util.ArrayDeque<Card>();
 
         for(Suit suit : Suit.values()) {
-            for(Value value : Value.values()) {
+            for(Rank value : Rank.values()) {
                 stock.push(new Card(suit, value));
             }
         }
@@ -40,8 +40,8 @@ public class TalonTest {
     @Test void unevenDraw() {
         Deque<Card> stock = new ArrayDeque<>();
 
-        stock.add(new Card(Suit.DIAMONDS, Value.ACE));
-        stock.add(new Card(Suit.DIAMONDS, Value.TWO));
+        stock.add(new Card(Suit.DIAMONDS, Rank.ACE));
+        stock.add(new Card(Suit.DIAMONDS, Rank.TWO));
 
         Talon talon = new Talon();
         talon.withStock(stock);
@@ -69,10 +69,10 @@ public class TalonTest {
     @Test void unevenRefresh() {
         Deque<Card> stock = new ArrayDeque<>();
 
-        stock.add(new Card(Suit.CLUBS, Value.EIGHT));
-        stock.add(new Card(Suit.CLUBS, Value.EIGHT));
-        stock.add(new Card(Suit.CLUBS, Value.EIGHT));
-        stock.add(new Card(Suit.CLUBS, Value.EIGHT));
+        stock.add(new Card(Suit.CLUBS, Rank.EIGHT));
+        stock.add(new Card(Suit.CLUBS, Rank.EIGHT));
+        stock.add(new Card(Suit.CLUBS, Rank.EIGHT));
+        stock.add(new Card(Suit.CLUBS, Rank.EIGHT));
 
         Talon talon = new Talon();
         talon.withStock(stock); 

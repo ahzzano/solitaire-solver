@@ -2,13 +2,13 @@ package solitaire.utils;
 
 public class Card {
     final Suit suit;
-    final Value value;
+    final Rank value;
 
     public String toDisplayString() {
         return this.value.displayString() + "(" + this.suit.displayString() + ")";
     }
 
-    public Value value() {
+    public Rank value() {
         return this.value;
     }
 
@@ -16,7 +16,7 @@ public class Card {
         return this.suit;
     }
 
-    public Card(Suit s, Value v) {
+    public Card(Suit s, Rank v) {
         this.suit = s;
         this.value = v;
     }

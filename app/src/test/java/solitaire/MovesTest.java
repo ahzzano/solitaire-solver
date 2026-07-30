@@ -25,36 +25,36 @@ import solitaire.utils.Manoeuvre;
 import solitaire.utils.Foundation;
 import solitaire.utils.Suit;
 import solitaire.utils.Talon;
-import solitaire.utils.Value;
+import solitaire.utils.Rank;
 
 public class MovesTest {
     @Test void wasteCardToTableu() {
         Manoeuvre[] tableu = new Manoeuvre[4];
 
-        tableu[0] = new Manoeuvre(new LinkedList<Card>(List.of(new Card(Suit.DIAMONDS, Value.KING))), 0);
+        tableu[0] = new Manoeuvre(new LinkedList<Card>(List.of(new Card(Suit.DIAMONDS, Rank.KING))), 0);
         tableu[1] = new Manoeuvre(new LinkedList<Card>(
             List.of(
-                new Card(Suit.DIAMONDS, Value.KING),
-                new Card(Suit.HEARTS, Value.TEN))
+                new Card(Suit.DIAMONDS, Rank.KING),
+                new Card(Suit.HEARTS, Rank.TEN))
             ),
             1);
         tableu[2] = new Manoeuvre(new LinkedList<Card>(List.of(
-            new Card(Suit.SPADES, Value.TWO),
-            new Card(Suit.SPADES, Value.THREE),
-            new Card(Suit.HEARTS, Value.FIVE)
+            new Card(Suit.SPADES, Rank.TWO),
+            new Card(Suit.SPADES, Rank.THREE),
+            new Card(Suit.HEARTS, Rank.FIVE)
         )),2);
 
         tableu[3] = new Manoeuvre(new LinkedList<Card>(List.of(
-            new Card(Suit.SPADES, Value.TWO),
-            new Card(Suit.SPADES, Value.THREE),
-            new Card(Suit.HEARTS, Value.FIVE),
-            new Card(Suit.SPADES, Value.FOUR)
+            new Card(Suit.SPADES, Rank.TWO),
+            new Card(Suit.SPADES, Rank.THREE),
+            new Card(Suit.HEARTS, Rank.FIVE),
+            new Card(Suit.SPADES, Rank.FOUR)
         )), 3);
 
         Deque<Card> stock = new ArrayDeque<>();
-        stock.add(new Card(Suit.CLUBS, Value.FOUR));
-        stock.add(new Card(Suit.SPADES, Value.NINE));
-        stock.add(new Card(Suit.CLUBS, Value.QUEEN));
+        stock.add(new Card(Suit.CLUBS, Rank.FOUR));
+        stock.add(new Card(Suit.SPADES, Rank.NINE));
+        stock.add(new Card(Suit.CLUBS, Rank.QUEEN));
         // Waste waste = new Waste();
 
         Talon talon = new Talon();
@@ -66,11 +66,11 @@ public class MovesTest {
         move.play();
         move.play();
 
-        assertEquals(tableu[0].getRevealedBottom().value(), Value.QUEEN);
-        assertEquals(tableu[1].getRevealedBottom().value(), Value.NINE);
-        assertEquals(tableu[2].getRevealedBottom().value(), Value.FOUR);
+        assertEquals(tableu[0].getRevealedBottom().value(), Rank.QUEEN);
+        assertEquals(tableu[1].getRevealedBottom().value(), Rank.NINE);
+        assertEquals(tableu[2].getRevealedBottom().value(), Rank.FOUR);
 
-        assertEquals(tableu[3].getRevealedBottom().value(), Value.FOUR);
+        assertEquals(tableu[3].getRevealedBottom().value(), Rank.FOUR);
         assertEquals(tableu[3].getRevealedBottom().suit(), Suit.SPADES);
     }
 
@@ -81,20 +81,20 @@ public class MovesTest {
             foundations[i] = new Foundation();
         }
 
-        foundations[0].push(new Card(Suit.CLUBS, Value.ACE));
+        foundations[0].push(new Card(Suit.CLUBS, Rank.ACE));
 
         Talon talon = new Talon();
         Deque<Card> stock = new ArrayDeque<>();
 
-        stock.add(new Card(Suit.SPADES, Value.ACE));
-        stock.add(new Card(Suit.CLUBS, Value.TWO));
+        stock.add(new Card(Suit.SPADES, Rank.ACE));
+        stock.add(new Card(Suit.CLUBS, Rank.TWO));
 
         talon.withStock(stock);
 
         Move move = new TalonCardToFoundation(talon, foundations);
         move.play();
 
-        assertEquals(foundations[0].getTop().value(), Value.TWO);
+        assertEquals(foundations[0].getTop().value(), Rank.TWO);
         assertEquals(talon.size(), 1);
     }
 
@@ -108,8 +108,8 @@ public class MovesTest {
         Deque<Card> waste = new ArrayDeque<>();
         Deque<Card> stock = new ArrayDeque<>();
 
-        stock.add(new Card(Suit.CLUBS, Value.ACE));
-        stock.add(new Card(Suit.HEARTS, Value.KING));
+        stock.add(new Card(Suit.CLUBS, Rank.ACE));
+        stock.add(new Card(Suit.HEARTS, Rank.KING));
         Talon talon = new Talon();
 
         talon.withStock(stock);
@@ -131,20 +131,20 @@ public class MovesTest {
         tableu[0] = new Manoeuvre(new LinkedList<Card>(), 0);
 
         tableu[1] = new Manoeuvre(new LinkedList<Card>(List.of(
-            new Card(Suit.DIAMONDS, Value.THREE),
-            new Card(Suit.SPADES, Value.JACK)
+            new Card(Suit.DIAMONDS, Rank.THREE),
+            new Card(Suit.SPADES, Rank.JACK)
         )), 1);
 
         tableu[2] = new Manoeuvre(new LinkedList<Card>(), 0);
 
         tableu[3] = new Manoeuvre(new LinkedList<Card>(List.of(
-            new Card(Suit.SPADES, Value.JACK)
+            new Card(Suit.SPADES, Rank.JACK)
         )), 0);
 
         Deque<Card> stock = new ArrayDeque<>();
 
-        stock.add(new Card(Suit.CLUBS, Value.KING));
-        stock.add(new Card(Suit.HEARTS, Value.KING));
+        stock.add(new Card(Suit.CLUBS, Rank.KING));
+        stock.add(new Card(Suit.HEARTS, Rank.KING));
 
         Talon talon = new Talon();
         talon.withStock(stock);
@@ -153,13 +153,13 @@ public class MovesTest {
         move.play();
 
         assertFalse(tableu[0].empty());
-        assertEquals(tableu[0].getRevealedBottom().value(), Value.KING);
+        assertEquals(tableu[0].getRevealedBottom().value(), Rank.KING);
         assertEquals(tableu[0].getRevealedBottom().suit(), Suit.HEARTS);
 
         move.play();
 
         assertFalse(tableu[2].empty());
-        assertEquals(tableu[2].getRevealedBottom().value(), Value.KING);
+        assertEquals(tableu[2].getRevealedBottom().value(), Rank.KING);
         assertEquals(tableu[2].getRevealedBottom().suit(), Suit.CLUBS);
 
         assertEquals(tableu[1].size(), 2);
@@ -170,20 +170,20 @@ public class MovesTest {
         Manoeuvre[] tableu = new Manoeuvre[4];
 
         tableu[0] = new Manoeuvre(new LinkedList<Card>(List.of(
-            new Card(Suit.DIAMONDS, Value.QUEEN)
+            new Card(Suit.DIAMONDS, Rank.QUEEN)
         )), 0);
 
         tableu[1] = new Manoeuvre(new LinkedList<Card>(List.of(
-            new Card(Suit.DIAMONDS, Value.THREE),
-            new Card(Suit.SPADES, Value.JACK)
+            new Card(Suit.DIAMONDS, Rank.THREE),
+            new Card(Suit.SPADES, Rank.JACK)
         )), 1);
 
         tableu[2] = new Manoeuvre(new LinkedList<Card>(List.of(
-            new Card(Suit.SPADES, Value.KING)
+            new Card(Suit.SPADES, Rank.KING)
         )), 0);
 
         tableu[3] = new Manoeuvre(new LinkedList<Card>(List.of(
-            new Card(Suit.SPADES, Value.KING)
+            new Card(Suit.SPADES, Rank.KING)
         )), 0);
 
         Move move = new LateralMoves(tableu);
@@ -195,14 +195,14 @@ public class MovesTest {
 
     @Test void aceToFoundations() {
         LinkedList<Card> stack1 = new LinkedList<Card>(List.of(
-            new Card(Suit.DIAMONDS, Value.EIGHT),
-            new Card(Suit.CLUBS, Value.NINE),
-            new Card(Suit.CLUBS, Value.JACK),
-            new Card(Suit.CLUBS, Value.ACE)
+            new Card(Suit.DIAMONDS, Rank.EIGHT),
+            new Card(Suit.CLUBS, Rank.NINE),
+            new Card(Suit.CLUBS, Rank.JACK),
+            new Card(Suit.CLUBS, Rank.ACE)
         ));
 
         LinkedList<Card> stack2 = new LinkedList<Card>(List.of(
-            new Card(Suit.HEARTS, Value.ACE)
+            new Card(Suit.HEARTS, Rank.ACE)
         ));
 
         Manoeuvre[] tableu = new Manoeuvre[3];
@@ -219,8 +219,8 @@ public class MovesTest {
         Move atf = new AceToFoundations(tableu, foundations);
         atf.play();
 
-        assertEquals(tableu[0].getRevealedBottom().value(), Value.JACK);
-        assertEquals(foundations[0].getTop().value(), Value.ACE);
+        assertEquals(tableu[0].getRevealedBottom().value(), Rank.JACK);
+        assertEquals(foundations[0].getTop().value(), Rank.ACE);
 
         assertTrue(tableu[2].empty());
         assertEquals(foundations[1].getTop().suit(), Suit.HEARTS);
@@ -234,21 +234,21 @@ public class MovesTest {
             foundations[i] = new Foundation();
         }
 
-        foundations[0].push(new Card(Suit.DIAMONDS, Value.ACE));
-        foundations[1].push(new Card(Suit.HEARTS, Value.ACE));
-        foundations[2].push(new Card(Suit.CLUBS, Value.ACE));
-        foundations[3].push(new Card(Suit.SPADES, Value.ACE));
+        foundations[0].push(new Card(Suit.DIAMONDS, Rank.ACE));
+        foundations[1].push(new Card(Suit.HEARTS, Rank.ACE));
+        foundations[2].push(new Card(Suit.CLUBS, Rank.ACE));
+        foundations[3].push(new Card(Suit.SPADES, Rank.ACE));
 
         tableu[0] = new Manoeuvre(new LinkedList<Card>(List.of(
-            new Card(Suit.DIAMONDS, Value.TWO),
-            new Card(Suit.HEARTS, Value.TWO),
-            new Card(Suit.SPADES, Value.TWO),
-            new Card(Suit.CLUBS, Value.TWO)
+            new Card(Suit.DIAMONDS, Rank.TWO),
+            new Card(Suit.HEARTS, Rank.TWO),
+            new Card(Suit.SPADES, Rank.TWO),
+            new Card(Suit.CLUBS, Rank.TWO)
         )), 3);
 
         tableu[1] = new Manoeuvre(new LinkedList<Card>(List.of(
-            new Card(Suit.SPADES, Value.FOUR),
-            new Card(Suit.HEARTS, Value.THREE)
+            new Card(Suit.SPADES, Rank.FOUR),
+            new Card(Suit.HEARTS, Rank.THREE)
         )), 1);
 
         Move move = new CardsToFoundations(tableu, foundations);
@@ -256,22 +256,22 @@ public class MovesTest {
 
         assertTrue(tableu[0].empty());
         assertEquals(tableu[1].getRevealedBottom().suit(), Suit.SPADES);
-        assertEquals(tableu[1].getRevealedBottom().value(), Value.FOUR);
+        assertEquals(tableu[1].getRevealedBottom().value(), Rank.FOUR);
 
-        assertEquals(foundations[1].getTop().value(), Value.THREE);
+        assertEquals(foundations[1].getTop().value(), Rank.THREE);
     }
     
     @Test void kingToEmpty() {
         Manoeuvre[] tableu = new Manoeuvre[4];
 
         tableu[0] = new Manoeuvre(new LinkedList<Card>(List.of(
-            new Card(Suit.HEARTS, Value.KING)
+            new Card(Suit.HEARTS, Rank.KING)
         )), 0);
         tableu[1] = new Manoeuvre(new LinkedList<Card>(List.of()), 0);
         tableu[2] = new Manoeuvre(new LinkedList<Card>(List.of(
-            new Card(Suit.DIAMONDS, Value.ACE),
-            new Card(Suit.DIAMONDS, Value.KING),
-            new Card(Suit.SPADES, Value.QUEEN)
+            new Card(Suit.DIAMONDS, Rank.ACE),
+            new Card(Suit.DIAMONDS, Rank.KING),
+            new Card(Suit.SPADES, Rank.QUEEN)
         )), 1);
         tableu[3] = new Manoeuvre(new LinkedList<Card>(List.of()), 0);
 
@@ -283,7 +283,7 @@ public class MovesTest {
 
         assertEquals(tableu[0].getRevealedTop().suit(), Suit.HEARTS);
         assertEquals(tableu[1].getRevealedTop().suit(), Suit.DIAMONDS);
-        assertEquals(tableu[2].getRevealedBottom().value(), Value.ACE);
+        assertEquals(tableu[2].getRevealedBottom().value(), Rank.ACE);
 
         assertTrue(tableu[3].empty());
     }
@@ -293,12 +293,12 @@ public class MovesTest {
         Manoeuvre[] tableu = new Manoeuvre[2];
 
         tableu[0] = new Manoeuvre(new LinkedList<Card>(List.of(
-            new Card(Suit.HEARTS, Value.KING)
+            new Card(Suit.HEARTS, Rank.KING)
         )), 0);
         tableu[1] = new Manoeuvre(new LinkedList<Card>(List.of(
-            new Card(Suit.DIAMONDS, Value.ACE),
-            new Card(Suit.DIAMONDS, Value.KING),
-            new Card(Suit.SPADES, Value.QUEEN)
+            new Card(Suit.DIAMONDS, Rank.ACE),
+            new Card(Suit.DIAMONDS, Rank.KING),
+            new Card(Suit.SPADES, Rank.QUEEN)
         )), 1);
 
         Move move = new KingToEmpty(tableu);
@@ -317,52 +317,52 @@ public class MovesTest {
         }
 
         tableu[0] = new Manoeuvre(new LinkedList<Card>(List.of(
-            new Card(Suit.SPADES, Value.FIVE)
+            new Card(Suit.SPADES, Rank.FIVE)
         )), 0);
 
         tableu[1] = new Manoeuvre(new LinkedList<Card>(List.of( 
-            new Card(Suit.DIAMONDS, Value.TEN),
-            new Card(Suit.SPADES, Value.SIX)
+            new Card(Suit.DIAMONDS, Rank.TEN),
+            new Card(Suit.SPADES, Rank.SIX)
         )), 1);
 
         tableu[2] = new Manoeuvre(new LinkedList<Card>(List.of( 
-            new Card(Suit.HEARTS, Value.SIX),
-            new Card(Suit.HEARTS, Value.QUEEN),
-            new Card(Suit.DIAMONDS, Value.QUEEN)
+            new Card(Suit.HEARTS, Rank.SIX),
+            new Card(Suit.HEARTS, Rank.QUEEN),
+            new Card(Suit.DIAMONDS, Rank.QUEEN)
         )), 2);
 
         tableu[3] = new Manoeuvre(new LinkedList<Card>(List.of( 
-            new Card(Suit.DIAMONDS, Value.FOUR),
-            new Card(Suit.HEARTS, Value.FIVE),
-            new Card(Suit.DIAMONDS, Value.EIGHT),
-            new Card(Suit.SPADES, Value.ACE)
+            new Card(Suit.DIAMONDS, Rank.FOUR),
+            new Card(Suit.HEARTS, Rank.FIVE),
+            new Card(Suit.DIAMONDS, Rank.EIGHT),
+            new Card(Suit.SPADES, Rank.ACE)
         )), 3);
 
         tableu[4] = new Manoeuvre(new LinkedList<Card>(List.of( 
-            new Card(Suit.DIAMONDS, Value.FIVE),
-            new Card(Suit.SPADES, Value.FOUR),
-            new Card(Suit.HEARTS, Value.ACE),
-            new Card(Suit.DIAMONDS, Value.TWO),
-            new Card(Suit.CLUBS, Value.TWO)
+            new Card(Suit.DIAMONDS, Rank.FIVE),
+            new Card(Suit.SPADES, Rank.FOUR),
+            new Card(Suit.HEARTS, Rank.ACE),
+            new Card(Suit.DIAMONDS, Rank.TWO),
+            new Card(Suit.CLUBS, Rank.TWO)
         )), 4);
 
         tableu[5] = new Manoeuvre(new LinkedList<Card>(List.of( 
-            new Card(Suit.DIAMONDS, Value.THREE),
-            new Card(Suit.DIAMONDS, Value.KING),
-            new Card(Suit.CLUBS, Value.THREE),
-            new Card(Suit.CLUBS, Value.SEVEN),
-            new Card(Suit.CLUBS, Value.TEN),
-            new Card(Suit.SPADES, Value.JACK)
+            new Card(Suit.DIAMONDS, Rank.THREE),
+            new Card(Suit.DIAMONDS, Rank.KING),
+            new Card(Suit.CLUBS, Rank.THREE),
+            new Card(Suit.CLUBS, Rank.SEVEN),
+            new Card(Suit.CLUBS, Rank.TEN),
+            new Card(Suit.SPADES, Rank.JACK)
         )), 5);
 
         tableu[6] = new Manoeuvre(new LinkedList<Card>(List.of( 
-            new Card(Suit.DIAMONDS, Value.THREE),
-            new Card(Suit.DIAMONDS, Value.KING),
-            new Card(Suit.CLUBS, Value.THREE),
-            new Card(Suit.CLUBS, Value.SEVEN),
-            new Card(Suit.CLUBS, Value.TEN),
-            new Card(Suit.SPADES, Value.JACK),
-            new Card(Suit.DIAMONDS, Value.SEVEN)
+            new Card(Suit.DIAMONDS, Rank.THREE),
+            new Card(Suit.DIAMONDS, Rank.KING),
+            new Card(Suit.CLUBS, Rank.THREE),
+            new Card(Suit.CLUBS, Rank.SEVEN),
+            new Card(Suit.CLUBS, Rank.TEN),
+            new Card(Suit.SPADES, Rank.JACK),
+            new Card(Suit.DIAMONDS, Rank.SEVEN)
         )), 6);
 
         Move ctf = new CardsToFoundations(tableu, foundations);

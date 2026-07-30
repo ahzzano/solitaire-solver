@@ -45,7 +45,7 @@ public class BoardDisplay {
             }
 
             System.out.print(foundation.getTop().toDisplayString() + "  ");
-            if (foundation.getTop().value() != Value.TEN) {
+            if (foundation.getTop().value() != Rank.TEN) {
                 System.out.print(" ");
             }
         }
@@ -63,7 +63,7 @@ public class BoardDisplay {
     private void printCardDisplayString(Card card) {
         System.out.print(card.toDisplayString());
         System.out.print("  ");
-        if (card.value() != Value.TEN) {
+        if (card.value() != Rank.TEN) {
             System.out.print(" ");
         }
     }

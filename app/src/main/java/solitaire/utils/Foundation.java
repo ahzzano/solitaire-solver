@@ -13,7 +13,7 @@ public class Foundation {
     }
 
     public boolean pushable(Card c) {
-        if(this.cards.isEmpty() && c.value() == Value.ACE) {
+        if(this.cards.isEmpty() && c.value() == Rank.ACE) {
             return true;
         }
 
@@ -26,7 +26,7 @@ public class Foundation {
     }
 
     public boolean push(Card c) {
-        if(this.base == null && c.value() == Value.ACE) {
+        if(this.base == null && c.value() == Rank.ACE) {
             this.base = c;
             cards.push(c);
             return true;

@@ -8,32 +8,32 @@ import org.junit.jupiter.api.Test;
 import solitaire.utils.Card;
 import solitaire.utils.Foundation;
 import solitaire.utils.Suit;
-import solitaire.utils.Value;
+import solitaire.utils.Rank;
 
 public class FoundationsTest {
     @Test void foundationValidPushes() {
         Foundation foundation = new Foundation();
-        Card c = new Card(Suit.CLUBS, Value.ACE);
+        Card c = new Card(Suit.CLUBS, Rank.ACE);
         foundation.push(c);
 
-        Card invalidColor = new Card(Suit.DIAMONDS, Value.TWO);
-        Card invalidNumber = new Card(Suit.CLUBS, Value.THREE);
-        Card validTop = new Card(Suit.CLUBS, Value.TWO);
+        Card invalidColor = new Card(Suit.DIAMONDS, Rank.TWO);
+        Card invalidNumber = new Card(Suit.CLUBS, Rank.THREE);
+        Card validTop = new Card(Suit.CLUBS, Rank.TWO);
 
         boolean pushed = foundation.push(invalidColor);
         assertFalse(pushed);
         assertEquals(foundation.getTop().suit(), Suit.CLUBS);
 
         foundation.push(invalidNumber);
-        assertEquals(foundation.getTop().value(), Value.ACE);
+        assertEquals(foundation.getTop().value(), Rank.ACE);
 
         foundation.push(validTop);
-        assertEquals(foundation.getTop().value(), Value.TWO);
+        assertEquals(foundation.getTop().value(), Rank.TWO);
     }
 
     @Test void foundationPushToEmpty() {
         Foundation foundation = new Foundation();
-        Card c = new Card(Suit.CLUBS, Value.ACE);
+        Card c = new Card(Suit.CLUBS, Rank.ACE);
 
         assertEquals(foundation.empty(), true);
 
