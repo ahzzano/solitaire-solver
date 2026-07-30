@@ -17,7 +17,6 @@ import solitaire.utils.*;
 
 public class Game {
     Manoeuvre[] tableu;
-    Waste waste;
     Talon talon;
     Deque<Card> stock;
     Foundation[] foundations;
@@ -63,10 +62,6 @@ public class Game {
         return this.tableu;
     }
 
-    public Waste getWaste() {
-        return this.waste;
-    }
-
     public Talon getTalon() {
         return this.talon;
     }
@@ -85,10 +80,6 @@ public class Game {
 
     public void withStock(Deque<Card> stock) {
         this.stock = stock;
-    }
-
-    public void withWaste(Waste waste) {
-        this.waste = waste;
     }
 
     public void withFoundations(Foundation[] foundations) {
@@ -126,105 +117,6 @@ public class Game {
         if(this.display != null) {
             this.display.displayState();
         }
-    }
-
-    public boolean wasteCardToTableu() {
-        boolean move = false;
-        if (this.waste.size() == 0) {
-            this.waste.drawThreeFrom(this.stock);
-        }
-
-        Card top = this.waste.getTop();
-        int index = 0;
-        for (Manoeuvre manoeuvre : this.tableu) {
-            if (manoeuvre.empty()) {
-                continue;
-            }
-            if (top.isCompatibleBelow(manoeuvre.getRevealedBottom())) {
-                Card c = this.waste.popTop();
-                System.out.println("Moved " + top.toDisplayString() + " to Manoeuvre #" + (index+1));
-
-                manoeuvre.appendCard(c);
-                move = true;
-                break;
-            }
-
-            index++;
-        }
-        return move;
-    }
-
-    public boolean wasteCardToFoundation() {
-        boolean move = false;
-        if (this.waste.size() == 0) {
-            this.waste.drawThreeFrom(this.stock);
-        }
-
-        Card top = this.waste.getTop();
-
-        for (Foundation foundation : this.foundations) {
-            if (foundation.pushable(top)) {
-                Card c = this.waste.popTop();
-                System.out.println("Moved " + c.toDisplayString() + " to foundations");
-                foundation.push(c);
-                move = true;
-                break;
-            }
-        }
-
-        return move;
-    }
-
-    public boolean wasteAceToFoundation() {
-        boolean move = false;
-        if (this.waste.size() == 0) {
-            this.waste.drawThreeFrom(this.stock);
-        }
-
-        Card top = this.waste.getTop();
-        if (top.value() != Value.ACE) {
-            return false;
-        }
-
-        for (Foundation foundation : this.foundations) {
-            if (!foundation.empty()) {
-                continue;
-            }
-
-            Card c = this.waste.popTop();
-            System.out.println("Moved " + c.toDisplayString() + " to foundations");
-            foundation.push(c);
-            move = true;
-            break;
-        }
-
-        return move;
-    }
-
-    public boolean wasteKingToTableu() {
-        boolean move = false;
-        if (this.waste.size() == 0) {
-            this.waste.drawThreeFrom(this.stock);
-        }
-
-        Card top = this.waste.getTop();
-        if (top.value() != Value.KING) {
-            return false;
-        }
-
-        int index=0;
-        for (Manoeuvre manoeuvre : this.tableu) {
-            if (manoeuvre.empty()) {
-                Card c = this.waste.popTop();
-                manoeuvre.pushCard(c);
-                System.out.println("Moved " + c.toDisplayString() + " to " + (index+1));
-                move = true;
-                break;
-            }
-            index += 1;
-        }
-
-        return move;
     }
 
     private void tableuMoves() {
