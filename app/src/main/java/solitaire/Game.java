@@ -9,6 +9,10 @@ import solitaire.moves.CardsToFoundations;
 import solitaire.moves.KingToEmpty;
 import solitaire.moves.LateralMoves;
 import solitaire.moves.Move;
+import solitaire.moves.TalonAceToFoundations;
+import solitaire.moves.TalonCardToFoundation;
+import solitaire.moves.TalonCardToTableu;
+import solitaire.moves.TalonKingToTableu;
 import solitaire.utils.*;
 
 public class Game {
@@ -19,7 +23,8 @@ public class Game {
     Foundation[] foundations;
     BoardDisplay display;
 
-    List<@NonNull Move> moves;
+    List<@NonNull Move> tableuMoves;
+    List<@NonNull Move> talonMoves;
     
     public Game() {
         ArrayList<Card> deck = new ArrayList<>();
@@ -35,11 +40,18 @@ public class Game {
         this.initializeFoundations();
         this.talon = new Talon();
 
-        this.moves = new ArrayList<>(Arrays.asList(
+        this.tableuMoves = new ArrayList<>(Arrays.asList(
             new AceToFoundations(tableu, foundations),
             new CardsToFoundations(tableu, foundations),
             new KingToEmpty(tableu),
             new LateralMoves(tableu)
+        ));
+
+        this.talonMoves = new ArrayList<>(Arrays.asList(
+            new TalonAceToFoundations(talon, foundations),
+            new TalonCardToFoundation(talon, foundations),
+            new TalonKingToTableu(talon, tableu),
+            new TalonCardToTableu(talon, tableu)
         ));
     }
 
@@ -219,7 +231,7 @@ public class Game {
         boolean movesMade = true;
         while(movesMade) {
             movesMade = false;
-            for (Move move : this.moves) {
+            for (Move move : this.tableuMoves) {
                 boolean played = move.play();
                 if(played) {
                     this.displayState();
@@ -235,25 +247,15 @@ public class Game {
         boolean moveMade = false;
         boolean wasteMoves = false;
         while(!this.stock.isEmpty()) {
-            System.out.println("Drawing cards from stock");
-            this.waste.drawThreeFrom(this.stock);
+            System.out.println("Drawing cards from the talon");
+            this.talon.drawThree();;
             this.displayState();
 
-            if (this.wasteAceToFoundation()) {
-                wasteMoves = true;
-                this.displayState();
-            }
-            if (this.wasteCardToFoundation()) {
-                wasteMoves = true;
-                this.displayState();
-            }
-            if (this.wasteKingToTableu()) {
-                wasteMoves = true;
-                this.displayState();
-            }
-            if (this.wasteCardToTableu()) {
-                wasteMoves = true;
-                this.displayState();
+            for (Move move : this.talonMoves) {
+                if(move.play()) {
+                    wasteMoves = true;
+                    this.displayState();
+                }
             }
 
             if (wasteMoves) {
@@ -262,7 +264,7 @@ public class Game {
             }
         }
 
-        this.waste.refresh(this.stock);
+        this.talon.refresh();
         return moveMade;
     }
 

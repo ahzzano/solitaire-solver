@@ -29,7 +29,7 @@ public class BoardDisplay {
 
     public void displayState() {
         Manoeuvre[] tableu = this.board.getTableu();
-        Waste waste = this.board.getWaste();
+        // Waste waste = this.board.getWaste();
         Deque<Card> stock = this.board.getStock();
         Foundation[] foundations = this.board.getFoundations();
 
