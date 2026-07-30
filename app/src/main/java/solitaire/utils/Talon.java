@@ -20,6 +20,10 @@ public class Talon {
         this.waste = new ArrayDeque<>();
     }
 
+    public boolean isStockEmpty() {
+        return this.stock.isEmpty();
+    }
+
     public Card getTop() {
         return this.waste.peek();
     }

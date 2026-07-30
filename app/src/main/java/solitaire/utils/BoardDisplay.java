@@ -1,6 +1,5 @@
 package solitaire.utils;
 
-import java.util.Deque;
 import java.util.Scanner;
 
 import solitaire.Game;
@@ -31,7 +30,6 @@ public class BoardDisplay {
         Manoeuvre[] tableu = this.board.getTableu();
         // Waste waste = this.board.getWaste();
         Talon talon = this.board.getTalon();
-        Deque<Card> stock = this.board.getStock();
         Foundation[] foundations = this.board.getFoundations();
 
 
@@ -39,7 +37,7 @@ public class BoardDisplay {
         System.out.println("");
 
         if (topWaste != null) {
-            System.out.print("S(" + stock.size() + ")");
+            System.out.print("S(" + talon.stockSize() + ")");
             System.out.print("--" + topWaste.toDisplayString());
         } else {
             System.out.print(" [ empty ] ");

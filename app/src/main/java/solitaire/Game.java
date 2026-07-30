@@ -18,7 +18,6 @@ import solitaire.utils.*;
 public class Game {
     Manoeuvre[] tableu;
     Talon talon;
-    Deque<Card> stock;
     Foundation[] foundations;
     BoardDisplay display;
 
@@ -38,6 +37,7 @@ public class Game {
         this.initializeStock(deck);
         this.initializeFoundations();
         this.talon = new Talon();
+        this.talon.withStock(this.initializeStock(deck));
 
         this.tableuMoves = new ArrayList<>(Arrays.asList(
             new AceToFoundations(tableu, foundations),
@@ -66,20 +66,12 @@ public class Game {
         return this.talon;
     }
 
-    public Deque<Card> getStock() {
-        return this.stock;
-    }
-
     public Foundation[] getFoundations() {
         return this.foundations;
     }
 
     public void withTableu(Manoeuvre[] tableu) {
         this.tableu = tableu;
-    }
-
-    public void withStock(Deque<Card> stock) {
-        this.stock = stock;
     }
 
     public void withFoundations(Foundation[] foundations) {
@@ -104,13 +96,15 @@ public class Game {
         }
     }
 
-    private void initializeStock(ArrayList<Card> deck) {
-        this.stock = new ArrayDeque<>();
+    private Deque<Card> initializeStock(ArrayList<Card> deck) {
+        Deque<Card> stock = new ArrayDeque<>();
 
         while (!deck.isEmpty()) {
             Card c = deck.remove(0);
             stock.add(c);
         }
+
+        return stock;
     }
 
     private void displayState() {
@@ -138,7 +132,7 @@ public class Game {
 
         boolean moveMade = false;
         boolean wasteMoves = false;
-        while(!this.stock.isEmpty()) {
+        while(!this.talon.isStockEmpty()) {
             System.out.println("Drawing cards from the talon");
             this.talon.drawThree();;
             this.displayState();
