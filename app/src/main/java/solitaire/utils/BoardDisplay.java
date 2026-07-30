@@ -30,11 +30,12 @@ public class BoardDisplay {
     public void displayState() {
         Manoeuvre[] tableu = this.board.getTableu();
         // Waste waste = this.board.getWaste();
+        Talon talon = this.board.getTalon();
         Deque<Card> stock = this.board.getStock();
         Foundation[] foundations = this.board.getFoundations();
 
 
-        Card topWaste = waste.getTop();
+        Card topWaste = talon.getTop();
         System.out.println("");
 
         if (topWaste != null) {
