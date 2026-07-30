@@ -42,9 +42,9 @@ public class TalonTest {
 
         stock.add(new Card(Suit.DIAMONDS, Value.ACE));
         stock.add(new Card(Suit.DIAMONDS, Value.TWO));
-        // stock.add(new Card(Suit.DIAMONDS, Value.THREE));
 
         Talon talon = new Talon();
+        talon.withStock(stock);
         
         talon.drawThree();
 
