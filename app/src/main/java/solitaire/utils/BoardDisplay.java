@@ -24,7 +24,7 @@ public class BoardDisplay {
 
     private void displayTalonAndFoundations(Talon talon, Foundation[] foundations) {
         Card topWaste = talon.getTop();
-        System.out.println("");
+        System.out.println("   Talon                      Foundations");
 
         if (topWaste != null) {
             System.out.print("S(" + talon.stockSize() + ")");
@@ -33,7 +33,7 @@ public class BoardDisplay {
             System.out.print(" [ empty ] ");
         }
 
-        for (int i = 0; i < 16; i++) {
+        for (int i = 0; i < 13; i++) {
             System.out.print(" ");
         }
 
@@ -51,6 +51,23 @@ public class BoardDisplay {
 
         System.out.println();
         System.out.println();
+
+    }
+
+    private void printEmptyManoeuvre() {
+        System.out.print("----   ");
+    }
+
+    private void printCardDisplayString(Card card) {
+        System.out.print(card.toDisplayString());
+        System.out.print("  ");
+        if (card.value() != Value.TEN) {
+            System.out.print(" ");
+        }
+    }
+
+    private void printHiddenCard() {
+        System.out.print("-(-)   ");
 
     }
     
@@ -72,7 +89,7 @@ public class BoardDisplay {
             for (Manoeuvre stack : tableu) {
                 if (i >= stack.size()) {
                     if (i < 1) {
-                        System.out.print("----   ");
+                        this.printEmptyManoeuvre();
                     }
                     else {
                         System.out.print("       ");
@@ -81,19 +98,16 @@ public class BoardDisplay {
                 }
 
                 if (i < stack.revealedStart()) {
-                    System.out.print("-(-)   ");
+                    this.printHiddenCard();
                     continue;
                 }
 
-                System.out.print(stack.getCard(i).toDisplayString());
-                System.out.print("  ");
-                if (stack.getCard(i).value() != Value.TEN) {
-                    System.out.print(" ");
-                }
+                Card card = stack.getCard(i);
+                this.printCardDisplayString(card);
             }
             System.out.println();
         }
-        System.out.println("");
+        System.out.println();
     }
 
     public void displayState() {
