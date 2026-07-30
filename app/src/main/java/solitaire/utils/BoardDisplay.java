@@ -12,10 +12,6 @@ public class BoardDisplay {
         this.board = board;
     }
 
-    public BoardDisplay() {
-
-    }
-
     public static BoardDisplay withBoard(Game board) {
         BoardDisplay display = new BoardDisplay(board);
         board.withDisplay(display);
@@ -26,13 +22,7 @@ public class BoardDisplay {
         this.scanner = scanner;
     }
 
-    public void displayState() {
-        Manoeuvre[] tableu = this.board.getTableu();
-        // Waste waste = this.board.getWaste();
-        Talon talon = this.board.getTalon();
-        Foundation[] foundations = this.board.getFoundations();
-
-
+    private void displayTalonAndFoundations(Talon talon, Foundation[] foundations) {
         Card topWaste = talon.getTop();
         System.out.println("");
 
@@ -62,6 +52,9 @@ public class BoardDisplay {
         System.out.println();
         System.out.println();
 
+    }
+    
+    private void displayTableu(Manoeuvre[] tableu) {
         int maxSizeStack = 0;
 
         for (Manoeuvre stack : tableu) {
@@ -101,6 +94,15 @@ public class BoardDisplay {
             System.out.println();
         }
         System.out.println("");
+    }
+
+    public void displayState() {
+        Manoeuvre[] tableu = this.board.getTableu();
+        Talon talon = this.board.getTalon();
+        Foundation[] foundations = this.board.getFoundations();
+
+        this.displayTalonAndFoundations(talon, foundations);
+        this.displayTableu(tableu);
 
         if(this.scanner != null) {
             this.scanner.nextLine();
