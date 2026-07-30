@@ -23,6 +23,14 @@ public enum Rank {
         this.displayString = displayString;
     }
 
+    public static Rank fromValue(int value) {
+        for (Rank rank : Rank.values()) {
+            return rank;
+        }
+
+        throw new IllegalArgumentException("Unknown value: " + value);
+    }
+
     public String displayString() {
         return this.displayString;
     }
