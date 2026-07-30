@@ -17,6 +17,7 @@ import solitaire.moves.KingToEmpty;
 import solitaire.moves.LateralMoves;
 import solitaire.moves.Move;
 import solitaire.moves.TalonAceToFoundations;
+import solitaire.moves.TalonCardToFoundation;
 import solitaire.utils.Card;
 import solitaire.utils.Manoeuvre;
 import solitaire.utils.Foundation;
@@ -74,7 +75,6 @@ public class MovesTest {
 
 
     @Test void wasteCardToFoundation() {
-        Game board = new Game();
         Foundation[] foundations = new Foundation[4];
         for (int i = 0; i < 4; i++) {
             foundations[i] = new Foundation();
@@ -82,19 +82,19 @@ public class MovesTest {
 
         foundations[0].push(new Card(Suit.CLUBS, Value.ACE));
 
-        Waste waste = new Waste();
+        Talon talon = new Talon();
         Deque<Card> stock = new ArrayDeque<>();
 
         stock.add(new Card(Suit.SPADES, Value.ACE));
         stock.add(new Card(Suit.CLUBS, Value.TWO));
 
-        board.withFoundations(foundations);
-        board.withWaste(waste);
-        board.withStock(stock);
+        talon.withStock(stock);
 
-        board.wasteCardToFoundation();
-        assertEquals(board.foundations[0].getTop().value(), Value.TWO);
-        assertEquals(board.waste.size(), 1);
+        Move move = new TalonCardToFoundation(talon, foundations);
+        move.play();
+
+        assertEquals(foundations[0].getTop().value(), Value.TWO);
+        assertEquals(talon.size(), 1);
     }
 
     @Test void wasteAceToFoundation() {
