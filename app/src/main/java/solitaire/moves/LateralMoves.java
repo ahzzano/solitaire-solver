@@ -13,6 +13,10 @@ public class LateralMoves implements Move{
 
     @Override
     public boolean play() {
+        // TODO: Optimize this move. 
+        // Currently uses a double for loop that iterates the tableu twice
+        // Try to make it use only one for loop
+
         boolean move = false;
 
         // CardStack A - to move

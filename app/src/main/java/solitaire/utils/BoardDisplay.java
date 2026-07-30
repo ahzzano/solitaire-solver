@@ -22,6 +22,7 @@ public class BoardDisplay {
         this.scanner = scanner;
     }
 
+    // TODO: Refactor to use System.out.printf()
     private void displayTalonAndFoundations(Talon talon, Foundation[] foundations) {
         Card topWaste = talon.getTop();
         System.out.println("   Talon                      Foundations");
@@ -54,6 +55,7 @@ public class BoardDisplay {
 
     }
 
+    // TODO: Refactor to use System.out.printf()
     private void printEmptyManoeuvre() {
         System.out.print("----   ");
     }
@@ -66,11 +68,13 @@ public class BoardDisplay {
         }
     }
 
+    // TODO: Refactor to use System.out.printf()
     private void printHiddenCard() {
         System.out.print("-(-)   ");
 
     }
     
+    // TODO: Refactor to use System.out.printf()
     private void displayTableu(Manoeuvre[] tableu) {
         int maxSizeStack = 0;
 
