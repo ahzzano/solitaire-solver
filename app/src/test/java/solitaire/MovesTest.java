@@ -18,6 +18,7 @@ import solitaire.moves.LateralMoves;
 import solitaire.moves.Move;
 import solitaire.moves.TalonAceToFoundations;
 import solitaire.moves.TalonCardToFoundation;
+import solitaire.moves.TalonCardToTableu;
 import solitaire.moves.TalonKingToTableu;
 import solitaire.utils.Card;
 import solitaire.utils.Manoeuvre;
@@ -29,7 +30,6 @@ import solitaire.utils.Waste;
 
 public class MovesTest {
     @Test void wasteCardToTableu() {
-        Game board = new Game();
         Manoeuvre[] tableu = new Manoeuvre[4];
 
         tableu[0] = new Manoeuvre(new LinkedList<Card>(List.of(new Card(Suit.DIAMONDS, Value.KING))), 0);
@@ -56,22 +56,23 @@ public class MovesTest {
         stock.add(new Card(Suit.CLUBS, Value.FOUR));
         stock.add(new Card(Suit.SPADES, Value.NINE));
         stock.add(new Card(Suit.CLUBS, Value.QUEEN));
-        Waste waste = new Waste();
+        // Waste waste = new Waste();
 
-        board.withTableu(tableu);
-        board.withStock(stock);
-        board.withWaste(waste);
+        Talon talon = new Talon();
+        talon.withStock(stock);
 
-        board.wasteCardToTableu();
-        board.wasteCardToTableu();
-        board.wasteCardToTableu();
+        Move move = new TalonCardToTableu(talon, tableu);
 
-        assertEquals(board.tableu[0].getRevealedBottom().value(), Value.QUEEN);
-        assertEquals(board.tableu[1].getRevealedBottom().value(), Value.NINE);
-        assertEquals(board.tableu[2].getRevealedBottom().value(), Value.FOUR);
+        move.play();
+        move.play();
+        move.play();
 
-        assertEquals(board.tableu[3].getRevealedBottom().value(), Value.FOUR);
-        assertEquals(board.tableu[3].getRevealedBottom().suit(), Suit.SPADES);
+        assertEquals(tableu[0].getRevealedBottom().value(), Value.QUEEN);
+        assertEquals(tableu[1].getRevealedBottom().value(), Value.NINE);
+        assertEquals(tableu[2].getRevealedBottom().value(), Value.FOUR);
+
+        assertEquals(tableu[3].getRevealedBottom().value(), Value.FOUR);
+        assertEquals(tableu[3].getRevealedBottom().suit(), Suit.SPADES);
     }
 
 
