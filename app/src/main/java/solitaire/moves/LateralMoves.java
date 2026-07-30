@@ -35,8 +35,18 @@ public class LateralMoves implements Move{
     private HashMap<MoveKey, Deque<Manoeuvre>> generateDestinationMap() {
         HashMap<MoveKey, Deque<Manoeuvre>> destMap = new HashMap<>();
 
-        for (Manoeuvre manoeuvre : tableu) {
-            
+        for(Manoeuvre manoeuvre : this.tableu) {
+            Card bottomCard = manoeuvre.getRevealedBottom();
+            Rank targetRank = Rank.fromValue(bottomCard.value().number() - 1);
+
+            if(bottomCard.suit() == Suit.CLUBS || bottomCard.suit() == Suit.SPADES) {
+                MoveKey moveKeyA = new MoveKey(targetRank, Suit.DIAMONDS);
+                MoveKey moveKeyB = new MoveKey(targetRank, Suit.HEARTS);
+
+                if(!destinationColumn.containsKey(moveKeyA)) {
+                    destinationColumn.put(moveKeyA, new LinkedList<>());
+                }
+            }
         }
 
         return destMap;
@@ -53,19 +63,6 @@ public class LateralMoves implements Move{
 
         HashMap<MoveKey, Deque<Manoeuvre>> destinationColumn = generateDestinationMap();
 
-        for(Manoeuvre manoeuvre : this.tableu) {
-            Card bottomCard = manoeuvre.getRevealedBottom();
-            Rank targetRank = Rank.fromValue(bottomCard.value().number() - 1);
-
-            if(bottomCard.suit() == Suit.CLUBS || bottomCard.suit() == Suit.SPADES) {
-                MoveKey moveKeyA = new MoveKey(targetRank, Suit.DIAMONDS);
-                MoveKey moveKeyB = new MoveKey(targetRank, Suit.HEARTS);
-
-                if(!destinationColumn.containsKey(moveKeyA)) {
-                    destinationColumn.put(moveKeyA, new LinkedList<>());
-                }
-            }
-        }
 
         // CardStack A - to move
         // CardStack B - to receive
