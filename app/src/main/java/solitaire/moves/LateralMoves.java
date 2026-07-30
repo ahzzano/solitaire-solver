@@ -1,7 +1,10 @@
 package solitaire.moves;
 
 import solitaire.utils.Manoeuvre;
-import solitaire.utils.Value;
+import solitaire.utils.Rank;
+import solitaire.utils.Suit;
+
+record MoveKey(Rank rank, Suit suit) {}
 
 public class LateralMoves implements Move{
 
@@ -26,7 +29,7 @@ public class LateralMoves implements Move{
             if (manoeuvreToMove.empty()) {
                 continue;
             }
-            if (manoeuvreToMove.revealedStart() == 0 && manoeuvreToMove.getRevealedTop().value() == Value.KING) {
+            if (manoeuvreToMove.revealedStart() == 0 && manoeuvreToMove.getRevealedTop().value() == Rank.KING) {
                 continue;
             }
             int indexB = 1;

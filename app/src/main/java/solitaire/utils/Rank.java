@@ -1,6 +1,6 @@
 package solitaire.utils;
 
-public enum Value {
+public enum Rank {
     ACE(1, "A"),
     TWO(2, "2"),
     THREE(3, "3"),
@@ -18,7 +18,7 @@ public enum Value {
     private final int value;
     private final String displayString;
 
-    Value(int value, String displayString) {
+    Rank(int value, String displayString) {
         this.value = value;
         this.displayString = displayString;
     }

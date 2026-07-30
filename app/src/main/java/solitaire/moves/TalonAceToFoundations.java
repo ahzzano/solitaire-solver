@@ -3,7 +3,7 @@ package solitaire.moves;
 import solitaire.utils.Card;
 import solitaire.utils.Foundation;
 import solitaire.utils.Talon;
-import solitaire.utils.Value;
+import solitaire.utils.Rank;
 
 public class TalonAceToFoundations implements Move {
 
@@ -23,7 +23,7 @@ public class TalonAceToFoundations implements Move {
         }
 
         Card top = this.talon.getTop();
-        if (top.value() != Value.ACE) {
+        if (top.value() != Rank.ACE) {
             return false;
         }
 
