@@ -4,15 +4,7 @@ import java.util.*;
 
 import org.jspecify.annotations.NonNull;
 
-import solitaire.moves.AceToFoundations;
-import solitaire.moves.CardsToFoundations;
-import solitaire.moves.KingToEmpty;
-import solitaire.moves.LateralMoves;
-import solitaire.moves.Move;
-import solitaire.moves.TalonAceToFoundations;
-import solitaire.moves.TalonCardToFoundation;
-import solitaire.moves.TalonCardToTableu;
-import solitaire.moves.TalonKingToTableu;
+import solitaire.moves.*;
 import solitaire.utils.*;
 
 public class Game {
