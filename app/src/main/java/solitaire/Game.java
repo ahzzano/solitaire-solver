@@ -104,7 +104,8 @@ public class Game {
         }
     }
 
-    private void tableuMoves() {
+    // TODO: Refactor
+    private void playTableuMoves() {
         boolean movesMade = true;
         while(movesMade) {
             movesMade = false;
@@ -118,26 +119,33 @@ public class Game {
         }
     }
 
+    private boolean playTalonMoves() {
+        boolean talonMoves = false;
+        for (Move move : this.talonMoves) {
+            if(move.play()) {
+                talonMoves = true;
+                this.displayState();
+            }
+        }
+
+        return talonMoves;
+    }
+
+    // TODO: Refactor
     public boolean playOneCycle() {
-        this.tableuMoves();
+        this.playTableuMoves();
 
         boolean moveMade = false;
-        boolean wasteMoves = false;
+        boolean talonMove = false;
         while(!this.talon.isStockEmpty()) {
             System.out.println("Drawing cards from the talon");
-            this.talon.drawThree();;
+            this.talon.drawThree();
             this.displayState();
+            talonMove = this.playTalonMoves();
 
-            for (Move move : this.talonMoves) {
-                if(move.play()) {
-                    wasteMoves = true;
-                    this.displayState();
-                }
-            }
-
-            if (wasteMoves) {
+            if (talonMove) {
                 moveMade = true;
-                this.tableuMoves();
+                this.playTableuMoves();
             }
         }
 
