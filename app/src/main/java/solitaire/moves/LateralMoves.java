@@ -22,6 +22,23 @@ record MoveKey(Rank rank, Suit suit) {
     public static MoveKey fromCard(Card card) {
         return new MoveKey(card.value(), card.suit());
     }
+
+    public static MoveKey[] expectedCards(Card card) {
+        Rank targetRank = Rank.fromValue(card.value().number() - 1);
+
+        if(card.suit() == Suit.DIAMONDS || card.suit() == Suit.HEARTS) {
+            return new MoveKey[] {
+                new MoveKey(targetRank, Suit.CLUBS),
+                new MoveKey(targetRank, Suit.SPADES)
+            };
+        }
+
+        return new MoveKey[] {
+            new MoveKey(targetRank, Suit.DIAMONDS),
+            new MoveKey(targetRank, Suit.HEARTS)
+        };
+
+    }
 }
 
 public class LateralMoves implements Move{
@@ -30,6 +47,15 @@ public class LateralMoves implements Move{
 
     public LateralMoves(Manoeuvre[] tableu) {
         this.tableu = tableu;
+    }
+
+    private void addToDestMap(HashMap<MoveKey, Deque<Manoeuvre>> destMap, MoveKey[] moveKeys, Deque<Manoeuvre> queue) {
+        for (MoveKey moveKey : moveKeys) {
+            
+            if(!destMap.containsKey(moveKey)) {
+                destMap.put(moveKey, queue);
+            } 
+        }
     }
 
     private HashMap<MoveKey, Deque<Manoeuvre>> generateDestinationMap() {
@@ -45,45 +71,21 @@ public class LateralMoves implements Move{
             }
 
             Card bottomCard = manoeuvre.getRevealedBottom();
-            Rank targetRank = Rank.fromValue(bottomCard.value().number() - 1);
 
             queue.add(manoeuvre);
 
-            if(bottomCard.suit() == Suit.CLUBS || bottomCard.suit() == Suit.SPADES) {
-                MoveKey moveKeyA = new MoveKey(targetRank, Suit.DIAMONDS);
-                MoveKey moveKeyB = new MoveKey(targetRank, Suit.HEARTS);
-
-                if(!destMap.containsKey(moveKeyA)) {
-                    destMap.put(moveKeyA, queue);
-                } 
-
-                if(!destMap.containsKey(moveKeyB)) {
-                    destMap.put(moveKeyB, queue);
-                } 
-            } 
-            if(bottomCard.suit() == Suit.DIAMONDS || bottomCard.suit() == Suit.HEARTS) {
-                MoveKey moveKeyA = new MoveKey(targetRank, Suit.CLUBS);
-                MoveKey moveKeyB = new MoveKey(targetRank, Suit.SPADES);
-
-                if(!destMap.containsKey(moveKeyA)) {
-                    destMap.put(moveKeyA, queue);
-                } 
-
-                if(!destMap.containsKey(moveKeyB)) {
-                    destMap.put(moveKeyB, queue);
-                } 
-            } 
+            MoveKey[] moveKeys = MoveKey.expectedCards(bottomCard);
+            this.addToDestMap(destMap, moveKeys, queue);
         }
 
         return destMap;
     }
 
+    // TODO: Refactor me
+    // This function is way too long. Needs to be chopped up further
+    // Also, add proper display thx
     @Override
     public boolean play() {
-        // TODO: Optimize this move. 
-        // Currently uses a double for loop that iterates the tableu twice
-        // Try to make it use only one for loop
-
         boolean move = false;
 
         HashMap<MoveKey, Deque<Manoeuvre>> destMap = this.generateDestinationMap();
@@ -105,6 +107,7 @@ public class LateralMoves implements Move{
                 Deque<Manoeuvre> nextManoeuvre = destMap.get(targetMove);
 
                 if(nextManoeuvre.isEmpty()) {
+                    destMap.remove(targetMove);
                     continue;
                 }
 
