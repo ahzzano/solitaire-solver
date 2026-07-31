@@ -24,6 +24,7 @@ public class Game {
                 deck.add(new Card(suit, value));
             }
         }
+        Collections.shuffle(deck);
 
         this.initializeTableu(deck);
         this.initializeFoundations();
