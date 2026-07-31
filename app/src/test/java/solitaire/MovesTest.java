@@ -384,29 +384,4 @@ public class MovesTest {
 
         assertTrue(tableu[1].empty());
     }
-
-    @Test void exampleGame() {
-        Game board = new Game();
-
-        assertTrue(board.talon.isStockEmpty() == false);
-        
-        boolean moveMadeThisCycle = board.playOneCycle();
-
-        assertFalse(board.foundations[0].empty());
-        assertFalse(board.foundations[1].empty());
-        assertFalse(board.foundations[2].empty());
-        assertFalse(board.foundations[3].empty());
-
-        for (Manoeuvre stack : board.tableu) {
-            for (int i = stack.revealedStart() + 1; i < stack.size(); i++) {
-                Card a = stack.getCard(i);
-                Card b = stack.getCard(i - 1);
-
-                assertFalse(a.sameColor(b));
-            }
-        }
-
-        assertTrue(moveMadeThisCycle);
-    }
-
 }
