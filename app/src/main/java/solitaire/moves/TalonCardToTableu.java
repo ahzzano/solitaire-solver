@@ -21,6 +21,9 @@ public class TalonCardToTableu implements Move {
         }
 
         Card top = this.talon.getTop();
+        if(top == null) {
+            return false;
+        }
         int index = 0;
         for (Manoeuvre manoeuvre : this.tableu) {
             if (manoeuvre.empty()) {

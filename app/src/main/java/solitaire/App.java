@@ -11,26 +11,16 @@ public class App {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        Game board = new Game();
+        Game game = new Game();
 
-        boolean move = true;
-        boolean win = false;
-
-        BoardDisplay display = BoardDisplay.withBoard(board);
+        BoardDisplay display = BoardDisplay.withBoard(game);
         display.setScanner(scanner);
         
         System.out.println("Starting the game GLHF");
         display.displayState();
 
-        // TODO: Abstract this away to game
-        while (move && !win) {
-            move = board.playOneCycle();
-            display.displayState();
+        boolean win = game.play();
 
-            if (board.areFoundationsComplete()) {
-                win = true;
-            }
-        }
         if (win) {
             System.out.println("You win!");
         } else {

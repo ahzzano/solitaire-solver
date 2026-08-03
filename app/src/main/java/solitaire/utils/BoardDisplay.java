@@ -21,34 +21,40 @@ public class BoardDisplay {
     public void setScanner(Scanner scanner) {
         this.scanner = scanner;
     }
+    
+    public void pause() {
+        if(this.scanner != null) {
+            this.scanner.nextLine();
+        }
+    }
 
     // TODO: Refactor to use System.out.printf()
     private void displayTalonAndFoundations(Talon talon, Foundation[] foundations) {
         Card topWaste = talon.getTop();
-        System.out.println("   Talon                      Foundations");
+        System.out.println("      Talon                    Foundations");
+
+        String deckDisplay = "";
 
         if (topWaste != null) {
-            System.out.print("S(" + talon.stockSize() + ")");
-            System.out.print("--" + topWaste.toDisplayString());
+            // System.out.printf("D(%d) -- [ %s ]", talon.stockSize(), topWaste.toDisplayString());
+            deckDisplay = String.format("D(%d) -- [ %s ]", talon.stockSize(), topWaste.toDisplayString());
         } else {
-            System.out.print(" [ empty ] ");
+            // System.out.print(" [ empty ] ");
+            deckDisplay = String.format("[ empty ]");
         }
 
-        for (int i = 0; i < 13; i++) {
-            System.out.print(" ");
-        }
+        String foundationsString = "";
 
         for (Foundation foundation : foundations) {
             if (foundation.empty()) {
-                System.out.print("----  ");
+                foundationsString += String.format("%6s", "----");
                 continue;
             }
 
-            System.out.print(foundation.getTop().toDisplayString() + "  ");
-            if (foundation.getTop().value() != Rank.TEN) {
-                System.out.print(" ");
-            }
+            foundationsString += String.format("%6s", foundation.getTop().toDisplayString());
         }
+
+        System.out.printf("%-22s%18s", deckDisplay, foundationsString);
 
         System.out.println();
         System.out.println();
@@ -112,6 +118,7 @@ public class BoardDisplay {
             System.out.println();
         }
         System.out.println();
+        System.out.println();
     }
 
     public void displayState() {
@@ -119,11 +126,9 @@ public class BoardDisplay {
         Talon talon = this.board.getTalon();
         Foundation[] foundations = this.board.getFoundations();
 
+        System.out.println("=====================================");
         this.displayTalonAndFoundations(talon, foundations);
         this.displayTableu(tableu);
-
-        if(this.scanner != null) {
-            this.scanner.nextLine();
-        }
+        System.out.println("=====================================");
     }
 }

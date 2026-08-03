@@ -13,6 +13,8 @@ public class Game {
     Foundation[] foundations;
     BoardDisplay display;
 
+    int move = 0;
+
     List<@NonNull Move> tableuMoves;
     List<@NonNull Move> talonMoves;
     
@@ -105,31 +107,32 @@ public class Game {
         }
     }
 
-    // TODO: Refactor
-    private void playTableuMoves() {
+    private boolean playMoves(List<@NonNull Move> moves) {
         boolean movesMade = true;
+        boolean toRet = false;
         while(movesMade) {
             movesMade = false;
-            for (Move move : this.tableuMoves) {
+            for (Move move : moves) {
                 boolean played = move.play();
                 if(played) {
+                    this.move++; 
+                    System.out.println("Moves: " + this.move);
                     this.displayState();
+                    this.display.pause();
                     movesMade = true;
+                    toRet = true;
                 }
             }
         }
+        return toRet;
+    }
+
+    private boolean playTableuMoves() {
+        return this.playMoves(this.tableuMoves);
     }
 
     private boolean playTalonMoves() {
-        boolean talonMoves = false;
-        for (Move move : this.talonMoves) {
-            if(move.play()) {
-                talonMoves = true;
-                this.displayState();
-            }
-        }
-
-        return talonMoves;
+        return this.playMoves(this.talonMoves);
     }
 
     // TODO: Refactor
@@ -141,7 +144,11 @@ public class Game {
         while(!this.talon.isStockEmpty()) {
             System.out.println("Drawing cards from the talon");
             this.talon.drawThree();
+            this.move++;
+            System.out.println("Moves: " + this.move);
             this.displayState();
+            this.display.pause();
+
             talonMove = this.playTalonMoves();
 
             if (talonMove) {
@@ -152,6 +159,21 @@ public class Game {
 
         this.talon.refresh();
         return moveMade;
+    }
+
+    public boolean play() {
+        boolean move = true;
+        boolean win = false;
+
+        while (move && !win) {
+            move = this.playOneCycle();
+
+            if (this.areFoundationsComplete()) {
+                win = true;
+            }
+        }
+
+        return win;
     }
 
     public boolean areFoundationsComplete() {

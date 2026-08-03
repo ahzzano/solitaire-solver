@@ -23,6 +23,9 @@ public class TalonAceToFoundations implements Move {
         }
 
         Card top = this.talon.getTop();
+        if(top == null) {
+            return false;
+        }
         if (top.value() != Rank.ACE) {
             return false;
         }

@@ -25,12 +25,16 @@ record MoveKey(Rank rank, Suit suit) {
     }
 
     public static MoveKey[] expectedCards(Card card) {
-        Rank targetRank = Rank.fromValue(card.value().number() - 1);
+        int expectedValue = card.value().number() - 1;
+        if(expectedValue < 1) {
+            expectedValue = 1;
+        }
+        Rank targetRank = Rank.fromValue(expectedValue);
 
         if (card.suit() == Suit.DIAMONDS || card.suit() == Suit.HEARTS) {
             return new MoveKey[] {
-                    new MoveKey(targetRank, Suit.CLUBS),
-                    new MoveKey(targetRank, Suit.SPADES)
+                new MoveKey(targetRank, Suit.CLUBS),
+                new MoveKey(targetRank, Suit.SPADES)
             };
         }
 
@@ -122,11 +126,12 @@ public class LateralMoves implements Move {
                     if (dest == null) {
                         break;
                     }
-                    Card manoeuvreBottom = dest.getRevealedBottomCard().get();
-                    if (manoeuvreBottom == null) {
+                    var manouvreBottom = dest.getRevealedBottomCard();
+                    if (manouvreBottom.isEmpty()) {
                         continue;
                     }
-                    if (!manoeuvreTop.isCompatibleBelow(manoeuvreBottom)) {
+                    Card manoeuvreBottomCard = manouvreBottom.get();
+                    if (!manoeuvreTop.isCompatibleBelow(manoeuvreBottomCard)) {
                         continue;
                     }
 

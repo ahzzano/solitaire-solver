@@ -22,6 +22,11 @@ public class TalonCardToFoundation implements Move{
 
         Card top = this.talon.getTop();
 
+        if(top == null) {
+            return false;
+            
+        }
+
         for (Foundation foundation : this.foundations) {
             if (foundation.pushable(top)) {
                 Card c = this.talon.popTop();

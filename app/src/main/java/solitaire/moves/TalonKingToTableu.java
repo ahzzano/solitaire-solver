@@ -22,6 +22,10 @@ public class TalonKingToTableu implements Move{
         }
 
         Card top = this.talon.getTop();
+        if(top == null) {
+            return false;
+        }
+
         if (top.value() != Rank.KING) {
             return false;
         }
