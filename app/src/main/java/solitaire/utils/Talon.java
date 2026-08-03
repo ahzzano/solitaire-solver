@@ -24,10 +24,14 @@ public class Talon {
         return this.stock.isEmpty();
     }
 
+    // TODO: Make this use Optional<Card> 
+    // @Deprecated
     public Card getTop() {
         return this.waste.peek();
     }
 
+    // @Deprecated
+    // TODO: Make this use Optional<Card> 
     public Card popTop() {
         return this.waste.pop();
     }
@@ -45,10 +49,6 @@ public class Talon {
         while (!this.waste.isEmpty()) {
             stock.push(this.waste.pop());
         }
-    }
-
-    public void display() {
-        // TODO: Add display to Talon
     }
 
     public int size() {
