@@ -9,8 +9,6 @@ public class Manoeuvre {
     // Topmost revealed card
     private int revealedStart;
 
-    // REMOVE revealedEnd, no need for the thing as its always at the end of the list
-
     public Manoeuvre(LinkedList<Card> cards, int revealedStart) {
         this.cards = cards;
         this.revealedStart = revealedStart;
@@ -68,7 +66,7 @@ public class Manoeuvre {
     }
 
     public void revealCard() {
-        if(revealedStart > 0) {
+        if (revealedStart > 0) {
             this.revealedStart -= 1;
         }
     }
@@ -84,12 +82,22 @@ public class Manoeuvre {
     public Card getRevealedTop() {
         return this.cards.get(this.revealedStart);
     }
-    
+
+    // TODO: Use null type annotations here
+    @Deprecated
     public Card getRevealedBottom() {
         if (this.cards.isEmpty()) {
             return null;
         }
         return this.cards.get(this.cards.size() - 1);
+    }
+
+    public Optional<Card> getRevealedBottomCard() {
+        if (this.cards.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(this.cards.get(this.cards.size() - 1));
+
     }
 
     public int size() {

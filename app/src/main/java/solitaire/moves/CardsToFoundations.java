@@ -25,7 +25,7 @@ public class CardsToFoundations implements Move {
             boolean pushable = true;
             while (!manoeuvre.empty() && pushable) {
                 for (Foundation foundation : this.foundations) {
-                    Card end = manoeuvre.getRevealedBottom();
+                    Card end = manoeuvre.getRevealedBottomCard().get();
                     if (!foundation.pushable(end)) {
                         pushable = false;
                         continue;
@@ -42,5 +42,5 @@ public class CardsToFoundations implements Move {
 
         return move;
     }
-    
+
 }

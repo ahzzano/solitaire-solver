@@ -22,6 +22,7 @@ public class App {
         System.out.println("Starting the game GLHF");
         display.displayState();
 
+        // TODO: Abstract this away to game
         while (move && !win) {
             move = board.playOneCycle();
             display.displayState();

@@ -7,6 +7,7 @@ import solitaire.utils.Manoeuvre;
 public class AceToFoundations implements Move {
     Manoeuvre[] tableu;
     Foundation[] foundations;
+
     public AceToFoundations(Manoeuvre[] tableu, Foundation[] foundations) {
         this.tableu = tableu;
         this.foundations = foundations;
@@ -23,7 +24,7 @@ public class AceToFoundations implements Move {
             boolean pushable = true;
             while (!stack.empty() && pushable) {
                 for (Foundation foundation : foundations) {
-                    Card end = stack.getRevealedBottom();
+                    Card end = stack.getRevealedBottomCard().get();
                     if (!foundation.pushable(end)) {
                         pushable = false;
                         continue;

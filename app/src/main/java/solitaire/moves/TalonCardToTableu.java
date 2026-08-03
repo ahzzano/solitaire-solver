@@ -26,9 +26,9 @@ public class TalonCardToTableu implements Move {
             if (manoeuvre.empty()) {
                 continue;
             }
-            if (top.isCompatibleBelow(manoeuvre.getRevealedBottom())) {
+            if (top.isCompatibleBelow(manoeuvre.getRevealedBottomCard().get())) {
                 Card c = this.talon.popTop();
-                System.out.println("Moved " + top.toDisplayString() + " to Manoeuvre #" + (index+1));
+                System.out.println("Moved " + top.toDisplayString() + " to Manoeuvre #" + (index + 1));
 
                 manoeuvre.appendCard(c);
                 move = true;

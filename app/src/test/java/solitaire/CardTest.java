@@ -16,7 +16,8 @@ import solitaire.utils.Suit;
 import solitaire.utils.Rank;
 
 public class CardTest {
-    @Test void cardMovableComparison() {
+    @Test
+    void cardMovableComparison() {
         Card c1 = new Card(Suit.DIAMONDS, Rank.FIVE);
         Card c2 = new Card(Suit.SPADES, Rank.FOUR);
         Card c3 = new Card(Suit.HEARTS, Rank.THREE);
@@ -26,7 +27,8 @@ public class CardTest {
 
     }
 
-    @Test void comparisonsWorks() {
+    @Test
+    void comparisonsWorks() {
         Card c1 = new Card(Suit.DIAMONDS, Rank.ACE);
         Card c2 = new Card(Suit.HEARTS, Rank.ACE);
         Card c3 = new Card(Suit.CLUBS, Rank.ACE);
@@ -37,27 +39,27 @@ public class CardTest {
         assertTrue(c1.sameSuit(c4));
     }
 
-    @Test void cardStackEnd() {
+    @Test
+    void cardStackEnd() {
         LinkedList<Card> cards = new LinkedList<Card>(List.of(
-            new Card(Suit.CLUBS, Rank.TEN),
-            new Card(Suit.DIAMONDS, Rank.NINE),
-            new Card(Suit.CLUBS, Rank.EIGHT),
-            new Card(Suit.DIAMONDS, Rank.SEVEN)
-        ));
+                new Card(Suit.CLUBS, Rank.TEN),
+                new Card(Suit.DIAMONDS, Rank.NINE),
+                new Card(Suit.CLUBS, Rank.EIGHT),
+                new Card(Suit.DIAMONDS, Rank.SEVEN)));
 
         Manoeuvre cs = new Manoeuvre(cards, 2);
 
-        assertEquals(cs.getRevealedBottom().value(), Rank.SEVEN);
+        assertEquals(cs.getRevealedBottomCard().get().value(), Rank.SEVEN);
 
     }
 
-    @Test void cardStackPopping() {
+    @Test
+    void cardStackPopping() {
         LinkedList<Card> cards = new LinkedList<Card>(List.of(
-            new Card(Suit.CLUBS, Rank.TEN),
-            new Card(Suit.DIAMONDS, Rank.NINE),
-            new Card(Suit.CLUBS, Rank.EIGHT),
-            new Card(Suit.DIAMONDS, Rank.SEVEN)
-        ));
+                new Card(Suit.CLUBS, Rank.TEN),
+                new Card(Suit.DIAMONDS, Rank.NINE),
+                new Card(Suit.CLUBS, Rank.EIGHT),
+                new Card(Suit.DIAMONDS, Rank.SEVEN)));
 
         Manoeuvre cs = new Manoeuvre(cards, 2);
         Card c = cs.popCard();
@@ -66,28 +68,28 @@ public class CardTest {
         assertEquals(c.suit(), Suit.DIAMONDS);
     }
 
-    @Test void cardStackRevealsProperly() {
+    @Test
+    void cardStackRevealsProperly() {
         LinkedList<Card> cards = new LinkedList<Card>(List.of(
-            new Card(Suit.CLUBS, Rank.TEN),
-            new Card(Suit.DIAMONDS, Rank.NINE),
-            new Card(Suit.CLUBS, Rank.EIGHT),
-            new Card(Suit.DIAMONDS, Rank.SEVEN)
-        ));
+                new Card(Suit.CLUBS, Rank.TEN),
+                new Card(Suit.DIAMONDS, Rank.NINE),
+                new Card(Suit.CLUBS, Rank.EIGHT),
+                new Card(Suit.DIAMONDS, Rank.SEVEN)));
 
         Manoeuvre cs = new Manoeuvre(cards, 3);
         cs.popCard();
 
-        assertEquals(cs.getRevealedBottom().value(), Rank.EIGHT);
+        assertEquals(cs.getRevealedBottomCard().get().value(), Rank.EIGHT);
         assertEquals(cs.revealedStart(), 2);
     }
 
-    @Test void cardStackSplitsStacks() {
+    @Test
+    void cardStackSplitsStacks() {
         LinkedList<Card> cards = new LinkedList<Card>(List.of(
-            new Card(Suit.CLUBS, Rank.TEN),
-            new Card(Suit.DIAMONDS, Rank.NINE),
-            new Card(Suit.CLUBS, Rank.EIGHT),
-            new Card(Suit.DIAMONDS, Rank.SEVEN)
-        ));
+                new Card(Suit.CLUBS, Rank.TEN),
+                new Card(Suit.DIAMONDS, Rank.NINE),
+                new Card(Suit.CLUBS, Rank.EIGHT),
+                new Card(Suit.DIAMONDS, Rank.SEVEN)));
 
         Manoeuvre cs = new Manoeuvre(cards, 2);
 
@@ -103,13 +105,13 @@ public class CardTest {
         assertTrue(newCS.getCard(1).suit() == Suit.DIAMONDS);
     }
 
-    @Test void cardStackBasicMerge() {
+    @Test
+    void cardStackBasicMerge() {
         LinkedList<Card> cards = new LinkedList<Card>(List.of(
-            new Card(Suit.CLUBS, Rank.TEN),
-            new Card(Suit.DIAMONDS, Rank.NINE),
-            new Card(Suit.CLUBS, Rank.EIGHT),
-            new Card(Suit.DIAMONDS, Rank.SEVEN)
-        ));
+                new Card(Suit.CLUBS, Rank.TEN),
+                new Card(Suit.DIAMONDS, Rank.NINE),
+                new Card(Suit.CLUBS, Rank.EIGHT),
+                new Card(Suit.DIAMONDS, Rank.SEVEN)));
 
         Manoeuvre cs = new Manoeuvre(cards, 2);
 
@@ -121,17 +123,16 @@ public class CardTest {
         assertSame(cs.getCard(2).suit(), Suit.CLUBS);
     }
 
-    @Test void cardStackInvalidMerge() {
+    @Test
+    void cardStackInvalidMerge() {
         LinkedList<Card> cards1 = new LinkedList<Card>(List.of(
-            new Card(Suit.HEARTS, Rank.JACK),
-            new Card(Suit.CLUBS, Rank.TEN),
-            new Card(Suit.DIAMONDS, Rank.NINE)
-        ));
+                new Card(Suit.HEARTS, Rank.JACK),
+                new Card(Suit.CLUBS, Rank.TEN),
+                new Card(Suit.DIAMONDS, Rank.NINE)));
 
         LinkedList<Card> cards2 = new LinkedList<Card>(List.of(
-            new Card(Suit.HEARTS, Rank.TEN),
-            new Card(Suit.SPADES, Rank.NINE)
-        ));
+                new Card(Suit.HEARTS, Rank.TEN),
+                new Card(Suit.SPADES, Rank.NINE)));
 
         Manoeuvre cs1 = new Manoeuvre(cards1, 0);
         Manoeuvre cs2 = new Manoeuvre(cards2, 0);

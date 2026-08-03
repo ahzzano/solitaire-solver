@@ -15,6 +15,7 @@ import solitaire.utils.Suit;
  * as using a Card as a key in a HashMap would make comparisons by reference.
  * It's better if the comparisons are by value instead of by reference. MoveKey
  * does that well
+ * 
  * @param rank
  * @param suit
  */
@@ -26,22 +27,22 @@ record MoveKey(Rank rank, Suit suit) {
     public static MoveKey[] expectedCards(Card card) {
         Rank targetRank = Rank.fromValue(card.value().number() - 1);
 
-        if(card.suit() == Suit.DIAMONDS || card.suit() == Suit.HEARTS) {
+        if (card.suit() == Suit.DIAMONDS || card.suit() == Suit.HEARTS) {
             return new MoveKey[] {
-                new MoveKey(targetRank, Suit.CLUBS),
-                new MoveKey(targetRank, Suit.SPADES)
+                    new MoveKey(targetRank, Suit.CLUBS),
+                    new MoveKey(targetRank, Suit.SPADES)
             };
         }
 
         return new MoveKey[] {
-            new MoveKey(targetRank, Suit.DIAMONDS),
-            new MoveKey(targetRank, Suit.HEARTS)
+                new MoveKey(targetRank, Suit.DIAMONDS),
+                new MoveKey(targetRank, Suit.HEARTS)
         };
 
     }
 }
 
-public class LateralMoves implements Move{
+public class LateralMoves implements Move {
 
     private Manoeuvre[] tableu;
 
@@ -51,26 +52,26 @@ public class LateralMoves implements Move{
 
     private void addToDestMap(HashMap<MoveKey, Deque<Manoeuvre>> destMap, MoveKey[] moveKeys, Deque<Manoeuvre> queue) {
         for (MoveKey moveKey : moveKeys) {
-            
-            if(!destMap.containsKey(moveKey)) {
+
+            if (!destMap.containsKey(moveKey)) {
                 destMap.put(moveKey, queue);
-            } 
+            }
         }
     }
 
     private HashMap<MoveKey, Deque<Manoeuvre>> generateDestinationMap() {
         HashMap<MoveKey, Deque<Manoeuvre>> destMap = new HashMap<>();
 
-        for(Manoeuvre manoeuvre : this.tableu) {
+        for (Manoeuvre manoeuvre : this.tableu) {
             // Use the same queue. That way, if a card gets placed into one
             // both will be dequeued
             LinkedList<Manoeuvre> queue = new LinkedList<>();
 
-            if(manoeuvre.empty()) {
+            if (manoeuvre.empty()) {
                 continue;
             }
 
-            Card bottomCard = manoeuvre.getRevealedBottom();
+            Card bottomCard = manoeuvre.getRevealedBottomCard().get();
 
             queue.add(manoeuvre);
 
@@ -89,8 +90,9 @@ public class LateralMoves implements Move{
         boolean move = false;
 
         HashMap<MoveKey, Deque<Manoeuvre>> destMap = this.generateDestinationMap();
+
         for (Manoeuvre manoeuvre : this.tableu) {
-            if(manoeuvre.empty()) {
+            if (manoeuvre.empty()) {
                 continue;
             }
 
@@ -98,15 +100,15 @@ public class LateralMoves implements Move{
 
             // Skip all King to Empty moves.
             // This should be handled by KingToEmpty() instead
-            if(manoeuvreTop.value() == Rank.KING) {
+            if (manoeuvreTop.value() == Rank.KING) {
                 continue;
             }
 
             MoveKey targetMove = new MoveKey(manoeuvreTop.value(), manoeuvreTop.suit());
-            if(destMap.containsKey(targetMove)) {
+            if (destMap.containsKey(targetMove)) {
                 Deque<Manoeuvre> nextManoeuvre = destMap.get(targetMove);
 
-                if(nextManoeuvre.isEmpty()) {
+                if (nextManoeuvre.isEmpty()) {
                     destMap.remove(targetMove);
                     continue;
                 }
@@ -117,38 +119,37 @@ public class LateralMoves implements Move{
 
                 do {
                     dest = nextManoeuvre.poll();
-                    if(dest == null) {
+                    if (dest == null) {
                         break;
                     }
-                    Card manoeuvreBottom = dest.getRevealedBottom();
-                    if(manoeuvreBottom == null) {
+                    Card manoeuvreBottom = dest.getRevealedBottomCard().get();
+                    if (manoeuvreBottom == null) {
                         continue;
                     }
-                    if(!manoeuvreTop.isCompatibleBelow(manoeuvreBottom)) {
+                    if (!manoeuvreTop.isCompatibleBelow(manoeuvreBottom)) {
                         continue;
                     }
 
                     validNext = true;
-                } while(!validNext);
+                } while (!validNext);
 
-                if(dest == null) {
+                if (dest == null) {
                     continue;
                 }
 
                 var temp = manoeuvre.splitStack(manoeuvre.revealedStart());
 
-                if(temp.isEmpty()) {
+                if (temp.isEmpty()) {
                     continue;
                 }
 
                 System.out.println("Moved Cards from " + targetMove);
                 dest.mergeStacks(temp.get());
                 move = true;
-
             }
         }
 
         return move;
     }
-    
+
 }
