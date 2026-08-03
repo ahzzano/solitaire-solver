@@ -57,7 +57,7 @@ public class Manoeuvre {
             return false;
         }
 
-        if (other.getCard(other.revealedStart()).sameColor(this.getRevealedBottom())) {
+        if (other.getCard(other.revealedStart()).sameColor(this.getRevealedBottomCard().get())) {
             return false;
         }
 
@@ -81,15 +81,6 @@ public class Manoeuvre {
 
     public Card getRevealedTop() {
         return this.cards.get(this.revealedStart);
-    }
-
-    // TODO: Use null type annotations here
-    @Deprecated
-    public Card getRevealedBottom() {
-        if (this.cards.isEmpty()) {
-            return null;
-        }
-        return this.cards.get(this.cards.size() - 1);
     }
 
     public Optional<Card> getRevealedBottomCard() {
