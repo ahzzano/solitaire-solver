@@ -47,7 +47,7 @@ public class LateralMoves implements Move {
 
             Card manoeuvreTop = manoeuvre.getRevealedTop();
 
-            if(manoeuvreTop.value() == Rank.KING) {
+            if(manoeuvreTop.rank() == Rank.KING) {
                 sourceIndex++;
                 continue;
             }
@@ -65,13 +65,14 @@ public class LateralMoves implements Move {
                 continue;
             }
 
+            // TODO: combine into one function
             var temp = manoeuvre.splitStack(manoeuvre.revealedStart());
             if (temp.isEmpty()) {
                 sourceIndex++;
                 continue;
             }
 
-            System.out.printf("Moved Cards from Manoeuvre #%d to Manouvre #%d\n", sourceIndex+1, target+1);
+            System.out.printf("Moved Cards %s and below from Manoeuvre #%d to Manouvre #%d\n", manoeuvreTop.toDisplayString(), sourceIndex+1, target+1);
             tableu[target].mergeStacks(temp.get());
             move = true;
             break;

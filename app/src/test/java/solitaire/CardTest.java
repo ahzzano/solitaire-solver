@@ -49,7 +49,7 @@ public class CardTest {
 
         Manoeuvre cs = new Manoeuvre(cards, 2);
 
-        assertEquals(cs.getRevealedBottomCard().get().value(), Rank.SEVEN);
+        assertEquals(cs.getRevealedBottomCard().get().rank(), Rank.SEVEN);
 
     }
 
@@ -64,7 +64,7 @@ public class CardTest {
         Manoeuvre cs = new Manoeuvre(cards, 2);
         Card c = cs.popCard();
 
-        assertEquals(c.value(), Rank.SEVEN);
+        assertEquals(c.rank(), Rank.SEVEN);
         assertEquals(c.suit(), Suit.DIAMONDS);
     }
 
@@ -79,7 +79,7 @@ public class CardTest {
         Manoeuvre cs = new Manoeuvre(cards, 3);
         cs.popCard();
 
-        assertEquals(cs.getRevealedBottomCard().get().value(), Rank.EIGHT);
+        assertEquals(cs.getRevealedBottomCard().get().rank(), Rank.EIGHT);
         assertEquals(cs.revealedStart(), 2);
     }
 

@@ -18,15 +18,24 @@ public class Game {
     List<@NonNull Move> tableuMoves;
     List<@NonNull Move> talonMoves;
     
-    public Game() {
-        ArrayList<Card> deck = new ArrayList<>();
+    public void displayDeck(ArrayList<Card> cards) {
+        int maxRowLength = 7;
+        int rowLength = 0;
 
-        for (Suit suit : Suit.values()) {
-            for (Rank value : Rank.values()) {
-                deck.add(new Card(suit, value));
+        for (Card card : cards) {
+            System.out.printf("%-6s ", card.toDisplayString());
+            rowLength += 1;
+            if(rowLength == maxRowLength) {
+                rowLength = 0;
+                System.out.println();
             }
         }
-        Collections.shuffle(deck);
+        System.out.println();
+        System.out.println();
+    }
+
+    private void initializeGameWithDeck(ArrayList<Card> deck) {
+        this.displayDeck(deck);
 
         this.initializeTableu(deck);
         this.initializeFoundations();
@@ -46,6 +55,23 @@ public class Game {
             new TalonKingToTableu(this.talon, this.tableu),
             new TalonCardToTableu(this.talon, this.tableu)
         ));
+    }
+
+    public Game(ArrayList<Card> deck) {
+        this.initializeGameWithDeck(deck);
+    }
+
+    public Game() {
+        ArrayList<Card> deck = new ArrayList<>();
+
+        for (Suit suit : Suit.values()) {
+            for (Rank value : Rank.values()) {
+                deck.add(new Card(suit, value));
+            }
+        }
+        Collections.shuffle(deck);
+
+        this.initializeGameWithDeck(deck);
     }
 
     public void withDisplay(BoardDisplay display) {
@@ -113,14 +139,17 @@ public class Game {
         while(movesMade) {
             movesMade = false;
             for (Move move : moves) {
-                // TODO: Refactor so that each move only does ONE move and nothing more
-                while(move.play()) {
-                    this.move++; 
-                    System.out.println("Moves: " + this.move);
-                    this.displayState();
-                    // this.display.pause();
-                    movesMade = true;
-                    toRet = true;
+                boolean cont = true;
+                while(cont) {
+                    cont = move.play();
+                    if(cont) {
+                        this.move++; 
+                        System.out.println("Moves: " + this.move);
+                        this.displayState();
+                        this.display.pause();
+                        movesMade = true;
+                        toRet = true;
+                    }
                 }
             }
         }
@@ -147,7 +176,7 @@ public class Game {
             this.move++;
             System.out.println("Moves: " + this.move);
             this.displayState();
-            // this.display.pause();
+            this.display.pause();
 
             talonMove = this.playTalonMoves();
 
@@ -157,7 +186,6 @@ public class Game {
             }
         }
 
-        this.talon.refresh();
         return moveMade;
     }
 
@@ -170,7 +198,10 @@ public class Game {
 
             if (this.areFoundationsComplete()) {
                 win = true;
+                break;
             }
+
+            this.talon.refresh();
         }
 
         return win;

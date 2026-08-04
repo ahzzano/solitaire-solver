@@ -39,7 +39,7 @@ public class KingToEmpty implements Move {
                 break;
             }
 
-            if (stack.revealedStart() > 0 && stack.getRevealedTop().value() == Rank.KING) {
+            if (stack.revealedStart() > 0 && stack.getRevealedTop().rank() == Rank.KING) {
                 Manoeuvre kingStack = stack.splitStack(stack.revealedStart()).get();
                 System.out.println("Moved " + kingStack.getRevealedTop().toDisplayString() + " to Manoeuvre #" + (index+1));
                 this.tableu[emptyStackIndexes.get(nextMarkedStack)].mergeStacks(kingStack);

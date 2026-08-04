@@ -13,7 +13,7 @@ public class Foundation {
     }
 
     public boolean pushable(Card c) {
-        if(this.cards.isEmpty() && c.value() == Rank.ACE) {
+        if(this.cards.isEmpty() && c.rank() == Rank.ACE) {
             return true;
         }
 
@@ -21,12 +21,12 @@ public class Foundation {
             return false;
         }
 
-        boolean validMove = this.base.suit() == c.suit() &&  c.value().number() - 1 == this.cards.getFirst().value().number();
+        boolean validMove = this.base.suit() == c.suit() &&  c.rank().number() - 1 == this.cards.getFirst().rank().number();
         return validMove;
     }
 
     public boolean push(Card c) {
-        if(this.base == null && c.value() == Rank.ACE) {
+        if(this.base == null && c.rank() == Rank.ACE) {
             this.base = c;
             cards.push(c);
             return true;
@@ -37,7 +37,7 @@ public class Foundation {
         }
 
         if (this.base.suit() == c.suit()) {
-            if (c.value().number() - 1 == this.cards.getFirst().value().number()) {
+            if (c.rank().number() - 1 == this.cards.getFirst().rank().number()) {
                 cards.push(c);
                 return true;
             }

@@ -25,10 +25,10 @@ public class FoundationsTest {
         assertEquals(foundation.getTop().suit(), Suit.CLUBS);
 
         foundation.push(invalidNumber);
-        assertEquals(foundation.getTop().value(), Rank.ACE);
+        assertEquals(foundation.getTop().rank(), Rank.ACE);
 
         foundation.push(validTop);
-        assertEquals(foundation.getTop().value(), Rank.TWO);
+        assertEquals(foundation.getTop().rank(), Rank.TWO);
     }
 
     @Test void foundationPushToEmpty() {

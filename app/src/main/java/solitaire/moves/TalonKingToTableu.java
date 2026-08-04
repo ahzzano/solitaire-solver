@@ -26,7 +26,7 @@ public class TalonKingToTableu implements Move{
             return false;
         }
 
-        if (top.value() != Rank.KING) {
+        if (top.rank() != Rank.KING) {
             return false;
         }
 

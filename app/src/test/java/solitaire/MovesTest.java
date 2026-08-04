@@ -64,11 +64,11 @@ public class MovesTest {
         move.play();
         move.play();
 
-        assertEquals(tableu[0].getRevealedBottomCard().get().value(), Rank.QUEEN);
-        assertEquals(tableu[1].getRevealedBottomCard().get().value(), Rank.NINE);
-        assertEquals(tableu[2].getRevealedBottomCard().get().value(), Rank.FOUR);
+        assertEquals(tableu[0].getRevealedBottomCard().get().rank(), Rank.QUEEN);
+        assertEquals(tableu[1].getRevealedBottomCard().get().rank(), Rank.NINE);
+        assertEquals(tableu[2].getRevealedBottomCard().get().rank(), Rank.FOUR);
 
-        assertEquals(tableu[3].getRevealedBottomCard().get().value(), Rank.FOUR);
+        assertEquals(tableu[3].getRevealedBottomCard().get().rank(), Rank.FOUR);
         assertEquals(tableu[3].getRevealedBottomCard().get().suit(), Suit.SPADES);
     }
 
@@ -92,7 +92,7 @@ public class MovesTest {
         Move move = new TalonCardToFoundation(talon, foundations);
         move.play();
 
-        assertEquals(foundations[0].getTop().value(), Rank.TWO);
+        assertEquals(foundations[0].getTop().rank(), Rank.TWO);
         assertEquals(talon.size(), 1);
     }
 
@@ -151,13 +151,13 @@ public class MovesTest {
         move.play();
 
         assertFalse(tableu[0].empty());
-        assertEquals(tableu[0].getRevealedBottomCard().get().value(), Rank.KING);
+        assertEquals(tableu[0].getRevealedBottomCard().get().rank(), Rank.KING);
         assertEquals(tableu[0].getRevealedBottomCard().get().suit(), Suit.HEARTS);
 
         move.play();
 
         assertFalse(tableu[2].empty());
-        assertEquals(tableu[2].getRevealedBottomCard().get().value(), Rank.KING);
+        assertEquals(tableu[2].getRevealedBottomCard().get().rank(), Rank.KING);
         assertEquals(tableu[2].getRevealedBottomCard().get().suit(), Suit.CLUBS);
 
         assertEquals(tableu[1].size(), 2);
@@ -213,8 +213,8 @@ public class MovesTest {
         Move atf = new AceToFoundations(tableu, foundations);
         atf.play();
 
-        assertEquals(tableu[0].getRevealedBottomCard().get().value(), Rank.JACK);
-        assertEquals(foundations[0].getTop().value(), Rank.ACE);
+        assertEquals(tableu[0].getRevealedBottomCard().get().rank(), Rank.JACK);
+        assertEquals(foundations[0].getTop().rank(), Rank.ACE);
 
         assertTrue(tableu[2].empty());
         assertEquals(foundations[1].getTop().suit(), Suit.HEARTS);
@@ -247,11 +247,11 @@ public class MovesTest {
         Move move = new CardsToFoundations(tableu, foundations);
         move.play();
 
-        assertTrue(tableu[0].empty());
-        assertEquals(tableu[1].getRevealedBottomCard().get().suit(), Suit.SPADES);
-        assertEquals(tableu[1].getRevealedBottomCard().get().value(), Rank.FOUR);
+        assertFalse(tableu[0].empty());
+        assertEquals(tableu[1].getRevealedBottomCard().get().suit(), Suit.HEARTS);
+        assertEquals(tableu[1].getRevealedBottomCard().get().rank(), Rank.THREE);
 
-        assertEquals(foundations[1].getTop().value(), Rank.THREE);
+        assertEquals(tableu[0].getRevealedBottomCard().get().rank(), Rank.TWO);
     }
 
     @Test
@@ -275,7 +275,7 @@ public class MovesTest {
 
         assertEquals(tableu[0].getRevealedTop().suit(), Suit.HEARTS);
         assertEquals(tableu[1].getRevealedTop().suit(), Suit.DIAMONDS);
-        assertEquals(tableu[2].getRevealedBottomCard().get().value(), Rank.ACE);
+        assertEquals(tableu[2].getRevealedBottomCard().get().rank(), Rank.ACE);
 
         assertTrue(tableu[3].empty());
     }

@@ -2,14 +2,14 @@ package solitaire.utils;
 
 public class Card {
     final Suit suit;
-    final Rank value;
+    final Rank rank;
 
     public String toDisplayString() {
-        return this.value.displayString() + "(" + this.suit.displayString() + ")";
+        return this.rank.displayString() + "(" + this.suit.displayString() + ")";
     }
 
-    public Rank value() {
-        return this.value;
+    public Rank rank() {
+        return this.rank;
     }
 
     public Suit suit() {
@@ -18,7 +18,7 @@ public class Card {
 
     public Card(Suit s, Rank v) {
         this.suit = s;
-        this.value = v;
+        this.rank = v;
     }
 
     public boolean sameSuit(Card other) {
@@ -26,11 +26,11 @@ public class Card {
     }
 
     public boolean sameValue(Card other) {
-        return this.value == other.value;
+        return this.rank == other.rank;
     }
 
     public boolean isCompatibleBelow(Card other) {
-        return !this.sameColor(other) && this.value().number() == other.value().number() - 1;
+        return !this.sameColor(other) && this.rank().number() == other.rank().number() - 1;
     }
 
     public boolean sameColor(Card other) {

@@ -26,7 +26,7 @@ public class TalonAceToFoundations implements Move {
         if(top == null) {
             return false;
         }
-        if (top.value() != Rank.ACE) {
+        if (top.rank() != Rank.ACE) {
             return false;
         }
 

@@ -18,10 +18,6 @@ public class CardsToFoundations implements Move {
         boolean move = false;
 
         for (Manoeuvre manoeuvre : this.tableu) {
-            if(move == true) {
-                break;
-            }
-
             if (manoeuvre.empty()) {
                 continue;
             }
@@ -39,6 +35,10 @@ public class CardsToFoundations implements Move {
                 foundation.push(manoeuvre.popCard());
                 System.out.println("Moved " + foundation.getTop().toDisplayString() + " to Foundations");
                 move = true;
+                break;
+            }
+
+            if(move == true) {
                 break;
             }
         }

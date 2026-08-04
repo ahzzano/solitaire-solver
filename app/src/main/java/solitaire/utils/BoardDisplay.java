@@ -4,6 +4,14 @@ import java.util.Scanner;
 
 import solitaire.Game;
 
+// TODO:
+// Final strench so let's clean up the last things
+// Must haves IMHO
+// - [ ] add timer
+// - [ ] add color to terminal
+// Nice to have
+// - [ ] add transition when card flips?
+
 public class BoardDisplay {
     Game board;
     Scanner scanner;
@@ -55,14 +63,14 @@ public class BoardDisplay {
 
         for (Foundation foundation : foundations) {
             if (foundation.empty()) {
-                foundationsString += String.format("%6s", "----");
+                foundationsString += String.format("%-7s", "----");
                 continue;
             }
 
-            foundationsString += String.format("%6s", foundation.getTop().toDisplayString());
+            foundationsString += String.format("%-7s", foundation.getTop().toDisplayString());
         }
 
-        System.out.printf("%-22s%18s", deckDisplay, foundationsString);
+        System.out.printf("%-20s%21s", deckDisplay, foundationsString);
 
         System.out.println();
         System.out.println();
@@ -70,7 +78,7 @@ public class BoardDisplay {
     }
 
     private void printEmptyManoeuvre() {
-        System.out.printf("%6s", "----");
+        System.out.printf("%-7s", "----");
     }
 
     private void printCardDisplayString(Card card) {
