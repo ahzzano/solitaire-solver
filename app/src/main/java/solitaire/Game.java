@@ -140,12 +140,12 @@ public class Game {
             movesMade = false;
             for (Move move : moves) {
                 if(move.play()) {
-                        this.numOfMoves++; 
-                        System.out.println("Moves: " + this.numOfMoves);
-                        this.displayState();
-                        this.display.pause();
-                        movesMade = true;
-                        toRet = true;
+                    this.numOfMoves++; 
+                    System.out.println("Moves: " + this.numOfMoves);
+                    this.displayState();
+                    this.display.pause();
+                    movesMade = true;
+                    toRet = true;
                 }
             }
         }
