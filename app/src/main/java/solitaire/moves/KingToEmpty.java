@@ -45,6 +45,7 @@ public class KingToEmpty implements Move {
                 this.tableu[emptyStackIndexes.get(nextMarkedStack)].mergeStacks(kingStack);
                 nextMarkedStack += 1;
                 move = true;
+                break;
             }
             index++;
         }

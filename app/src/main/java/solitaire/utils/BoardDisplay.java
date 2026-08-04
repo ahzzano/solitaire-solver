@@ -36,10 +36,8 @@ public class BoardDisplay {
         String deckDisplay = "";
 
         if (topWaste != null) {
-            // System.out.printf("D(%d) -- [ %s ]", talon.stockSize(), topWaste.toDisplayString());
             deckDisplay = String.format("D(%d) -- [ %s ]", talon.stockSize(), topWaste.toDisplayString());
         } else {
-            // System.out.print(" [ empty ] ");
             deckDisplay = String.format("[ empty ]");
         }
 
@@ -94,6 +92,12 @@ public class BoardDisplay {
             System.out.print("Mv#" + (i+1) + "   ");
         }
         System.out.println();
+
+        if(maxSizeStack <= 0) {
+            for(int i=0; i<7; i++) {
+                this.printEmptyManoeuvre();
+            }
+        }
 
         for (int i = 0; i < maxSizeStack; i++) {
             for (Manoeuvre stack : tableu) {

@@ -18,25 +18,28 @@ public class CardsToFoundations implements Move {
         boolean move = false;
 
         for (Manoeuvre manoeuvre : this.tableu) {
+            if(move == true) {
+                break;
+            }
+
             if (manoeuvre.empty()) {
                 continue;
             }
 
-            boolean pushable = true;
-            while (!manoeuvre.empty() && pushable) {
-                for (Foundation foundation : this.foundations) {
-                    Card end = manoeuvre.getRevealedBottomCard().get();
-                    if (!foundation.pushable(end)) {
-                        pushable = false;
-                        continue;
-                    }
-
-                    foundation.push(manoeuvre.popCard());
-                    System.out.println("Moved " + foundation.getTop().toDisplayString() + " to Foundations");
-                    move = true;
-                    pushable = true;
-                    break;
+            for (Foundation foundation : this.foundations) {
+                var endTemp = manoeuvre.getRevealedBottomCard();
+                if(endTemp.isEmpty()) {
+                    continue;
                 }
+                Card end = endTemp.get();
+                if (!foundation.pushable(end)) {
+                    continue;
+                }
+
+                foundation.push(manoeuvre.popCard());
+                System.out.println("Moved " + foundation.getTop().toDisplayString() + " to Foundations");
+                move = true;
+                break;
             }
         }
 

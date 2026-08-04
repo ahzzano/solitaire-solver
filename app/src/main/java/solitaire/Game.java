@@ -113,12 +113,12 @@ public class Game {
         while(movesMade) {
             movesMade = false;
             for (Move move : moves) {
-                boolean played = move.play();
-                if(played) {
+                // TODO: Refactor so that each move only does ONE move and nothing more
+                while(move.play()) {
                     this.move++; 
                     System.out.println("Moves: " + this.move);
                     this.displayState();
-                    this.display.pause();
+                    // this.display.pause();
                     movesMade = true;
                     toRet = true;
                 }
@@ -147,7 +147,7 @@ public class Game {
             this.move++;
             System.out.println("Moves: " + this.move);
             this.displayState();
-            this.display.pause();
+            // this.display.pause();
 
             talonMove = this.playTalonMoves();
 

@@ -21,21 +21,16 @@ public class AceToFoundations implements Move {
                 continue;
             }
 
-            boolean pushable = true;
-            while (!stack.empty() && pushable) {
-                for (Foundation foundation : foundations) {
-                    Card end = stack.getRevealedBottomCard().get();
-                    if (!foundation.pushable(end)) {
-                        pushable = false;
-                        continue;
-                    }
-
-                    foundation.push(stack.popCard());
-                    System.out.println("Moved " + foundation.getTop().toDisplayString() + " to Foundations");
-                    move = true;
-                    pushable = true;
-                    break;
+            for (Foundation foundation : foundations) {
+                Card end = stack.getRevealedBottomCard().get();
+                if (!foundation.pushable(end)) {
+                    continue;
                 }
+
+                foundation.push(stack.popCard());
+                System.out.println("Moved " + foundation.getTop().toDisplayString() + " to Foundations");
+                move = true;
+                break;
             }
         }
         return move;
