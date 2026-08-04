@@ -19,9 +19,7 @@ public class TalonKingToTableau implements Move{
     @Override
     public boolean play() {
         boolean move = false;
-        if (this.talon.size() == 0) {
-            this.talon.drawThree();;
-        }
+        this.talon.drawIfTalonEmpty();
 
         Optional<Card> topTemp = this.talon.getTop();
         if(topTemp.isEmpty()) {

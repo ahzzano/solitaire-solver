@@ -29,6 +29,12 @@ public class Talon {
         return Optional.ofNullable(this.waste.peek());
     }
 
+    public void drawIfTalonEmpty() {
+        if (this.waste.isEmpty()) {
+            this.drawThree();
+        }
+    }
+
     // @Deprecated
     // TODO: Make this use Optional<Card> 
     public Card popTop() {
