@@ -12,6 +12,17 @@ public class BoardDisplay {
         this.board = board;
     }
 
+    public void displayState() {
+        Manoeuvre[] tableu = this.board.getTableu();
+        Talon talon = this.board.getTalon();
+        Foundation[] foundations = this.board.getFoundations();
+
+        System.out.println("=====================================");
+        this.displayTalonAndFoundations(talon, foundations);
+        this.displayTableu(tableu);
+        System.out.println("=====================================");
+    }
+
     public static BoardDisplay withBoard(Game board) {
         BoardDisplay display = new BoardDisplay(board);
         board.withDisplay(display);
@@ -28,7 +39,6 @@ public class BoardDisplay {
         }
     }
 
-    // TODO: Refactor to use System.out.printf()
     private void displayTalonAndFoundations(Talon talon, Foundation[] foundations) {
         Card topWaste = talon.getTop();
         System.out.println("      Talon                    Foundations");
@@ -59,27 +69,19 @@ public class BoardDisplay {
 
     }
 
-    // TODO: Refactor to use System.out.printf()
     private void printEmptyManoeuvre() {
-        System.out.print("----   ");
+        System.out.printf("%6s", "----");
     }
 
     private void printCardDisplayString(Card card) {
-        System.out.print(card.toDisplayString());
-        System.out.print("  ");
-        if (card.value() != Rank.TEN) {
-            System.out.print(" ");
-        }
+        System.out.printf("%-7s", card.toDisplayString());
     }
 
-    // TODO: Refactor to use System.out.printf()
     private void printHiddenCard() {
-        System.out.print("-(-)   ");
-
+        System.out.printf("%-7s", "-(-)");
     }
-    
-    // TODO: Refactor to use System.out.printf()
-    private void displayTableu(Manoeuvre[] tableu) {
+
+    private int getMaxSizeStack(Manoeuvre[] tableu) {
         int maxSizeStack = 0;
 
         for (Manoeuvre stack : tableu) {
@@ -88,10 +90,20 @@ public class BoardDisplay {
             }
         }
 
+        return maxSizeStack;
+    }
+
+    private void printTableuColumnHeaders(Manoeuvre[] tableu) {
         for (int i = 0; i < tableu.length; i++) {
             System.out.print("Mv#" + (i+1) + "   ");
         }
+
         System.out.println();
+    }
+    
+    private void displayTableu(Manoeuvre[] tableu) {
+        int maxSizeStack = this.getMaxSizeStack(tableu);
+        this.printTableuColumnHeaders(tableu);
 
         if(maxSizeStack <= 0) {
             for(int i=0; i<7; i++) {
@@ -122,17 +134,6 @@ public class BoardDisplay {
             System.out.println();
         }
         System.out.println();
-        System.out.println();
     }
 
-    public void displayState() {
-        Manoeuvre[] tableu = this.board.getTableu();
-        Talon talon = this.board.getTalon();
-        Foundation[] foundations = this.board.getFoundations();
-
-        System.out.println("=====================================");
-        this.displayTalonAndFoundations(talon, foundations);
-        this.displayTableu(tableu);
-        System.out.println("=====================================");
-    }
 }
