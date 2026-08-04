@@ -27,6 +27,7 @@ public class App {
         System.out.println("Starting the game GLHF");
         System.out.println("Starting state");
         display.displayState();
+        System.out.println("Press enter to start the game");
         scanner.nextLine();
 
         boolean win = game.play();
