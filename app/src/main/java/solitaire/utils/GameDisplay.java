@@ -5,8 +5,6 @@ import java.util.Optional;
 
 import solitaire.Game;
 
-// TODO:
-// Final strench so let's clean up the last things
 // Must haves IMHO
 // - [ ] add color to terminal
 
