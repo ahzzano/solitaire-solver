@@ -6,46 +6,29 @@ import java.util.Optional;
 
 public class Foundation {
     private Deque<Card> cards;
-    private Card base;
 
     public Foundation() {
         this.cards = new ArrayDeque<Card>();
     }
 
-    public boolean pushable(Card c) {
-        if(this.cards.isEmpty() && c.rank() == Rank.ACE) {
-            return true;
+    public boolean pushable(Card card) {
+        if(this.cards.isEmpty()) {
+            return card.rank() == Rank.ACE;
         }
 
-        if (this.base == null) {
-            return false;
-        }
+        Card top = cards.peek();
 
-        boolean validMove = this.base.suit() == c.suit() &&  c.rank().number() - 1 == this.cards.getFirst().rank().number();
-        return validMove;
+        return top.suit() == card.suit() 
+            && card.rank().number() == top.rank().number() + 1;
     }
 
-    public boolean push(Card c) {
-        if(this.base == null && c.rank() == Rank.ACE) {
-            this.base = c;
-            cards.push(c);
-            return true;
-        }
-
-        if(this.base == null) {
+    public boolean push(Card card) {
+        if(!this.pushable(card)) {
             return false;
         }
 
-        if (this.base.suit() == c.suit()) {
-            if (c.rank().number() - 1 == this.cards.getFirst().rank().number()) {
-                cards.push(c);
-                return true;
-            }
-            return true;
-        }
-
-
-        return false;
+        this.cards.push(card);
+        return true;
     }
 
     public Optional<Card> pop() {

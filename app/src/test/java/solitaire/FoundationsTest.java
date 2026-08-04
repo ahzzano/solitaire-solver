@@ -24,7 +24,7 @@ public class FoundationsTest {
         assertFalse(pushed);
         assertEquals(foundation.getTop().suit(), Suit.CLUBS);
 
-        foundation.push(invalidNumber);
+        assertFalse(foundation.push(invalidNumber));
         assertEquals(foundation.getTop().rank(), Rank.ACE);
 
         foundation.push(validTop);
