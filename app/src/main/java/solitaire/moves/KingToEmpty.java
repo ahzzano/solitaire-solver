@@ -14,20 +14,19 @@ public class KingToEmpty implements Move {
 
     @Override
     public boolean play() {
-        ArrayList<Integer> emptyStackIndexes = new ArrayList<>();
+        int emptyStackIndex = -1;
         boolean move = false;
 
-        for (int i = 0; i < this.tableau.length; i++) {
-            if (tableau[i].empty()) {
-                emptyStackIndexes.add(i);
+        for(int i=0; i<this.tableau.length; i++) {
+            if(tableau[i].empty()) {
+                emptyStackIndex = i;
+                break;
             }
         }
 
-        if(emptyStackIndexes.isEmpty()) {
-            return move;
+        if(emptyStackIndex == -1) {
+            return false;
         }
-
-        int nextMarkedStack = 0;
 
         int index = 0;
         for (Manoeuvre stack : this.tableau) {
@@ -35,15 +34,10 @@ public class KingToEmpty implements Move {
                 continue;
             }
 
-            if (nextMarkedStack >= emptyStackIndexes.size()) {
-                break;
-            }
-
             if (stack.revealedStart() > 0 && stack.getRevealedTop().rank() == Rank.KING) {
                 Manoeuvre kingStack = stack.splitStack(stack.revealedStart()).get();
                 System.out.println("Moved " + kingStack.getRevealedTop().toDisplayString() + " to Manoeuvre #" + (index+1));
-                this.tableau[emptyStackIndexes.get(nextMarkedStack)].mergeStacks(kingStack);
-                nextMarkedStack += 1;
+                this.tableau[emptyStackIndex].mergeStacks(kingStack);
                 move = true;
                 break;
             }
