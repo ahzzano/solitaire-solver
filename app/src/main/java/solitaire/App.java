@@ -14,6 +14,9 @@ public class App {
         do {
             System.out.print("Autoskip to end (Y/n): ");
             autoSkip = scanner.nextLine();
+            if(!autoSkip.equals("Y") && !autoSkip.equals("n")) {
+                System.out.print("Please enter only Y/n. Thank you");
+            }
         } while (!autoSkip.equals("Y") && !autoSkip.equals("n"));
 
         GameDisplay display = GameDisplay.withBoard(game);

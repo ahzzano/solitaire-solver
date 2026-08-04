@@ -5,9 +5,6 @@ import java.util.Optional;
 
 import solitaire.Game;
 
-// Must haves IMHO
-// - [ ] add color to terminal
-
 public class GameDisplay {
     Game game;
     Scanner scanner;

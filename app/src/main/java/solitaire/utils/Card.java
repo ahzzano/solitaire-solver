@@ -16,9 +16,9 @@ public class Card {
         return this.suit;
     }
 
-    public Card(Suit s, Rank v) {
-        this.suit = s;
-        this.rank = v;
+    public Card(Suit suit, Rank rank) {
+        this.suit = suit;
+        this.rank = rank;
     }
 
     public boolean sameSuit(Card other) {
