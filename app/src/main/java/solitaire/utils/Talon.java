@@ -2,6 +2,7 @@ package solitaire.utils;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.Optional;
 
 public class Talon {
     private Deque<Card> stock;
@@ -24,10 +25,8 @@ public class Talon {
         return this.stock.isEmpty();
     }
 
-    // TODO: Make this use Optional<Card> 
-    // @Deprecated
-    public Card getTop() {
-        return this.waste.peek();
+    public Optional<Card> getTop() {
+        return Optional.ofNullable(this.waste.peek());
     }
 
     // @Deprecated

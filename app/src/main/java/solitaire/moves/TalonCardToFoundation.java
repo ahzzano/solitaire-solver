@@ -1,5 +1,7 @@
 package solitaire.moves;
 
+import java.util.Optional;
+
 import solitaire.utils.Card;
 import solitaire.utils.Foundation;
 import solitaire.utils.Talon;
@@ -20,12 +22,13 @@ public class TalonCardToFoundation implements Move{
             this.talon.drawThree();;
         }
 
-        Card top = this.talon.getTop();
+        Optional<Card> topTemp = this.talon.getTop();
 
-        if(top == null) {
+        if(topTemp.isEmpty()) {
             return false;
             
         }
+        Card top = topTemp.get();
 
         for (Foundation foundation : this.foundations) {
             if (foundation.pushable(top)) {

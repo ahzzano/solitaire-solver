@@ -1,6 +1,7 @@
 package solitaire.utils;
 
 import java.util.Scanner;
+import java.util.Optional;
 
 import solitaire.Game;
 
@@ -45,13 +46,13 @@ public class GameDisplay {
     }
 
     private void displayTalonAndFoundations(Talon talon, Foundation[] foundations) {
-        Card topWaste = talon.getTop();
+        Optional<Card> topWaste = talon.getTop();
         System.out.println("      Talon                    Foundations");
 
         String deckDisplay = "";
 
-        if (topWaste != null) {
-            deckDisplay = String.format("D(%d) -- [ %s ]", talon.stockSize(), topWaste.toDisplayString());
+        if (topWaste.isPresent()) {
+            deckDisplay = String.format("D(%d) -- [ %s ]", talon.stockSize(), topWaste.get().toDisplayString());
         } else {
             deckDisplay = String.format("[ empty ]");
         }

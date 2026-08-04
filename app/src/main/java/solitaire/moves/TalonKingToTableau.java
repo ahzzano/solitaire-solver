@@ -1,5 +1,7 @@
 package solitaire.moves;
 
+import java.util.Optional;
+
 import solitaire.utils.Card;
 import solitaire.utils.Manoeuvre;
 import solitaire.utils.Talon;
@@ -21,10 +23,11 @@ public class TalonKingToTableau implements Move{
             this.talon.drawThree();;
         }
 
-        Card top = this.talon.getTop();
-        if(top == null) {
+        Optional<Card> topTemp = this.talon.getTop();
+        if(topTemp.isEmpty()) {
             return false;
         }
+        Card top = topTemp.get();
 
         if (top.rank() != Rank.KING) {
             return false;
