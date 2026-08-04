@@ -10,8 +10,8 @@ public class LateralMoves implements Move {
 
     private Manoeuvre[] tableau;
 
-    public LateralMoves(Manoeuvre[] tableu) {
-        this.tableau = tableu;
+    public LateralMoves(Manoeuvre[] tableau) {
+        this.tableau = tableau;
     }
 
     private Optional<Integer> findDestination(Card card) {

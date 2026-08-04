@@ -38,7 +38,7 @@ public class Game {
     private void initializeGameWithDeck(ArrayList<Card> deck) {
         this.displayDeck(deck);
 
-        this.initializeTableu(deck);
+        this.initializeTableau(deck);
         this.initializeFoundations();
         this.talon = new Talon();
         this.talon.withStock(this.initializeStock(deck));
@@ -90,15 +90,15 @@ public class Game {
         return this.foundations;
     }
 
-    public void withTableu(Manoeuvre[] tableu) {
-        this.tableau = tableu;
+    public void withTableau(Manoeuvre[] tableau) {
+        this.tableau = tableau;
     }
 
     public void withFoundations(Foundation[] foundations) {
         this.foundations = foundations;
     }
 
-    private void initializeTableu(ArrayList<Card> deck) {
+    private void initializeTableau(ArrayList<Card> deck) {
         this.tableau = new Manoeuvre[7];
         for (int i = 0; i < 7; i++) {
             this.tableau[i] = new Manoeuvre(new LinkedList<Card>(), i);
@@ -161,7 +161,7 @@ public class Game {
         return toRet;
     }
 
-    private boolean playTableuMoves() {
+    private boolean playTableauMoves() {
         return this.playMoves(this.tableauMoves);
     }
 
@@ -170,7 +170,7 @@ public class Game {
     }
 
     public boolean playOneCycle() {
-        this.playTableuMoves();
+        this.playTableauMoves();
 
         boolean moveMade = false;
         boolean talonMove = false;
@@ -183,7 +183,7 @@ public class Game {
 
             if (talonMove) {
                 moveMade = true;
-                this.playTableuMoves();
+                this.playTableauMoves();
             }
         }
 

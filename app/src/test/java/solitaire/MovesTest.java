@@ -28,21 +28,21 @@ import solitaire.utils.Rank;
 
 public class MovesTest {
     @Test
-    void wasteCardToTableu() {
-        Manoeuvre[] tableu = new Manoeuvre[4];
+    void wasteCardToTableau() {
+        Manoeuvre[] tableau = new Manoeuvre[4];
 
-        tableu[0] = new Manoeuvre(new LinkedList<Card>(List.of(new Card(Suit.DIAMONDS, Rank.KING))), 0);
-        tableu[1] = new Manoeuvre(new LinkedList<Card>(
+        tableau[0] = new Manoeuvre(new LinkedList<Card>(List.of(new Card(Suit.DIAMONDS, Rank.KING))), 0);
+        tableau[1] = new Manoeuvre(new LinkedList<Card>(
                 List.of(
                         new Card(Suit.DIAMONDS, Rank.KING),
                         new Card(Suit.HEARTS, Rank.TEN))),
                 1);
-        tableu[2] = new Manoeuvre(new LinkedList<Card>(List.of(
+        tableau[2] = new Manoeuvre(new LinkedList<Card>(List.of(
                 new Card(Suit.SPADES, Rank.TWO),
                 new Card(Suit.SPADES, Rank.THREE),
                 new Card(Suit.HEARTS, Rank.FIVE))), 2);
 
-        tableu[3] = new Manoeuvre(new LinkedList<Card>(List.of(
+        tableau[3] = new Manoeuvre(new LinkedList<Card>(List.of(
                 new Card(Suit.SPADES, Rank.TWO),
                 new Card(Suit.SPADES, Rank.THREE),
                 new Card(Suit.HEARTS, Rank.FIVE),
@@ -57,18 +57,18 @@ public class MovesTest {
         Talon talon = new Talon();
         talon.withStock(stock);
 
-        Move move = new TalonCardToTableau(talon, tableu);
+        Move move = new TalonCardToTableau(talon, tableau);
 
         move.play();
         move.play();
         move.play();
 
-        assertEquals(tableu[0].getRevealedBottomCard().get().rank(), Rank.QUEEN);
-        assertEquals(tableu[1].getRevealedBottomCard().get().rank(), Rank.NINE);
-        assertEquals(tableu[2].getRevealedBottomCard().get().rank(), Rank.FOUR);
+        assertEquals(tableau[0].getRevealedBottomCard().get().rank(), Rank.QUEEN);
+        assertEquals(tableau[1].getRevealedBottomCard().get().rank(), Rank.NINE);
+        assertEquals(tableau[2].getRevealedBottomCard().get().rank(), Rank.FOUR);
 
-        assertEquals(tableu[3].getRevealedBottomCard().get().rank(), Rank.FOUR);
-        assertEquals(tableu[3].getRevealedBottomCard().get().suit(), Suit.SPADES);
+        assertEquals(tableau[3].getRevealedBottomCard().get().rank(), Rank.FOUR);
+        assertEquals(tableau[3].getRevealedBottomCard().get().suit(), Suit.SPADES);
     }
 
     @Test
@@ -124,17 +124,17 @@ public class MovesTest {
     }
 
     @Test
-    void wasteKingToTableu() {
-        Manoeuvre[] tableu = new Manoeuvre[4];
-        tableu[0] = new Manoeuvre(new LinkedList<Card>(), 0);
+    void wasteKingToTableau() {
+        Manoeuvre[] tableau = new Manoeuvre[4];
+        tableau[0] = new Manoeuvre(new LinkedList<Card>(), 0);
 
-        tableu[1] = new Manoeuvre(new LinkedList<Card>(List.of(
+        tableau[1] = new Manoeuvre(new LinkedList<Card>(List.of(
                 new Card(Suit.DIAMONDS, Rank.THREE),
                 new Card(Suit.SPADES, Rank.JACK))), 1);
 
-        tableu[2] = new Manoeuvre(new LinkedList<Card>(), 0);
+        tableau[2] = new Manoeuvre(new LinkedList<Card>(), 0);
 
-        tableu[3] = new Manoeuvre(new LinkedList<Card>(List.of(
+        tableau[3] = new Manoeuvre(new LinkedList<Card>(List.of(
                 new Card(Suit.SPADES, Rank.JACK))), 0);
 
         Deque<Card> stock = new ArrayDeque<>();
@@ -145,45 +145,45 @@ public class MovesTest {
         Talon talon = new Talon();
         talon.withStock(stock);
 
-        Move move = new TalonKingToTableau(talon, tableu);
+        Move move = new TalonKingToTableau(talon, tableau);
         move.play();
 
-        assertFalse(tableu[0].empty());
-        assertEquals(tableu[0].getRevealedBottomCard().get().rank(), Rank.KING);
-        assertEquals(tableu[0].getRevealedBottomCard().get().suit(), Suit.HEARTS);
+        assertFalse(tableau[0].empty());
+        assertEquals(tableau[0].getRevealedBottomCard().get().rank(), Rank.KING);
+        assertEquals(tableau[0].getRevealedBottomCard().get().suit(), Suit.HEARTS);
 
         move.play();
 
-        assertFalse(tableu[2].empty());
-        assertEquals(tableu[2].getRevealedBottomCard().get().rank(), Rank.KING);
-        assertEquals(tableu[2].getRevealedBottomCard().get().suit(), Suit.CLUBS);
+        assertFalse(tableau[2].empty());
+        assertEquals(tableau[2].getRevealedBottomCard().get().rank(), Rank.KING);
+        assertEquals(tableau[2].getRevealedBottomCard().get().suit(), Suit.CLUBS);
 
-        assertEquals(tableu[1].size(), 2);
-        assertEquals(tableu[3].size(), 1);
+        assertEquals(tableau[1].size(), 2);
+        assertEquals(tableau[3].size(), 1);
     }
 
     @Test
     void lateralMoves() {
-        Manoeuvre[] tableu = new Manoeuvre[4];
+        Manoeuvre[] tableau = new Manoeuvre[4];
 
-        tableu[0] = new Manoeuvre(new LinkedList<Card>(List.of(
+        tableau[0] = new Manoeuvre(new LinkedList<Card>(List.of(
                 new Card(Suit.DIAMONDS, Rank.QUEEN))), 0);
 
-        tableu[1] = new Manoeuvre(new LinkedList<Card>(List.of(
+        tableau[1] = new Manoeuvre(new LinkedList<Card>(List.of(
                 new Card(Suit.DIAMONDS, Rank.THREE),
                 new Card(Suit.SPADES, Rank.JACK))), 1);
 
-        tableu[2] = new Manoeuvre(new LinkedList<Card>(List.of(
+        tableau[2] = new Manoeuvre(new LinkedList<Card>(List.of(
                 new Card(Suit.SPADES, Rank.KING))), 0);
 
-        tableu[3] = new Manoeuvre(new LinkedList<Card>(List.of(
+        tableau[3] = new Manoeuvre(new LinkedList<Card>(List.of(
                 new Card(Suit.SPADES, Rank.KING))), 0);
 
-        Move move = new LateralMoves(tableu);
+        Move move = new LateralMoves(tableau);
         boolean made = move.play();
 
         assertTrue(made);
-        assertTrue(tableu[0].empty());
+        assertTrue(tableau[0].empty());
     }
 
     @Test
@@ -221,43 +221,43 @@ public class MovesTest {
 
     @Test
     void kingToEmpty() {
-        Manoeuvre[] tableu = new Manoeuvre[4];
+        Manoeuvre[] tableau = new Manoeuvre[4];
 
-        tableu[0] = new Manoeuvre(new LinkedList<Card>(List.of(
+        tableau[0] = new Manoeuvre(new LinkedList<Card>(List.of(
                 new Card(Suit.HEARTS, Rank.KING))), 0);
-        tableu[1] = new Manoeuvre(new LinkedList<Card>(List.of()), 0);
-        tableu[2] = new Manoeuvre(new LinkedList<Card>(List.of(
+        tableau[1] = new Manoeuvre(new LinkedList<Card>(List.of()), 0);
+        tableau[2] = new Manoeuvre(new LinkedList<Card>(List.of(
                 new Card(Suit.DIAMONDS, Rank.ACE),
                 new Card(Suit.DIAMONDS, Rank.KING),
                 new Card(Suit.SPADES, Rank.QUEEN))), 1);
-        tableu[3] = new Manoeuvre(new LinkedList<Card>(List.of()), 0);
+        tableau[3] = new Manoeuvre(new LinkedList<Card>(List.of()), 0);
 
-        Move move = new KingToEmpty(tableu);
+        Move move = new KingToEmpty(tableau);
 
         boolean worked = move.play();
 
         assertTrue(worked);
 
-        assertEquals(tableu[0].getRevealedTop().suit(), Suit.HEARTS);
-        assertEquals(tableu[1].getRevealedTop().suit(), Suit.DIAMONDS);
-        assertEquals(tableu[2].getRevealedBottomCard().get().rank(), Rank.ACE);
+        assertEquals(tableau[0].getRevealedTop().suit(), Suit.HEARTS);
+        assertEquals(tableau[1].getRevealedTop().suit(), Suit.DIAMONDS);
+        assertEquals(tableau[2].getRevealedBottomCard().get().rank(), Rank.ACE);
 
-        assertTrue(tableu[3].empty());
+        assertTrue(tableau[3].empty());
     }
 
     @Test
     void kingToNonEmpty() {
         // Do nothing
-        Manoeuvre[] tableu = new Manoeuvre[2];
+        Manoeuvre[] tableau = new Manoeuvre[2];
 
-        tableu[0] = new Manoeuvre(new LinkedList<Card>(List.of(
+        tableau[0] = new Manoeuvre(new LinkedList<Card>(List.of(
                 new Card(Suit.HEARTS, Rank.KING))), 0);
-        tableu[1] = new Manoeuvre(new LinkedList<Card>(List.of(
+        tableau[1] = new Manoeuvre(new LinkedList<Card>(List.of(
                 new Card(Suit.DIAMONDS, Rank.ACE),
                 new Card(Suit.DIAMONDS, Rank.KING),
                 new Card(Suit.SPADES, Rank.QUEEN))), 1);
 
-        Move move = new KingToEmpty(tableu);
+        Move move = new KingToEmpty(tableau);
 
         boolean worked = move.play();
 
@@ -266,39 +266,39 @@ public class MovesTest {
 
     @Test
     void exampleFirstMoveWithoutWaste() {
-        Manoeuvre[] tableu = new Manoeuvre[7];
+        Manoeuvre[] tableau = new Manoeuvre[7];
         Foundation[] foundations = new Foundation[4];
 
         for (int i = 0; i < 4; i++) {
             foundations[i] = new Foundation();
         }
 
-        tableu[0] = new Manoeuvre(new LinkedList<Card>(List.of(
+        tableau[0] = new Manoeuvre(new LinkedList<Card>(List.of(
                 new Card(Suit.SPADES, Rank.FIVE))), 0);
 
-        tableu[1] = new Manoeuvre(new LinkedList<Card>(List.of(
+        tableau[1] = new Manoeuvre(new LinkedList<Card>(List.of(
                 new Card(Suit.DIAMONDS, Rank.TEN),
                 new Card(Suit.SPADES, Rank.SIX))), 1);
 
-        tableu[2] = new Manoeuvre(new LinkedList<Card>(List.of(
+        tableau[2] = new Manoeuvre(new LinkedList<Card>(List.of(
                 new Card(Suit.HEARTS, Rank.SIX),
                 new Card(Suit.HEARTS, Rank.QUEEN),
                 new Card(Suit.DIAMONDS, Rank.QUEEN))), 2);
 
-        tableu[3] = new Manoeuvre(new LinkedList<Card>(List.of(
+        tableau[3] = new Manoeuvre(new LinkedList<Card>(List.of(
                 new Card(Suit.DIAMONDS, Rank.FOUR),
                 new Card(Suit.HEARTS, Rank.FIVE),
                 new Card(Suit.DIAMONDS, Rank.EIGHT),
                 new Card(Suit.SPADES, Rank.ACE))), 3);
 
-        tableu[4] = new Manoeuvre(new LinkedList<Card>(List.of(
+        tableau[4] = new Manoeuvre(new LinkedList<Card>(List.of(
                 new Card(Suit.DIAMONDS, Rank.FIVE),
                 new Card(Suit.SPADES, Rank.FOUR),
                 new Card(Suit.HEARTS, Rank.ACE),
                 new Card(Suit.DIAMONDS, Rank.TWO),
                 new Card(Suit.CLUBS, Rank.TWO))), 4);
 
-        tableu[5] = new Manoeuvre(new LinkedList<Card>(List.of(
+        tableau[5] = new Manoeuvre(new LinkedList<Card>(List.of(
                 new Card(Suit.DIAMONDS, Rank.THREE),
                 new Card(Suit.DIAMONDS, Rank.KING),
                 new Card(Suit.CLUBS, Rank.THREE),
@@ -306,7 +306,7 @@ public class MovesTest {
                 new Card(Suit.CLUBS, Rank.TEN),
                 new Card(Suit.SPADES, Rank.JACK))), 5);
 
-        tableu[6] = new Manoeuvre(new LinkedList<Card>(List.of(
+        tableau[6] = new Manoeuvre(new LinkedList<Card>(List.of(
                 new Card(Suit.DIAMONDS, Rank.THREE),
                 new Card(Suit.DIAMONDS, Rank.KING),
                 new Card(Suit.CLUBS, Rank.THREE),
@@ -315,9 +315,9 @@ public class MovesTest {
                 new Card(Suit.SPADES, Rank.JACK),
                 new Card(Suit.DIAMONDS, Rank.SEVEN))), 6);
 
-        Move atf = new TableauToFoundations(tableu, foundations);
-        Move kte = new KingToEmpty(tableu);
-        Move lat = new LateralMoves(tableu);
+        Move atf = new TableauToFoundations(tableau, foundations);
+        Move kte = new KingToEmpty(tableau);
+        Move lat = new LateralMoves(tableau);
 
         while (atf.play() || kte.play() || lat.play()) {
         }
@@ -325,13 +325,13 @@ public class MovesTest {
         // Expected Final State
         assertEquals(foundations[0].empty(), false);
 
-        assertFalse(tableu[0].empty());
-        assertFalse(tableu[2].empty());
-        assertFalse(tableu[3].empty());
-        assertFalse(tableu[4].empty());
-        assertFalse(tableu[5].empty());
-        assertFalse(tableu[6].empty());
+        assertFalse(tableau[0].empty());
+        assertFalse(tableau[2].empty());
+        assertFalse(tableau[3].empty());
+        assertFalse(tableau[4].empty());
+        assertFalse(tableau[5].empty());
+        assertFalse(tableau[6].empty());
 
-        assertTrue(tableu[1].empty());
+        assertTrue(tableau[1].empty());
     }
 }

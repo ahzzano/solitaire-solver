@@ -8,8 +8,8 @@ public class TableauToFoundations implements Move {
     Manoeuvre[] tableau;
     Foundation[] foundations;
 
-    public TableauToFoundations(Manoeuvre[] tableu, Foundation[] foundations) {
-        this.tableau = tableu;
+    public TableauToFoundations(Manoeuvre[] tableau, Foundation[] foundations) {
+        this.tableau = tableau;
         this.foundations = foundations;
     }
 

@@ -8,8 +8,8 @@ import solitaire.utils.Rank;
 public class KingToEmpty implements Move {
     Manoeuvre[] tableau;
 
-    public KingToEmpty(Manoeuvre[] tableu) {
-        this.tableau = tableu;
+    public KingToEmpty(Manoeuvre[] tableau) {
+        this.tableau = tableau;
     }
 
     @Override

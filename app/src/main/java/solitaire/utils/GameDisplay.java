@@ -19,13 +19,13 @@ public class GameDisplay {
     }
 
     public void displayState() {
-        Manoeuvre[] tableu = this.game.getTableau();
+        Manoeuvre[] tableau = this.game.getTableau();
         Talon talon = this.game.getTalon();
         Foundation[] foundations = this.game.getFoundations();
 
         System.out.println("=====================================");
         this.displayTalonAndFoundations(talon, foundations);
-        this.displayTableu(tableu);
+        this.displayTableau(tableau);
         System.out.println("=====================================");
     }
 
@@ -87,10 +87,10 @@ public class GameDisplay {
         System.out.printf("%-7s", "-(-)");
     }
 
-    private int getMaxSizeStack(Manoeuvre[] tableu) {
+    private int getMaxSizeStack(Manoeuvre[] tableau) {
         int maxSizeStack = 0;
 
-        for (Manoeuvre stack : tableu) {
+        for (Manoeuvre stack : tableau) {
             if (stack.size() > maxSizeStack) {
                 maxSizeStack = stack.size();
             }
@@ -99,17 +99,17 @@ public class GameDisplay {
         return maxSizeStack;
     }
 
-    private void printTableuColumnHeaders(Manoeuvre[] tableu) {
-        for (int i = 0; i < tableu.length; i++) {
+    private void printTableauColumnHeaders(Manoeuvre[] tableau) {
+        for (int i = 0; i < tableau.length; i++) {
             System.out.print("Mv#" + (i+1) + "   ");
         }
 
         System.out.println();
     }
     
-    private void displayTableu(Manoeuvre[] tableu) {
-        int maxSizeStack = this.getMaxSizeStack(tableu);
-        this.printTableuColumnHeaders(tableu);
+    private void displayTableau(Manoeuvre[] tableau) {
+        int maxSizeStack = this.getMaxSizeStack(tableau);
+        this.printTableauColumnHeaders(tableau);
 
         if(maxSizeStack <= 0) {
             for(int i=0; i<7; i++) {
@@ -118,7 +118,7 @@ public class GameDisplay {
         }
 
         for (int i = 0; i < maxSizeStack; i++) {
-            for (Manoeuvre stack : tableu) {
+            for (Manoeuvre stack : tableau) {
                 if (i >= stack.size()) {
                     if (i < 1) {
                         this.printEmptyManoeuvre();

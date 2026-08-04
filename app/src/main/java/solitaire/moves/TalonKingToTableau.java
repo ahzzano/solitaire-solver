@@ -11,9 +11,9 @@ public class TalonKingToTableau implements Move{
     Talon talon;
     Manoeuvre[] tableau;
 
-    public TalonKingToTableau(Talon talon, Manoeuvre[] tableu) {
+    public TalonKingToTableau(Talon talon, Manoeuvre[] tableau) {
         this.talon = talon;
-        this.tableau = tableu;
+        this.tableau = tableau;
     }
 
     @Override
