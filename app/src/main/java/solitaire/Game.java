@@ -177,10 +177,7 @@ public class Game {
         while(!this.talon.isStockEmpty()) {
             System.out.println("Drawing cards from the talon");
             this.talon.drawThree();
-            this.numOfMoves++;
-            this.printStats();
-            this.displayState();
-            this.display.pause();
+            this.recordSuccessfulMove();
 
             talonMove = this.playTalonMoves();
 
