@@ -62,7 +62,6 @@ public class LateralMoves implements Move {
                 continue;
             }
 
-            // TODO: combine into one function
             var temp = manoeuvre.splitStack(manoeuvre.revealedStart());
             if (temp.isEmpty()) {
                 continue;
