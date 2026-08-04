@@ -134,16 +134,20 @@ public class Game {
         }
     }
 
+    public void printStats() {
+        System.out.println("Moves: " + this.numOfMoves);
+        System.out.println("Deck Cycles: " + this.numOfCycles);
+    }
+
     private boolean playMoves(List<@NonNull Move> moves) {
         boolean movesMade = true;
         boolean toRet = false;
         while(movesMade) {
             movesMade = false;
             for (Move move : moves) {
-                if(move.play()) {
+                while(move.play()) {
                     this.numOfMoves++; 
-                    System.out.println("Moves: " + this.numOfMoves);
-                    System.out.println("Deck Cycles: " + this.numOfCycles);
+                    this.printStats();
                     this.displayState();
                     this.display.pause();
                     movesMade = true;
@@ -172,8 +176,7 @@ public class Game {
             System.out.println("Drawing cards from the talon");
             this.talon.drawThree();
             this.numOfMoves++;
-            System.out.println("Moves: " + this.numOfMoves);
-            System.out.println("Deck Cycles: " + this.numOfCycles);
+            this.printStats();
             this.displayState();
             this.display.pause();
 

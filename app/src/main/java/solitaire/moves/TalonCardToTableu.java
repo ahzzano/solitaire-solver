@@ -27,6 +27,7 @@ public class TalonCardToTableu implements Move {
         int index = 0;
         for (Manoeuvre manoeuvre : this.tableu) {
             if (manoeuvre.empty()) {
+                index++;
                 continue;
             }
             if (top.isCompatibleBelow(manoeuvre.getRevealedBottomCard().get())) {

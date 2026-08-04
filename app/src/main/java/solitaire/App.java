@@ -14,7 +14,7 @@ public class App {
         Game game = new Game();
 
         BoardDisplay display = BoardDisplay.withBoard(game);
-        display.setScanner(scanner);
+        // display.setScanner(scanner);
         
         System.out.println("Starting the game GLHF");
         display.displayState();
