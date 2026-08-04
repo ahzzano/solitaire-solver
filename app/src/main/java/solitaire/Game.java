@@ -8,13 +8,13 @@ import solitaire.moves.*;
 import solitaire.utils.*;
 
 public class Game {
-    Manoeuvre[] tableau;
-    Talon talon;
-    Foundation[] foundations;
-    GameDisplay display;
+    private Manoeuvre[] tableau;
+    private Talon talon;
+    private Foundation[] foundations;
+    private GameDisplay display;
 
-    int numOfMoves = 0;
-    int numOfCycles = 0;
+    private int numOfMoves = 0;
+    private int numOfCycles = 0;
 
     List<@NonNull Move> tableauMoves;
     List<@NonNull Move> talonMoves;

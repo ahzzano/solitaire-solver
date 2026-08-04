@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.Optional;
 
 public class Manoeuvre {
-    LinkedList<Card> cards;
+    private LinkedList<Card> cards;
 
     // Topmost revealed card
     private int revealedStart;

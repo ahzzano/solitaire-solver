@@ -4,8 +4,8 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 public class Talon {
-    Deque<Card> stock;
-    Deque<Card> waste;
+    private Deque<Card> stock;
+    private Deque<Card> waste;
 
     public void withStock(Deque<Card> stock) {
         this.stock = stock;

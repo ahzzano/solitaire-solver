@@ -97,7 +97,6 @@ public class MovesTest {
 
     @Test
     void wasteAceToFoundation() {
-        Game board = new Game();
         Foundation[] foundations = new Foundation[4];
         for (int i = 0; i < 4; i++) {
             foundations[i] = new Foundation();
@@ -116,7 +115,7 @@ public class MovesTest {
         Move move = new TalonAceToFoundations(talon, foundations);
         move.play();
 
-        assertTrue(board.foundations[0].empty());
+        assertTrue(foundations[0].empty());
 
         talon.popTop();
         move.play();
