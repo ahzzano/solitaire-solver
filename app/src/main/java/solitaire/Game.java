@@ -44,7 +44,7 @@ public class Game {
         this.talon.withStock(this.initializeStock(deck));
 
         this.tableuMoves = new ArrayList<>(Arrays.asList(
-            new TableuToFoundations(this.tableau, this.foundations),
+            new TableauToFoundations(this.tableau, this.foundations),
             new KingToEmpty(this.tableau),
             new LateralMoves(this.tableau)
         ));
@@ -138,6 +138,13 @@ public class Game {
         System.out.println("Deck Cycles: " + this.numOfCycles);
     }
 
+    private void recordSuccessfulMove() {
+        this.numOfMoves++; 
+        this.printStats();
+        this.displayState();
+        this.display.pause();
+    }
+
     private boolean playMoves(List<@NonNull Move> moves) {
         boolean movesMade = true;
         boolean toRet = false;
@@ -145,10 +152,7 @@ public class Game {
             movesMade = false;
             for (Move move : moves) {
                 while(move.play()) {
-                    this.numOfMoves++; 
-                    this.printStats();
-                    this.displayState();
-                    this.display.pause();
+                    this.recordSuccessfulMove();
                     movesMade = true;
                     toRet = true;
                 }
