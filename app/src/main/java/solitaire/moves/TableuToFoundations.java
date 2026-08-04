@@ -4,11 +4,11 @@ import solitaire.utils.Card;
 import solitaire.utils.Foundation;
 import solitaire.utils.Manoeuvre;
 
-public class AceToFoundations implements Move {
+public class TableuToFoundations implements Move {
     Manoeuvre[] tableu;
     Foundation[] foundations;
 
-    public AceToFoundations(Manoeuvre[] tableu, Foundation[] foundations) {
+    public TableuToFoundations(Manoeuvre[] tableu, Foundation[] foundations) {
         this.tableu = tableu;
         this.foundations = foundations;
     }
@@ -17,6 +17,9 @@ public class AceToFoundations implements Move {
     public boolean play() {
         boolean move = false;
         for (Manoeuvre stack : this.tableu) {
+            if(move) {
+                break;
+            }
             if (stack.empty()) {
                 continue;
             }

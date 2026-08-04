@@ -11,8 +11,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import solitaire.moves.AceToFoundations;
-import solitaire.moves.CardsToFoundations;
+import solitaire.moves.TableuToFoundations;
 import solitaire.moves.KingToEmpty;
 import solitaire.moves.LateralMoves;
 import solitaire.moves.Move;
@@ -210,7 +209,8 @@ public class MovesTest {
         tableu[1] = new Manoeuvre(new LinkedList<>(), 0);
         tableu[2] = new Manoeuvre(stack2, 0);
 
-        Move atf = new AceToFoundations(tableu, foundations);
+        Move atf = new TableuToFoundations(tableu, foundations);
+        atf.play();
         atf.play();
 
         assertEquals(tableu[0].getRevealedBottomCard().get().rank(), Rank.JACK);
@@ -218,40 +218,6 @@ public class MovesTest {
 
         assertTrue(tableu[2].empty());
         assertEquals(foundations[1].getTop().suit(), Suit.HEARTS);
-    }
-
-    @Test
-    void cardsToFoundation() {
-        Manoeuvre[] tableu = new Manoeuvre[2];
-        Foundation[] foundations = new Foundation[4];
-
-        for (int i = 0; i < 4; i++) {
-            foundations[i] = new Foundation();
-        }
-
-        foundations[0].push(new Card(Suit.DIAMONDS, Rank.ACE));
-        foundations[1].push(new Card(Suit.HEARTS, Rank.ACE));
-        foundations[2].push(new Card(Suit.CLUBS, Rank.ACE));
-        foundations[3].push(new Card(Suit.SPADES, Rank.ACE));
-
-        tableu[0] = new Manoeuvre(new LinkedList<Card>(List.of(
-                new Card(Suit.DIAMONDS, Rank.TWO),
-                new Card(Suit.HEARTS, Rank.TWO),
-                new Card(Suit.SPADES, Rank.TWO),
-                new Card(Suit.CLUBS, Rank.TWO))), 3);
-
-        tableu[1] = new Manoeuvre(new LinkedList<Card>(List.of(
-                new Card(Suit.SPADES, Rank.FOUR),
-                new Card(Suit.HEARTS, Rank.THREE))), 1);
-
-        Move move = new CardsToFoundations(tableu, foundations);
-        move.play();
-
-        assertFalse(tableu[0].empty());
-        assertEquals(tableu[1].getRevealedBottomCard().get().suit(), Suit.HEARTS);
-        assertEquals(tableu[1].getRevealedBottomCard().get().rank(), Rank.THREE);
-
-        assertEquals(tableu[0].getRevealedBottomCard().get().rank(), Rank.TWO);
     }
 
     @Test
@@ -350,12 +316,11 @@ public class MovesTest {
                 new Card(Suit.SPADES, Rank.JACK),
                 new Card(Suit.DIAMONDS, Rank.SEVEN))), 6);
 
-        Move ctf = new CardsToFoundations(tableu, foundations);
-        Move atf = new AceToFoundations(tableu, foundations);
+        Move atf = new TableuToFoundations(tableu, foundations);
         Move kte = new KingToEmpty(tableu);
         Move lat = new LateralMoves(tableu);
 
-        while (ctf.play() || atf.play() || kte.play() || lat.play()) {
+        while (atf.play() || kte.play() || lat.play()) {
         }
 
         // Expected Final State

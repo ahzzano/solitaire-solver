@@ -44,8 +44,7 @@ public class Game {
         this.talon.withStock(this.initializeStock(deck));
 
         this.tableuMoves = new ArrayList<>(Arrays.asList(
-            new AceToFoundations(this.tableu, this.foundations),
-            new CardsToFoundations(this.tableu, this.foundations),
+            new TableuToFoundations(this.tableu, this.foundations),
             new KingToEmpty(this.tableu),
             new LateralMoves(this.tableu)
         ));
@@ -166,7 +165,6 @@ public class Game {
         return this.playMoves(this.talonMoves);
     }
 
-    // TODO: Refactor
     public boolean playOneCycle() {
         this.playTableuMoves();
 
