@@ -16,7 +16,7 @@ public class Game {
     int numOfMoves = 0;
     int numOfCycles = 0;
 
-    List<@NonNull Move> tableuMoves;
+    List<@NonNull Move> tableauMoves;
     List<@NonNull Move> talonMoves;
     
     public void displayDeck(ArrayList<Card> cards) {
@@ -43,7 +43,7 @@ public class Game {
         this.talon = new Talon();
         this.talon.withStock(this.initializeStock(deck));
 
-        this.tableuMoves = new ArrayList<>(Arrays.asList(
+        this.tableauMoves = new ArrayList<>(Arrays.asList(
             new TableauToFoundations(this.tableau, this.foundations),
             new KingToEmpty(this.tableau),
             new LateralMoves(this.tableau)
@@ -162,7 +162,7 @@ public class Game {
     }
 
     private boolean playTableuMoves() {
-        return this.playMoves(this.tableuMoves);
+        return this.playMoves(this.tableauMoves);
     }
 
     private boolean playTalonMoves() {
