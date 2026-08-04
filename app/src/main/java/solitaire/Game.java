@@ -14,6 +14,7 @@ public class Game {
     BoardDisplay display;
 
     int numOfMoves = 0;
+    int numOfCycles = 0;
 
     List<@NonNull Move> tableuMoves;
     List<@NonNull Move> talonMoves;
@@ -142,6 +143,7 @@ public class Game {
                 if(move.play()) {
                     this.numOfMoves++; 
                     System.out.println("Moves: " + this.numOfMoves);
+                    System.out.println("Deck Cycles: " + this.numOfCycles);
                     this.displayState();
                     this.display.pause();
                     movesMade = true;
@@ -171,6 +173,7 @@ public class Game {
             this.talon.drawThree();
             this.numOfMoves++;
             System.out.println("Moves: " + this.numOfMoves);
+            System.out.println("Deck Cycles: " + this.numOfCycles);
             this.displayState();
             this.display.pause();
 
@@ -181,6 +184,8 @@ public class Game {
                 this.playTableuMoves();
             }
         }
+
+        this.numOfCycles++;
 
         return moveMade;
     }
