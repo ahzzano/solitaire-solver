@@ -36,7 +36,7 @@ public class TalonAceToFoundations implements Move {
                 continue;
             }
 
-            Card c = this.talon.popTop();
+            Card c = this.talon.popTop().get();
             System.out.println("Moved " + c.toDisplayString() + " from Talon to foundations");
             foundation.push(c);
             move = true;

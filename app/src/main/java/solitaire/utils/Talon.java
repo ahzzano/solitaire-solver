@@ -35,10 +35,12 @@ public class Talon {
         }
     }
 
-    // @Deprecated
-    // TODO: Make this use Optional<Card> 
-    public Card popTop() {
-        return this.waste.pop();
+    public Optional<Card> popTop() {
+        if (this.waste.isEmpty()) {
+            return Optional.empty();
+        }
+
+        return Optional.of(this.waste.pop());
     }
 
     public void drawThree() {

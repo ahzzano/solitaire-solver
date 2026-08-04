@@ -32,7 +32,7 @@ public class TalonCardToTableau implements Move {
                 continue;
             }
             if (top.isCompatibleBelow(manoeuvre.getRevealedBottomCard().get())) {
-                Card c = this.talon.popTop();
+                Card c = this.talon.popTop().get();
                 System.out.println("Moved " + top.toDisplayString() + " from Talon to Manoeuvre #" + (index + 1));
 
                 manoeuvre.appendCard(c);

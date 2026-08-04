@@ -30,7 +30,7 @@ public class TalonCardToFoundation implements Move{
 
         for (Foundation foundation : this.foundations) {
             if (foundation.pushable(top)) {
-                Card c = this.talon.popTop();
+                Card c = this.talon.popTop().get();
                 System.out.println("Moved " + c.toDisplayString() + " from Talon to foundations");
                 foundation.push(c);
                 move = true;

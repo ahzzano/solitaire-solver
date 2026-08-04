@@ -34,7 +34,7 @@ public class TalonKingToTableau implements Move{
         int index=0;
         for (Manoeuvre manoeuvre : this.tableau) {
             if (manoeuvre.empty()) {
-                Card c = this.talon.popTop();
+                Card c = this.talon.popTop().get();
                 manoeuvre.pushCard(c);
                 System.out.println("Moved " + c.toDisplayString() + " from Talon to " + (index+1));
                 move = true;
