@@ -1,7 +1,5 @@
 package solitaire.moves;
 
-import java.util.ArrayList;
-
 import solitaire.utils.Manoeuvre;
 import solitaire.utils.Rank;
 
