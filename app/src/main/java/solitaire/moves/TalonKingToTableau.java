@@ -5,13 +5,13 @@ import solitaire.utils.Manoeuvre;
 import solitaire.utils.Talon;
 import solitaire.utils.Rank;
 
-public class TalonKingToTableu implements Move{
+public class TalonKingToTableau implements Move{
     Talon talon;
-    Manoeuvre[] tableu;
+    Manoeuvre[] tableau;
 
-    public TalonKingToTableu(Talon talon, Manoeuvre[] tableu) {
+    public TalonKingToTableau(Talon talon, Manoeuvre[] tableu) {
         this.talon = talon;
-        this.tableu = tableu;
+        this.tableau = tableu;
     }
 
     @Override
@@ -31,7 +31,7 @@ public class TalonKingToTableu implements Move{
         }
 
         int index=0;
-        for (Manoeuvre manoeuvre : this.tableu) {
+        for (Manoeuvre manoeuvre : this.tableau) {
             if (manoeuvre.empty()) {
                 Card c = this.talon.popTop();
                 manoeuvre.pushCard(c);

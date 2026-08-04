@@ -8,15 +8,15 @@ import solitaire.utils.Rank;
 
 public class LateralMoves implements Move {
 
-    private Manoeuvre[] tableu;
+    private Manoeuvre[] tableau;
 
     public LateralMoves(Manoeuvre[] tableu) {
-        this.tableu = tableu;
+        this.tableau = tableu;
     }
 
     private Optional<Integer> findDestination(Card card) {
         int index = 0;
-        for (Manoeuvre manoeuvre : this.tableu) {
+        for (Manoeuvre manoeuvre : this.tableau) {
             int i = index;
             index++;
 
@@ -39,41 +39,37 @@ public class LateralMoves implements Move {
         boolean move = false;
 
         int sourceIndex = 0;
-        for(Manoeuvre manoeuvre : this.tableu) {
+        for(Manoeuvre manoeuvre : this.tableau) {
+            sourceIndex++;
             if(manoeuvre.empty()) {
-                sourceIndex++;
                 continue;
             }
 
             Card manoeuvreTop = manoeuvre.getRevealedTop();
 
             if(manoeuvreTop.rank() == Rank.KING) {
-                sourceIndex++;
                 continue;
             }
 
             Optional<Integer> targetManoeuvre = this.findDestination(manoeuvreTop);
             if(targetManoeuvre.isEmpty()) {
-                sourceIndex++;
                 continue;
             }
 
             int target = targetManoeuvre.get();
 
-            if(tableu[target].empty()) {
-                sourceIndex++;
+            if(tableau[target].empty()) {
                 continue;
             }
 
             // TODO: combine into one function
             var temp = manoeuvre.splitStack(manoeuvre.revealedStart());
             if (temp.isEmpty()) {
-                sourceIndex++;
                 continue;
             }
 
-            System.out.printf("Moved Cards %s and below from Manoeuvre #%d to Manouvre #%d\n", manoeuvreTop.toDisplayString(), sourceIndex+1, target+1);
-            tableu[target].mergeStacks(temp.get());
+            System.out.printf("Moved Cards %s and below from Manoeuvre #%d to Manouvre #%d\n", manoeuvreTop.toDisplayString(), sourceIndex, target+1);
+            tableau[target].mergeStacks(temp.get());
             move = true;
             break;
         }

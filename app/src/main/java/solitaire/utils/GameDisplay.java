@@ -9,18 +9,18 @@ import solitaire.Game;
 // Must haves IMHO
 // - [ ] add color to terminal
 
-public class BoardDisplay {
-    Game board;
+public class GameDisplay {
+    Game game;
     Scanner scanner;
     
-    public BoardDisplay(Game board) {
-        this.board = board;
+    public GameDisplay(Game board) {
+        this.game = board;
     }
 
     public void displayState() {
-        Manoeuvre[] tableu = this.board.getTableu();
-        Talon talon = this.board.getTalon();
-        Foundation[] foundations = this.board.getFoundations();
+        Manoeuvre[] tableu = this.game.getTableau();
+        Talon talon = this.game.getTalon();
+        Foundation[] foundations = this.game.getFoundations();
 
         System.out.println("=====================================");
         this.displayTalonAndFoundations(talon, foundations);
@@ -28,8 +28,8 @@ public class BoardDisplay {
         System.out.println("=====================================");
     }
 
-    public static BoardDisplay withBoard(Game board) {
-        BoardDisplay display = new BoardDisplay(board);
+    public static GameDisplay withBoard(Game board) {
+        GameDisplay display = new GameDisplay(board);
         board.withDisplay(display);
         return display;
     }

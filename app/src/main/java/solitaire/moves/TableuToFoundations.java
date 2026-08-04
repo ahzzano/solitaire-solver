@@ -5,18 +5,18 @@ import solitaire.utils.Foundation;
 import solitaire.utils.Manoeuvre;
 
 public class TableuToFoundations implements Move {
-    Manoeuvre[] tableu;
+    Manoeuvre[] tableau;
     Foundation[] foundations;
 
     public TableuToFoundations(Manoeuvre[] tableu, Foundation[] foundations) {
-        this.tableu = tableu;
+        this.tableau = tableu;
         this.foundations = foundations;
     }
 
     @Override
     public boolean play() {
         boolean move = false;
-        for (Manoeuvre stack : this.tableu) {
+        for (Manoeuvre stack : this.tableau) {
             if(move) {
                 break;
             }

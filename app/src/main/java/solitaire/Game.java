@@ -8,10 +8,10 @@ import solitaire.moves.*;
 import solitaire.utils.*;
 
 public class Game {
-    Manoeuvre[] tableu;
+    Manoeuvre[] tableau;
     Talon talon;
     Foundation[] foundations;
-    BoardDisplay display;
+    GameDisplay display;
 
     int numOfMoves = 0;
     int numOfCycles = 0;
@@ -44,16 +44,16 @@ public class Game {
         this.talon.withStock(this.initializeStock(deck));
 
         this.tableuMoves = new ArrayList<>(Arrays.asList(
-            new TableuToFoundations(this.tableu, this.foundations),
-            new KingToEmpty(this.tableu),
-            new LateralMoves(this.tableu)
+            new TableuToFoundations(this.tableau, this.foundations),
+            new KingToEmpty(this.tableau),
+            new LateralMoves(this.tableau)
         ));
 
         this.talonMoves = new ArrayList<>(Arrays.asList(
             new TalonAceToFoundations(this.talon, this.foundations),
             new TalonCardToFoundation(this.talon, this.foundations),
-            new TalonKingToTableu(this.talon, this.tableu),
-            new TalonCardToTableu(this.talon, this.tableu)
+            new TalonKingToTableau(this.talon, this.tableau),
+            new TalonCardToTableau(this.talon, this.tableau)
         ));
     }
 
@@ -74,12 +74,12 @@ public class Game {
         this.initializeGameWithDeck(deck);
     }
 
-    public void withDisplay(BoardDisplay display) {
+    public void withDisplay(GameDisplay display) {
         this.display = display;
     }
 
-    public Manoeuvre[] getTableu() {
-        return this.tableu;
+    public Manoeuvre[] getTableau() {
+        return this.tableau;
     }
 
     public Talon getTalon() {
@@ -91,7 +91,7 @@ public class Game {
     }
 
     public void withTableu(Manoeuvre[] tableu) {
-        this.tableu = tableu;
+        this.tableau = tableu;
     }
 
     public void withFoundations(Foundation[] foundations) {
@@ -99,12 +99,12 @@ public class Game {
     }
 
     private void initializeTableu(ArrayList<Card> deck) {
-        this.tableu = new Manoeuvre[7];
+        this.tableau = new Manoeuvre[7];
         for (int i = 0; i < 7; i++) {
-            this.tableu[i] = new Manoeuvre(new LinkedList<Card>(), i);
+            this.tableau[i] = new Manoeuvre(new LinkedList<Card>(), i);
             for (int j = 0; j < i+1; j++) {
                 Card c = deck.remove(0);
-                this.tableu[i].appendCard(c);
+                this.tableau[i].appendCard(c);
             }
         }
     }

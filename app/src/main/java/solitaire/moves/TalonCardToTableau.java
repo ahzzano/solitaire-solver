@@ -4,12 +4,12 @@ import solitaire.utils.Card;
 import solitaire.utils.Manoeuvre;
 import solitaire.utils.Talon;
 
-public class TalonCardToTableu implements Move {
-    Manoeuvre[] tableu;
+public class TalonCardToTableau implements Move {
+    Manoeuvre[] tableau;
     Talon talon;
 
-    public TalonCardToTableu(Talon talon, Manoeuvre[] tableu) {
-        this.tableu = tableu;
+    public TalonCardToTableau(Talon talon, Manoeuvre[] tableau) {
+        this.tableau = tableau;
         this.talon = talon;
     }
 
@@ -25,7 +25,7 @@ public class TalonCardToTableu implements Move {
             return false;
         }
         int index = 0;
-        for (Manoeuvre manoeuvre : this.tableu) {
+        for (Manoeuvre manoeuvre : this.tableau) {
             if (manoeuvre.empty()) {
                 index++;
                 continue;

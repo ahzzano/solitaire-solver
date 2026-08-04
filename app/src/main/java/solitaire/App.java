@@ -5,7 +5,7 @@ package solitaire;
 
 import java.util.Scanner;
 
-import solitaire.utils.BoardDisplay;
+import solitaire.utils.GameDisplay;
 
 public class App {
     public static void main(String[] args) {
@@ -13,7 +13,7 @@ public class App {
 
         Game game = new Game();
 
-        BoardDisplay display = BoardDisplay.withBoard(game);
+        GameDisplay display = GameDisplay.withBoard(game);
         // display.setScanner(scanner);
         
         System.out.println("Starting the game GLHF");

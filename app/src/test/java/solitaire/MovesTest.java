@@ -17,8 +17,8 @@ import solitaire.moves.LateralMoves;
 import solitaire.moves.Move;
 import solitaire.moves.TalonAceToFoundations;
 import solitaire.moves.TalonCardToFoundation;
-import solitaire.moves.TalonCardToTableu;
-import solitaire.moves.TalonKingToTableu;
+import solitaire.moves.TalonCardToTableau;
+import solitaire.moves.TalonKingToTableau;
 import solitaire.utils.Card;
 import solitaire.utils.Manoeuvre;
 import solitaire.utils.Foundation;
@@ -57,7 +57,7 @@ public class MovesTest {
         Talon talon = new Talon();
         talon.withStock(stock);
 
-        Move move = new TalonCardToTableu(talon, tableu);
+        Move move = new TalonCardToTableau(talon, tableu);
 
         move.play();
         move.play();
@@ -146,7 +146,7 @@ public class MovesTest {
         Talon talon = new Talon();
         talon.withStock(stock);
 
-        Move move = new TalonKingToTableu(talon, tableu);
+        Move move = new TalonKingToTableau(talon, tableu);
         move.play();
 
         assertFalse(tableu[0].empty());
@@ -198,25 +198,25 @@ public class MovesTest {
         LinkedList<Card> stack2 = new LinkedList<Card>(List.of(
                 new Card(Suit.HEARTS, Rank.ACE)));
 
-        Manoeuvre[] tableu = new Manoeuvre[3];
+        Manoeuvre[] tableau = new Manoeuvre[3];
         Foundation[] foundations = new Foundation[4];
 
         for (int i = 0; i < 4; i++) {
             foundations[i] = new Foundation();
         }
 
-        tableu[0] = new Manoeuvre(stack1, 3);
-        tableu[1] = new Manoeuvre(new LinkedList<>(), 0);
-        tableu[2] = new Manoeuvre(stack2, 0);
+        tableau[0] = new Manoeuvre(stack1, 3);
+        tableau[1] = new Manoeuvre(new LinkedList<>(), 0);
+        tableau[2] = new Manoeuvre(stack2, 0);
 
-        Move atf = new TableuToFoundations(tableu, foundations);
+        Move atf = new TableuToFoundations(tableau, foundations);
         atf.play();
         atf.play();
 
-        assertEquals(tableu[0].getRevealedBottomCard().get().rank(), Rank.JACK);
+        assertEquals(tableau[0].getRevealedBottomCard().get().rank(), Rank.JACK);
         assertEquals(foundations[0].getTop().rank(), Rank.ACE);
 
-        assertTrue(tableu[2].empty());
+        assertTrue(tableau[2].empty());
         assertEquals(foundations[1].getTop().suit(), Suit.HEARTS);
     }
 
