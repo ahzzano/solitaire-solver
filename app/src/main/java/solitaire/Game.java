@@ -13,7 +13,7 @@ public class Game {
     Foundation[] foundations;
     BoardDisplay display;
 
-    int move = 0;
+    int numOfMoves = 0;
 
     List<@NonNull Move> tableuMoves;
     List<@NonNull Move> talonMoves;
@@ -139,17 +139,13 @@ public class Game {
         while(movesMade) {
             movesMade = false;
             for (Move move : moves) {
-                boolean cont = true;
-                while(cont) {
-                    cont = move.play();
-                    if(cont) {
-                        this.move++; 
-                        System.out.println("Moves: " + this.move);
+                if(move.play()) {
+                        this.numOfMoves++; 
+                        System.out.println("Moves: " + this.numOfMoves);
                         this.displayState();
                         this.display.pause();
                         movesMade = true;
                         toRet = true;
-                    }
                 }
             }
         }
@@ -173,8 +169,8 @@ public class Game {
         while(!this.talon.isStockEmpty()) {
             System.out.println("Drawing cards from the talon");
             this.talon.drawThree();
-            this.move++;
-            System.out.println("Moves: " + this.move);
+            this.numOfMoves++;
+            System.out.println("Moves: " + this.numOfMoves);
             this.displayState();
             this.display.pause();
 
