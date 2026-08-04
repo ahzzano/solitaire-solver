@@ -142,7 +142,9 @@ public class Game {
         this.numOfMoves++; 
         this.printStats();
         this.displayState();
-        this.display.pause();
+        if(this.display != null) {
+            this.display.pause();
+        }
     }
 
     private boolean playMoves(List<@NonNull Move> moves) {
