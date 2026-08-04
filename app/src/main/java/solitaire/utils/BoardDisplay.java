@@ -7,10 +7,7 @@ import solitaire.Game;
 // TODO:
 // Final strench so let's clean up the last things
 // Must haves IMHO
-// - [ ] add timer
 // - [ ] add color to terminal
-// Nice to have
-// - [ ] add transition when card flips?
 
 public class BoardDisplay {
     Game board;
