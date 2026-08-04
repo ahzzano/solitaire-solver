@@ -28,7 +28,6 @@ public class KingToEmpty implements Move {
             return false;
         }
 
-        int index = 0;
         for (Manoeuvre stack : this.tableau) {
             if (stack.empty()) {
                 continue;
@@ -36,12 +35,11 @@ public class KingToEmpty implements Move {
 
             if (stack.revealedStart() > 0 && stack.getRevealedTop().rank() == Rank.KING) {
                 Manoeuvre kingStack = stack.splitStack(stack.revealedStart()).get();
-                System.out.println("Moved " + kingStack.getRevealedTop().toDisplayString() + " to Manoeuvre #" + (index+1));
+                System.out.println("Moved " + kingStack.getRevealedTop().toDisplayString() + " to Manoeuvre #" + (emptyStackIndex+1));
                 this.tableau[emptyStackIndex].mergeStacks(kingStack);
                 move = true;
                 break;
             }
-            index++;
         }
 
         return move;
