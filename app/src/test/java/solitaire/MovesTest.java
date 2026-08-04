@@ -11,7 +11,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import solitaire.moves.TableuToFoundations;
+import solitaire.moves.TableauToFoundations;
 import solitaire.moves.KingToEmpty;
 import solitaire.moves.LateralMoves;
 import solitaire.moves.Move;
@@ -209,7 +209,7 @@ public class MovesTest {
         tableau[1] = new Manoeuvre(new LinkedList<>(), 0);
         tableau[2] = new Manoeuvre(stack2, 0);
 
-        Move atf = new TableuToFoundations(tableau, foundations);
+        Move atf = new TableauToFoundations(tableau, foundations);
         atf.play();
         atf.play();
 
@@ -316,7 +316,7 @@ public class MovesTest {
                 new Card(Suit.SPADES, Rank.JACK),
                 new Card(Suit.DIAMONDS, Rank.SEVEN))), 6);
 
-        Move atf = new TableuToFoundations(tableu, foundations);
+        Move atf = new TableauToFoundations(tableu, foundations);
         Move kte = new KingToEmpty(tableu);
         Move lat = new LateralMoves(tableu);
 
