@@ -68,7 +68,7 @@ public class LateralMoves implements Move {
                 continue;
             }
 
-            System.out.printf("Moved Cards %s and below from Manoeuvre #%d to Manouvre #%d\n", manoeuvreTop.toDisplayString(), sourceIndex, target+1);
+            System.out.printf("Moved Cards %s and below from Manoeuvre #%d to Manoeuvre #%d\n", manoeuvreTop.toDisplayString(), sourceIndex, target+1);
             tableau[target].mergeStacks(temp.get());
             move = true;
             break;
