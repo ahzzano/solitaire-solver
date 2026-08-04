@@ -59,7 +59,7 @@ public class Manoeuvre {
 
         Card otherRevealedTop = other.getCard(other.revealedStart());
         Card bottomCard = this.getRevealedBottomCard().get();
-        if (otherRevealedTop.sameColor(bottomCard) && otherRevealedTop.isCompatibleBelow(bottomCard)) {
+        if (otherRevealedTop.sameColor(bottomCard) && !otherRevealedTop.isCompatibleBelow(bottomCard)) {
             return false;
         }
 
